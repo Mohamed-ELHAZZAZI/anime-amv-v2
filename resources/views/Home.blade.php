@@ -7,7 +7,7 @@
         <title>Laravel 9 with vue 3 vite</title>
         @vite('resources/css/app.css')
     </head>
-    <body class=" dark:bg-gray-700">
+    <body class="bg-[var(--background-light-color)] dark:bg-[var(--background-dark-color)]">
         <div id="app"></div>
         @vite('resources/js/app.js')
     </body>

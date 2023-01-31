@@ -1,5 +1,7 @@
 <template>
-    <div class="px-5 py-4 bg-white dark:bg-gray-800 shadow rounded-lg">
+    <div
+        class="px-5 py-4 bg-[var(--primary-light-color)] dark:bg-[var(--primary-dark-color)] shadow rounded-lg"
+    >
         <div class="flex mb-4">
             <img
                 class="w-12 h-12 rounded-full"
@@ -11,7 +13,7 @@
                     >{{ post.userName }}</span
                 >
                 <span
-                    class="block text-sm text-gray-500 dark:text-gray-400 font-light leading-snug"
+                    class="block text-sm text-gray-500 dark:text-[var(--tertiary-dark-color)] font-light leading-snug"
                     >{{ post.publishedDate }}</span
                 >
             </div>
@@ -38,7 +40,7 @@
         <div class="flex justify-between items-center mt-5">
             <div class="flex">
                 <svg
-                    class="p-0.5 h-6 w-6 rounded-full z-20 bg-white dark:bg-gray-800"
+                    class="p-0.5 h-6 w-6 rounded-full z-20 bg-[var(--primary-light-color)] dark:bg-[var(--primary-dark-color)]"
                     xmlns="http://www.w3.org/2000/svg"
                     xmlns:xlink="http://www.w3.org/1999/xlink"
                     viewBox="0 0 16 16"
@@ -100,11 +102,13 @@
                     </g>
                 </svg>
                 <span
-                    class="ml-1 text-gray-500 dark:text-gray-400 font-light"
+                    class="ml-1 text-gray-500 dark:text-[var(--tertiary-dark-color)] font-light"
                     >{{ post.likes }}</span
                 >
             </div>
-            <div class="ml-1 text-gray-500 dark:text-gray-400 font-light">
+            <div
+                class="ml-1 text-gray-500 dark:text-[var(--tertiary-dark-color)] font-light"
+            >
                 {{ post.comments }} comments
             </div>
         </div>

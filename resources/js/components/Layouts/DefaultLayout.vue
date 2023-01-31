@@ -1,6 +1,6 @@
 <template>
     <nav
-        class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700"
+        class="fixed top-0 z-50 w-full bg-[var(--primary-light-color)] border-b border-gray-200 dark:bg-[var(--primary-dark-color)] dark:border-gray-700"
     >
         <div class="px-3 py-3 lg:px-5 lg:pl-3">
             <div class="flex items-center justify-between">
@@ -10,7 +10,7 @@
                         data-drawer-toggle="logo-sidebar"
                         aria-controls="logo-sidebar"
                         type="button"
-                        class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                        class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-[var(--background-light-color)] focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-[var(--tertiary-dark-color)] dark:hover:bg-[var(--background-dark-color)] dark:focus:ring-gray-600"
                     >
                         <span class="sr-only">Open sidebar</span>
                         <svg
@@ -57,7 +57,7 @@
                             </button>
                         </div>
                         <div
-                            class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600"
+                            class="z-50 hidden my-4 text-base list-none bg-[var(--primary-light-color)] divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600"
                             id="dropdown-user"
                         >
                             <div class="px-4 py-3" role="none">
@@ -78,7 +78,7 @@
                                 <li>
                                     <a
                                         href="#"
-                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-[var(--background-light-color)] dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                                         role="menuitem"
                                         >Dashboard</a
                                     >
@@ -86,7 +86,7 @@
                                 <li>
                                     <a
                                         href="#"
-                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-[var(--background-light-color)] dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                                         role="menuitem"
                                         >Settings</a
                                     >
@@ -94,7 +94,7 @@
                                 <li>
                                     <a
                                         href="#"
-                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-[var(--background-light-color)] dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                                         role="menuitem"
                                         >Earnings</a
                                     >
@@ -102,7 +102,7 @@
                                 <li>
                                     <a
                                         href="#"
-                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-[var(--background-light-color)] dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                                         role="menuitem"
                                         >Sign out</a
                                     >
@@ -117,19 +117,21 @@
 
     <aside
         id="logo-sidebar"
-        class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
+        class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-[var(--primary-light-color)] border-r border-gray-200 sm:translate-x-0 dark:bg-[var(--primary-dark-color)] dark:border-gray-700"
         aria-label="Sidebar"
     >
-        <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
+        <div
+            class="h-full px-3 pb-4 overflow-y-auto bg-[var(--primary-light-color)] dark:bg-[var(--primary-dark-color)]"
+        >
             <ul class="space-y-2">
                 <li>
                     <a
                         href="#"
-                        class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                        class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-[var(--background-light-color)] dark:hover:bg-[var(--background-dark-color)]"
                     >
                         <svg
                             aria-hidden="true"
-                            class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                            class="w-6 h-6 text-gray-500 transition duration-75 dark:text-[var(--tertiary-dark-color)] group-hover:text-gray-900 dark:group-hover:text-white"
                             fill="currentColor"
                             viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg"
@@ -147,11 +149,11 @@
                 <li>
                     <a
                         href="#"
-                        class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                        class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-[var(--background-light-color)] dark:hover:bg-[var(--background-dark-color)]"
                     >
                         <svg
                             aria-hidden="true"
-                            class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                            class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-[var(--tertiary-dark-color)] group-hover:text-gray-900 dark:group-hover:text-white"
                             fill="currentColor"
                             viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg"
@@ -172,11 +174,11 @@
                 <li>
                     <a
                         href="#"
-                        class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                        class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-[var(--background-light-color)] dark:hover:bg-[var(--background-dark-color)]"
                     >
                         <svg
                             aria-hidden="true"
-                            class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                            class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-[var(--tertiary-dark-color)] group-hover:text-gray-900 dark:group-hover:text-white"
                             fill="currentColor"
                             viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg"
@@ -198,11 +200,11 @@
                 <li>
                     <a
                         href="#"
-                        class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                        class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-[var(--background-light-color)] dark:hover:bg-[var(--background-dark-color)]"
                     >
                         <svg
                             aria-hidden="true"
-                            class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                            class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-[var(--tertiary-dark-color)] group-hover:text-gray-900 dark:group-hover:text-white"
                             fill="currentColor"
                             viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg"
@@ -219,11 +221,11 @@
                 <li>
                     <a
                         href="#"
-                        class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                        class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-[var(--background-light-color)] dark:hover:bg-[var(--background-dark-color)]"
                     >
                         <svg
                             aria-hidden="true"
-                            class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                            class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-[var(--tertiary-dark-color)] group-hover:text-gray-900 dark:group-hover:text-white"
                             fill="currentColor"
                             viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg"
@@ -242,11 +244,11 @@
                 <li>
                     <a
                         href="#"
-                        class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                        class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-[var(--background-light-color)] dark:hover:bg-[var(--background-dark-color)]"
                     >
                         <svg
                             aria-hidden="true"
-                            class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                            class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-[var(--tertiary-dark-color)] group-hover:text-gray-900 dark:group-hover:text-white"
                             fill="currentColor"
                             viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg"
@@ -265,11 +267,11 @@
                 <li>
                     <a
                         href="#"
-                        class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                        class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-[var(--background-light-color)] dark:hover:bg-[var(--background-dark-color)]"
                     >
                         <svg
                             aria-hidden="true"
-                            class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                            class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-[var(--tertiary-dark-color)] group-hover:text-gray-900 dark:group-hover:text-white"
                             fill="currentColor"
                             viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg"

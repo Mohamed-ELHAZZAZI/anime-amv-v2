@@ -1,5 +1,7 @@
 <template>
-    <div class="px-5 py-4 bg-white dark:bg-gray-800 shadow rounded-lg">
+    <div
+        class="px-5 py-4 bg-white dark:bg-[var(--primary-dark-color)] shadow rounded-lg"
+    >
         <!-- Start Error -->
         <div
             v-if="errorMsg"
@@ -59,7 +61,7 @@
                     :disabled="disabled"
                     id="message"
                     rows="4"
-                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:border-[var(--tertiary-light-color)] focus:ring-0 dark:bg-[#dddddd1c] dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-[var(--tertiary-dark-color)]"
                     placeholder="Write your thoughts here..."
                     v-model="text"
                 ></textarea>
@@ -102,7 +104,7 @@
                 <label
                     v-if="!showVideo"
                     for="dropzone-file"
-                    class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+                    class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-[#dddddd1c] hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
                 >
                     <div
                         class="flex flex-col items-center justify-center pt-5 pb-6"
@@ -152,7 +154,7 @@
                     <input
                         type="text"
                         id="tags"
-                        class="block w-full p-2.5 text-sm text-gray-900 border border-gray-300 rounded-lg rounded-r-none bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        class="block w-full p-2.5 text-sm text-gray-900 border border-gray-300 rounded-lg rounded-r-none bg-gray-50 focus:ring-0 focus:border-[var(--tertiary-light-color)] dark:bg-[#dddddd1c] dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-[var(--tertiary-dark-color)]"
                         placeholder="Tags"
                         v-model="tagInput"
                         v-on:keydown.enter.prevent="pushTag"
@@ -160,8 +162,9 @@
                     />
                     <button
                         type="button"
-                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg rounded-l-none text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                        :disabled="disabled"
                         @click="pushTag"
+                        class="text-white capitalize bg-[var(--tertiary-light-color)] hover:bg-[var(--tertiary-hover-light-color)] focus:outline-none font-medium rounded-lg rounded-l-none text-sm px-4 py-2 dark:bg-[var(--tertiary-dark-color)] dark:text-black dark:hover:bg-[var(--tertiary-hover-dark-color)]"
                     >
                         add
                     </button>
@@ -170,17 +173,17 @@
                     <span
                         v-for="tag in tags"
                         :key="tag"
-                        class="inline-flex items-center px-4 py-2 pr-1 mr-2 text-sm font-medium text-blue-800 bg-blue-100 rounded dark:bg-blue-600 dark:text-blue-300"
+                        class="inline-flex items-center px-4 py-2 pr-1 mr-2 text-sm font-medium text-blue-800 bg-blue-100 rounded dark:bg-[var(--secondary-dark-color)] dark:text-white"
                     >
                         {{ tag }}
                         <button
                             type="button"
-                            class="inline-flex items-center p-0.5 ml-2 text-sm text-blue-400 bg-transparent rounded-sm hover:bg-blue-200 hover:text-blue-900 dark:hover:bg-blue-800 dark:hover:text-blue-300"
+                            class="inline-flex items-center p-0.5 ml-2 text-sm text-blue-400 bg-transparent rounded-sm hover:bg-blue-200 dark:hover:bg-opacity-20 dark:hover:text-white"
                             @click="removeTag(tag)"
                         >
                             <svg
                                 aria-hidden="true"
-                                class="w-3.5 h-3.5"
+                                class="w-3.5 h-3.5 dark:text-white"
                                 fill="currentColor"
                                 viewBox="0 0 20 20"
                                 xmlns="http://www.w3.org/2000/svg"
@@ -191,7 +194,7 @@
                                     clip-rule="evenodd"
                                 ></path>
                             </svg>
-                            <span class="sr-only">Remove badge</span>
+                            <span class="sr-only">Remove tag</span>
                         </button>
                     </span>
                 </div>
@@ -199,17 +202,17 @@
             <button
                 :disabled="disabled"
                 type="submit"
-                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 max-w-max ml-auto"
+                class="text-white bg-[var(--secondary-light-color)] capitalize hover:bg-[var(--secondary-hover-light-color)] font-medium rounded-lg text-sm px-5 py-2.5 mr-2 dark:bg-[var(--secondary-dark-color)] dark:hover:bg-[var(--secondary-hover-dark-color)] max-w-max ml-auto"
             >
                 <span v-if="!disabled"> Save</span>
                 <span v-else>{{ per + "%" }}</span>
             </button>
             <div
-                class="w-full mt-2 bottom-[2px] right-0 dark:bg-gray-700 mb-[1px] ml-[2px]"
+                class="w-full mt-2 bottom-[2px] right-0 dark:bg-[#dddddd1c] mb-[1px] ml-[2px]"
             >
                 <div
                     v-if="disabled"
-                    class="bg-blue-600 text-[13px] font-medium text-blue-100 text-center h-[5px] leading-none dark:bg-blue-500"
+                    class="bg-blue-600 text-[13px] font-medium text-blue-100 text-center h-[5px] leading-none dark:bg-[var(--secondary-dark-color)]"
                     :style="{ width: per + '%' }"
                 ></div>
             </div>
@@ -251,12 +254,11 @@ function clearError() {
 function pushTag() {
     var duplicated = false;
 
-    if (tags.value.length >= 5) {
-        return (errorMsg.value =
-            "The maximum number of tags permissible is five.");
-    }
-
     if (tagInput.value) {
+        if (tags.value.length >= 5) {
+            return (errorMsg.value =
+                "The maximum number of tags permissible is five.");
+        }
         tags.value.forEach((element) => {
             if (element.toLowerCase() === tagInput.value.toLowerCase()) {
                 tagInput.value = "";

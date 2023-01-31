@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+    --primary-light-color: #f9f7f7;
+    --secondary-light-color: #112d4e;
+    --background-light-color: #dbe2efd1;
+    --tertiary-light-color: #3f72af;
+    /*light hover*/
+    --secondary-hover-light-color: #203d5e;
+    --tertiary-hover-light-color: #2860a5;
+    /*dark*/
+    --primary-dark-color: #222831;
+    --secondary-dark-color: #d65a31;
+    --tertiary-dark-color: #eeeeee;
+    --background-dark-color: #393e46;
+    /*dark hover*/
+    --tertiary-hover-dark-color: rgb(194, 189, 189);
+    --secondary-hover-dark-color: #ca481d;
+}
