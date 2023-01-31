@@ -15,4 +15,11 @@ class Amv extends Model
     protected $casts = [
         'tags' => 'json',
     ];
+
+
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

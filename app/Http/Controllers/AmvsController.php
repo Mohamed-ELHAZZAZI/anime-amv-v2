@@ -33,7 +33,7 @@ class AmvsController extends Controller
 
             $amv = new Amv();
             $amv->text = $request->title;
-            $amv->user_id = 2;
+            $amv->user_id = 1;
             $amv->video = $filePath;
             $amv->tags = $request->tags;
             $amv->save();
@@ -41,6 +41,13 @@ class AmvsController extends Controller
 
         return response([
             'status' => 200,
+        ]);
+    }
+
+    public function get()
+    {
+        return response([
+            'posts' => Amv::with('user')->limit(10)->get(),
         ]);
     }
 }

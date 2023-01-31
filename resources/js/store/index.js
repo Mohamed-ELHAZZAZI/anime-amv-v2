@@ -18,9 +18,13 @@ const store = createStore({
                 })
                 .catch((error) => {
                     state.uploads.percentage = 0;
-
                     return error;
                 });
+        },
+        getAmv: ({ state, commit }) => {
+            return axiosClient.get("/get-amv").then((response) => {
+                return response;
+            });
         },
     },
     mutations: {

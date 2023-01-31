@@ -10,12 +10,12 @@
             <div class="ml-2 mt-0.5">
                 <span
                     class="block font-medium text-base leading-snug text-black dark:text-gray-100"
-                    >{{ post.userName }}</span
+                    >{{ post.user.name }}</span
                 >
                 <span
                     class="block text-sm text-gray-500 dark:text-[var(--tertiary-dark-color)] font-light leading-snug"
-                    >{{ post.publishedDate }}</span
-                >
+                    >16 December at 08:25
+                </span>
             </div>
         </div>
         <p
@@ -26,13 +26,13 @@
 
         <div class="w-full mt-2">
             <video
-                class="mx-auto relative ElementMedia"
+                class="mx-auto relative ElementMedia w-full"
                 controls
                 muted
                 loop
                 id="video"
             >
-                <source :src="post.video" type="video/mp4" />
+                <source :src="'storage/' + post.video" type="video/mp4" />
                 Your browser does not support the video tag.
             </video>
         </div>
