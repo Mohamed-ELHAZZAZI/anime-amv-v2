@@ -11,7 +11,6 @@ const posts = ref([]);
 onMounted(() => {
     store.dispatch("getAmv").then((res) => {
         posts.value = res.data.posts;
-        console.log(posts.value);
     });
 });
 </script>

@@ -40,7 +40,7 @@
                     </a>
                 </div>
                 <div class="flex items-center">
-                    <div class="flex items-center ml-3">
+                    <div class="flex items-center ml-3" v-if="loggedIn">
                         <div>
                             <button
                                 type="button"
@@ -110,6 +110,20 @@
                             </ul>
                         </div>
                     </div>
+                    <button
+                        v-else
+                        @click="showAuthModel = true"
+                        class="dark:bg-[var(--secondary-dark-color)] dark:hover:bg-[var(--secondary-hover-dark-color)] dark:text-white px-3 py-2 rounded"
+                    >
+                        Log In
+                        <span class="hidden min-[450px]:inline-block"
+                            >/ Sign Up</span
+                        >
+                    </button>
+                    <AuthLayout
+                        @closeAuthModel="showAuthModel = false"
+                        v-if="showAuthModel"
+                    />
                 </div>
             </div>
         </div>
@@ -302,6 +316,19 @@
     </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { computed, ref } from "vue";
+import store from "../../store";
+import AuthLayout from "../auth/AuthLayout.vue";
+
+const showAuthModel = ref(false);
+
+const loggedIn = computed(() => {
+    return store.state.user.token ? true : false;
+});
+function closeAuthModel() {
+    alert("alo");
+}
+</script>
 
 <style></style>
