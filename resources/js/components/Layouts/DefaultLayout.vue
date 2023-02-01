@@ -44,9 +44,8 @@
                         <div>
                             <button
                                 type="button"
+                                @click="showDropDownUser = !showDropDownUser"
                                 class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
-                                aria-expanded="false"
-                                data-dropdown-toggle="dropdown-user"
                             >
                                 <span class="sr-only">Open user menu</span>
                                 <img
@@ -57,8 +56,8 @@
                             </button>
                         </div>
                         <div
-                            class="z-50 hidden my-4 text-base list-none bg-[var(--primary-light-color)] divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600"
-                            id="dropdown-user"
+                            v-show="showDropDownUser"
+                            class="absolute top-10 right-0 z-50 my-4 text-base list-none bg-[var(--primary-light-color)] divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600"
                         >
                             <div class="px-4 py-3" role="none">
                                 <p
@@ -322,7 +321,7 @@ import store from "../../store";
 import AuthLayout from "../auth/AuthLayout.vue";
 
 const showAuthModel = ref(false);
-
+const showDropDownUser = ref(false);
 const loggedIn = computed(() => {
     return store.state.user.token ? true : false;
 });
