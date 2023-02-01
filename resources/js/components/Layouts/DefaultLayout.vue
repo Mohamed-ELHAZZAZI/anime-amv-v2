@@ -1,6 +1,6 @@
 <template>
     <nav
-        class="fixed top-0 z-50 w-full bg-[var(--primary-light-color)] border-b border-gray-200 dark:bg-[var(--primary-dark-color)] dark:border-gray-700"
+        class="fixed top-0 z-50 w-full bg-[var(--primary-light-color)] dark:bg-[var(--primary-dark-color)]"
     >
         <div class="px-3 py-3 lg:px-5 lg:pl-3">
             <div class="flex items-center justify-between">
@@ -131,7 +131,7 @@
 
     <aside
         id="logo-sidebar"
-        class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-[var(--primary-light-color)] border-r border-gray-200 sm:translate-x-0 dark:bg-[var(--primary-dark-color)] dark:border-gray-700"
+        class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-[var(--primary-light-color)] sm:translate-x-0 dark:bg-[var(--primary-dark-color)]"
         aria-label="Sidebar"
     >
         <div

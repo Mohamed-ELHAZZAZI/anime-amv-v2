@@ -1,16 +1,81 @@
 <template>
     <div
-        class="fixed top-0 bottom-0 right-0 left-0 bg-black bg-opacity-30 z-10 flex items-center justify-center"
+        class="fixed top-0 bottom-0 right-0 left-0 bg-black bg-opacity-60 z-10 flex items-center justify-center"
     >
-        <div class="w-96 h-80 bg-red-600" @click="aa"></div>
+        <div class="w-full max-w-[550px] overflow-hidden rounded-md">
+            <div
+                class="h-full dark:bg-[var(--primary-dark-color)] px-10 py-4 relative"
+            >
+                <button
+                    class="absolute top-3 right-3 dark:text-white"
+                    @click="closeAuthModel"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="w-7 h-7"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M6 18L18 6M6 6l12 12"
+                        />
+                    </svg>
+                </button>
+                <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
+                    <ul
+                        class="flex flex-wrap -mb-px text-sm font-medium text-center text-white"
+                    >
+                        <li class="mr-2">
+                            <button
+                                class="inline-block p-4 border-b-2 rounded-t-lg"
+                                :class="[
+                                    active === 'login'
+                                        ? 'text-[var(--secondary-dark-color)] border-[var(--secondary-dark-color)]'
+                                        : 'hover:text-gray-400 border-transparent',
+                                ]"
+                                @click="active = 'login'"
+                                type="button"
+                            >
+                                Login
+                            </button>
+                        </li>
+                        <li class="mr-2">
+                            <button
+                                class="inline-block p-4 border-b-2 rounded-t-lg"
+                                :class="[
+                                    active === 'register'
+                                        ? 'text-[var(--secondary-dark-color)] border-[var(--secondary-dark-color)]'
+                                        : 'hover:text-gray-400 border-transparent',
+                                ]"
+                                @click="active = 'register'"
+                                type="button"
+                            >
+                                Register
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <LoginForm v-if="active === 'login'" />
+                <RegisterForm v-else-if="active === 'register'" />
+            </div>
+        </div>
     </div>
 </template>
 
 <script setup>
+import { ref } from "vue";
+import LoginForm from "./LoginForm.vue";
+import RegisterForm from "./RegisterForm.vue";
 const emit = defineEmits(["closeAuthModel"]);
-function aa() {
+function closeAuthModel() {
     emit("closeAuthModel");
 }
+
+const active = ref("login");
 </script>
 
 <style>
