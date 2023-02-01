@@ -2,9 +2,11 @@ import { createStore } from "vuex";
 import axiosClient from "../axios";
 import axios from "axios";
 const store = createStore({
+    strict: true,
     state: {
         user: {
-            token: "",
+            info: {},
+            token: sessionStorage.getItem("TOKEN"),
         },
         uploads: {
             percentage: 0,
@@ -29,10 +31,23 @@ const store = createStore({
                 return response;
             });
         },
+        register: ({ state, commit }, user) => {
+            return axiosClient.post("/register", user).then((response) => {
+                if (response.data.success) {
+                    commit("setUserInfo", response.data);
+                }
+                return response;
+            });
+        },
     },
     mutations: {
         setProgress: (state, per) => {
             state.uploads.percentage = per;
+        },
+        setUserInfo(state, data) {
+            state.user.token = data.token;
+            sessionStorage.setItem("TOKEN", data.token);
+            state.user.info = data.user;
         },
     },
     modules: {},

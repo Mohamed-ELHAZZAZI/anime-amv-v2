@@ -122,7 +122,7 @@
                     </button>
                     <AuthLayout
                         @closeAuthModel="showAuthModel = false"
-                        v-if="showAuthModel"
+                        v-if="showAuthModel && !loggedIn"
                     />
                 </div>
             </div>
