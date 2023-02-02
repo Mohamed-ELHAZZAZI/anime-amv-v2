@@ -53,15 +53,30 @@ const store = createStore({
                 return data;
             });
         },
+        InfoWithToken({ commit }) {
+            return axiosClient
+                .get("/user")
+                .then((res) => {
+                    commit("setUserData", res.data);
+                    return res.data;
+                })
+                .catch((err) => {
+                    commit("logout");
+                    return null;
+                });
+        },
     },
     mutations: {
         setProgress: (state, per) => {
             state.uploads.percentage = per;
         },
-        setUserInfo(state, data) {
+        setUserInfo: (state, data) => {
             state.user.token = data.token;
             sessionStorage.setItem("TOKEN", data.token);
             state.user.info = data.user;
+        },
+        setUserData: (state, data) => {
+            state.user.info = data;
         },
         logout: (state) => {
             state.user.info = {};

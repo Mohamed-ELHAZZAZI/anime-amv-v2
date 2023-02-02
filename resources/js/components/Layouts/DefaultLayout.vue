@@ -57,20 +57,20 @@
                         </div>
                         <div
                             v-show="showDropDownUser"
-                            class="absolute top-10 right-0 z-50 my-4 text-base list-none bg-[var(--primary-light-color)] divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600"
+                            class="absolute top-10 right-2 z-50 my-4 text-base list-none bg-[var(--primary-light-color)] divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600 w-[225px]"
                         >
                             <div class="px-4 py-3" role="none">
                                 <p
                                     class="text-sm text-gray-900 dark:text-white"
                                     role="none"
                                 >
-                                    Neil Sims
+                                    {{ user?.firstName + " " + user?.lastName }}
                                 </p>
                                 <p
                                     class="text-sm font-medium text-gray-900 truncate dark:text-gray-300"
                                     role="none"
                                 >
-                                    neil.sims@flowbite.com
+                                    {{ user?.email }}
                                 </p>
                             </div>
                             <ul class="py-1" role="none">
@@ -317,15 +317,22 @@
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
+import { computed, ref, onMounted } from "vue";
 import store from "../../store";
 import AuthLayout from "../auth/AuthLayout.vue";
 
 const showAuthModel = ref(false);
 const showDropDownUser = ref(false);
+const user = ref(null);
+
 const loggedIn = computed(() => {
+    user.value = store.state.user.info;
     return store.state.user.token ? true : false;
 });
+
+if (loggedIn) {
+    store.dispatch("InfoWithToken");
+}
 
 function logout() {
     showAuthModel.value = false;
