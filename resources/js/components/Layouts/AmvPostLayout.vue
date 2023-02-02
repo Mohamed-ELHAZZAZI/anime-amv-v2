@@ -36,7 +36,16 @@
                 Your browser does not support the video tag.
             </video>
         </div>
-
+        <div class="py-2">
+            <router-link
+                to="/"
+                v-for="tag in post.tags"
+                :key="tag"
+                class="inline-flex items-center px-4 py-2 mt-4 mr-2 text-sm font-medium text-blue-800 bg-blue-100 rounded dark:bg-[var(--secondary-dark-color)] dark:text-white"
+            >
+                {{ tag }}
+            </router-link>
+        </div>
         <div class="flex justify-between items-center mt-5">
             <div class="flex">
                 <svg
