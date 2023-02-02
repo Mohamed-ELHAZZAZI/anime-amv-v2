@@ -51,4 +51,19 @@ class AmvsController extends Controller
             'posts' => Amv::with('user')->orderBy('created_at', 'DESC')->offset($request->start ? $request->start : 0)->limit($request->end ? $request->end : 0)->orderBy('created_at', 'DESC')->get(),
         ]);
     }
+
+    public function delete(Request $request)
+    {
+        $post = Amv::findOrFail($request->post_id);
+
+        if ($post->user_id === $request->user_id) {
+            $post->delete();
+            return response([
+                'error' => false,
+            ]);
+        }
+        return response([
+            'error' => true
+        ]);
+    }
 }

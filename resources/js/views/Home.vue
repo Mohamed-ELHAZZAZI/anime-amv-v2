@@ -1,5 +1,10 @@
 <template>
-    <AmvPostLayoutVue v-for="post in posts" :key="post.id" :post="post" />
+    <AmvPostLayoutVue
+        v-for="post in posts"
+        :key="post.id"
+        :post="post"
+        @deletePost="deletePost"
+    />
     <AmvPostSkeleton v-if="showSkelton" :count="count" />
 </template>
 
@@ -47,6 +52,14 @@ window.onscroll = () => {
         getAmv();
     }
 };
+
+function deletePost(post) {
+    store.dispatch("deletePost", post.id).then((res) => {
+        if (!res.data.error) {
+            posts.value = posts.value.filter((p) => p !== post);
+        } else alert("Error try again later");
+    });
+}
 </script>
 
 <style></style>

@@ -68,6 +68,18 @@ const store = createStore({
                     return null;
                 });
         },
+        deletePost: ({ commit, state }, postId) => {
+            const info = {
+                user_id: state.user.info.id,
+                post_id: postId,
+            };
+            return axiosClient
+                .post("/delete-amv", info)
+                .then((response) => {
+                    return response;
+                })
+                .catch((err) => alert("Error try again later"));
+        },
     },
     mutations: {
         setProgress: (state, per) => {

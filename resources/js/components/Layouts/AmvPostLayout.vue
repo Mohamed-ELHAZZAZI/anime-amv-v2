@@ -1,6 +1,6 @@
 <template>
     <div
-        class="px-5 py-4 bg-[var(--primary-light-color)] dark:bg-[var(--primary-dark-color)] shadow rounded-lg"
+        class="px-5 py-4 bg-[var(--primary-light-color)] dark:bg-[var(--primary-dark-color)] shadow rounded-lg relative"
     >
         <div class="flex mb-4 relative">
             <img
@@ -51,6 +51,7 @@
                     </li>
                     <li>
                         <button
+                            @click="showDeleteModel"
                             class="text-red-600 w-full flex px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600"
                         >
                             Delete post
@@ -163,16 +164,37 @@
             </div>
         </div>
     </div>
+    <ConfirmationModalLayout
+        ref="DeleteModel"
+        @deletePosts="deletePosts"
+        message="Are you sure you want to delete this product?"
+    />
 </template>
 
 <script setup>
 import { computed, ref } from "vue";
 import store from "../../store";
+import ConfirmationModalLayout from "../Layouts/ConfirmationModalLayout.vue";
+
+const emit = defineEmits(["deletePost"]);
+
 const user_id = computed(() => {
     return store.state.user.info?.id;
 });
 const props = defineProps(["post"]);
 const showMenu = ref(false);
+const postDelete = ref(true);
+
+const DeleteModel = ref(null);
+
+function showDeleteModel() {
+    showMenu.value = false;
+    DeleteModel.value.showDeleteModel();
+}
+function deletePosts() {
+    DeleteModel.value.HideDeleteModel();
+    emit("deletePost", props.post);
+}
 </script>
 
 <style></style>

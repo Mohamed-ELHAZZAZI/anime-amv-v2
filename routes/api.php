@@ -23,8 +23,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [UsersController::class, 'logout']);
 });
 
+Route::post('/register', [UsersController::class, 'register']);
+Route::post('/login', [UsersController::class, 'login']);
 
 Route::post('save-amv',  [AmvsController::class, 'post']);
 Route::get('/get-amv', [AmvsController::class, 'get']);
-Route::post('/register', [UsersController::class, 'register']);
-Route::post('/login', [UsersController::class, 'login']);
+Route::post('/delete-amv', [AmvsController::class, 'delete']);
