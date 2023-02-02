@@ -32,18 +32,25 @@ const store = createStore({
             });
         },
         register: ({ state, commit }, user) => {
-            return axiosClient.post("/register", user).then((response) => {
-                if (response.data.success) {
-                    commit("setUserInfo", response.data);
+            return axiosClient.post("/register", user).then(({ response }) => {
+                if (response.success) {
+                    commit("setUserInfo", response);
                 }
                 return response;
             });
         },
         logout({ commit }) {
-            console.log("logout");
             return axiosClient.post("/logout").then((response) => {
                 commit("logout");
                 return response;
+            });
+        },
+        login({ commit }, user) {
+            return axiosClient.post("/login", user).then(({ data }) => {
+                if (data.status) {
+                    commit("setUserInfo", data);
+                }
+                return data;
             });
         },
     },

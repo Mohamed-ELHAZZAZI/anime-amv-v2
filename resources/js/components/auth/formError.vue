@@ -17,7 +17,6 @@
 <script setup>
 const props = defineProps(["error"]);
 const error = props.error;
-console.log(props.error);
 </script>
 
 <style></style>

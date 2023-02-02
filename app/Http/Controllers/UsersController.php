@@ -54,25 +54,23 @@ class UsersController extends Controller
 
     public function login(Request $request)
     {
-        $remember = $request->remember ?? false;
-
-
-        if (Auth::attempt(['email' => $request->emai, 'password' => $request->password])) {
+        if (Auth::attempt(['email' => $request->email_address, 'password' => $request->password])) {
             /** @var \App\Models\user $user */
             $user = Auth::user();
 
             $token = $user->createToken('main')->plainTextToken;
+            unset($user['created_at'], $user['updated_at']);
 
             return response()->json([
                 'user' => $user,
                 'token' => $token,
-                'email' => $remember
-
+                'success' => true
             ]);
         }
 
         return response()->json([
             'error' => 'The provided credentials are not correct',
+            'success' => false
         ], 400);
     }
 

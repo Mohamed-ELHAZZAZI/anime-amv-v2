@@ -1,6 +1,6 @@
 <template>
     <div class="w-full h-full flex my-10">
-        <form class="w-full">
+        <form class="w-full" @submit.prevent="submitLogin">
             <div class="relative z-0 w-full mb-6 group">
                 <input
                     type="email"
@@ -8,7 +8,13 @@
                     id="floating_email"
                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-[var(--secondary-dark-color)] focus:outline-none focus:ring-0 focus:border-[var(--secondary-dark-color)] peer"
                     placeholder=" "
+                    v-model="user.email_address"
                     required
+                />
+                <formError v-if="logErr" :error="logErr" />
+                <formError
+                    v-else-if="error.email_address"
+                    :error="error.email_address"
                 />
                 <label
                     for="floating_email"
@@ -23,8 +29,10 @@
                     id="floating_password"
                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-[var(--secondary-dark-color)] focus:outline-none focus:ring-0 focus:border-[var(--secondary-dark-color)] peer"
                     placeholder=" "
+                    v-model="user.password"
                     required
                 />
+                <formError v-if="error.password" :error="error.password" />
                 <button
                     class="absolute z-50 text-gray-500 bottom-2 right-1"
                     type="button"
@@ -90,8 +98,41 @@
 
 <script setup>
 import { ref } from "vue";
+import store from "../../store";
+import formError from "./formError.vue";
 
 const showPass = ref(false);
+
+const user = {
+    email_address: "",
+    password: "",
+};
+
+const error = ref({
+    email_address: "",
+    password: "",
+});
+
+const logErr = ref("");
+
+function submitLogin() {
+    let proceed = true;
+    for (const key in user) {
+        if (Object.hasOwnProperty.call(user, key)) {
+            const element = user[key];
+            if (element === "") {
+                error.value[key] =
+                    "The " + key.replace("_", " ") + " is required";
+                proceed = false;
+            }
+        }
+    }
+    if (proceed) {
+        store.dispatch("login", user).catch((res) => {
+            logErr.value = res.response.data.error;
+        });
+    }
+}
 </script>
 
 <style></style>
