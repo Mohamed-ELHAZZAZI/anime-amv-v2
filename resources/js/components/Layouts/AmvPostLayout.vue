@@ -2,7 +2,7 @@
     <div
         class="px-5 py-4 bg-[var(--primary-light-color)] dark:bg-[var(--primary-dark-color)] shadow rounded-lg"
     >
-        <div class="flex mb-4">
+        <div class="flex mb-4 relative">
             <img
                 class="w-12 h-12 rounded-full"
                 src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
@@ -16,6 +16,47 @@
                     class="block text-sm text-gray-400 font-light leading-snug"
                     >{{ post.created_at }}
                 </span>
+            </div>
+            <button
+                v-if="user_id === post.user.id"
+                @click="showMenu = !showMenu"
+                class="ml-auto h-6 w-6 rounded-full hover:bg-gray-700 flex items-center justify-center"
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-5 h-5"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
+                    />
+                </svg>
+            </button>
+            <div
+                v-if="showMenu && user_id === post.user.id"
+                class="absolute z-20 right-0 top-7 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
+            >
+                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
+                    <li>
+                        <a
+                            href="#"
+                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                            >Modify post</a
+                        >
+                    </li>
+                    <li>
+                        <button
+                            class="text-red-600 w-full flex px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600"
+                        >
+                            Delete post
+                        </button>
+                    </li>
+                </ul>
             </div>
         </div>
         <p
@@ -125,7 +166,13 @@
 </template>
 
 <script setup>
+import { computed, ref } from "vue";
+import store from "../../store";
+const user_id = computed(() => {
+    return store.state.user.info?.id;
+});
 const props = defineProps(["post"]);
+const showMenu = ref(false);
 </script>
 
 <style></style>
