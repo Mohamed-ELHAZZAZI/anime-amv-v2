@@ -44,10 +44,11 @@ class AmvsController extends Controller
         ]);
     }
 
-    public function get()
+    public function get(Request $request)
     {
+
         return response([
-            'posts' => Amv::with('user')->limit(10)->get(),
+            'posts' => Amv::with('user')->orderBy('created_at', 'DESC')->offset($request->start ? $request->start : 0)->limit($request->end ? $request->end : 0)->orderBy('created_at', 'DESC')->get(),
         ]);
     }
 }

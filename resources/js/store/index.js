@@ -27,10 +27,12 @@ const store = createStore({
                     return error;
                 });
         },
-        getAmv: ({ state, commit }) => {
-            return axiosClient.get("/get-amv").then((response) => {
-                return response;
-            });
+        getAmv: ({ state, commit }, info) => {
+            return axiosClient
+                .get("/get-amv?start=" + info.start + "&&end=" + info.end)
+                .then((response) => {
+                    return response;
+                });
         },
         register: ({ state, commit }, user) => {
             return axiosClient.post("/register", user).then((response) => {
