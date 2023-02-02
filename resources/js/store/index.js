@@ -39,6 +39,13 @@ const store = createStore({
                 return response;
             });
         },
+        logout({ commit }) {
+            console.log("logout");
+            return axiosClient.post("/logout").then((response) => {
+                commit("logout");
+                return response;
+            });
+        },
     },
     mutations: {
         setProgress: (state, per) => {
@@ -48,6 +55,11 @@ const store = createStore({
             state.user.token = data.token;
             sessionStorage.setItem("TOKEN", data.token);
             state.user.info = data.user;
+        },
+        logout: (state) => {
+            state.user.info = {};
+            state.user.token = null;
+            sessionStorage.removeItem("TOKEN");
         },
     },
     modules: {},

@@ -99,12 +99,13 @@
                                     >
                                 </li>
                                 <li>
-                                    <a
-                                        href="#"
-                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-[var(--background-light-color)] dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                                    <button
+                                        @click="logout"
+                                        class="flex w-full px-4 py-2 text-sm text-gray-700 hover:bg-[var(--background-light-color)] dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                                         role="menuitem"
-                                        >Sign out</a
                                     >
+                                        Sign out
+                                    </button>
                                 </li>
                             </ul>
                         </div>
@@ -325,8 +326,11 @@ const showDropDownUser = ref(false);
 const loggedIn = computed(() => {
     return store.state.user.token ? true : false;
 });
-function closeAuthModel() {
-    alert("alo");
+
+function logout() {
+    showAuthModel.value = false;
+    showDropDownUser.value = false;
+    store.dispatch("logout");
 }
 </script>
 

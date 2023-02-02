@@ -73,12 +73,14 @@ class UsersController extends Controller
 
         return response()->json([
             'error' => 'The provided credentials are not correct',
-            'email' => $remember
         ], 400);
     }
 
     public function logout()
     {
+        return response([
+            'success' => true,
+        ]);
         /** @var User $user */
         $user = Auth::user();
         $user->currentAccessToken()->delete();
