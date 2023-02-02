@@ -15,6 +15,7 @@ const store = createStore({
     getters: {},
     actions: {
         postAmv: ({ state, commit }, data) => {
+            data.append("user_id", state.user.info.id);
             return axiosClient
                 .post("/save-amv", data)
                 .then((response) => {

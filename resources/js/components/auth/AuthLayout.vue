@@ -78,8 +78,4 @@ function closeAuthModel() {
 const active = ref("login");
 </script>
 
-<style>
-body {
-    overflow: hidden;
-}
-</style>
+<style></style>

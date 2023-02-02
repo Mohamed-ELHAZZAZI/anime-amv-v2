@@ -325,7 +325,7 @@ function submitAmv() {
     });
     disabled.value = true;
     store.dispatch("postAmv", data).then((res) => {
-        if (res.hasOwnProperty("response")) {
+        if (Object.hasOwnProperty(res, "response")) {
             disabled.value = false;
             for (const e in res.response.data.errors) {
                 if (Object.hasOwnProperty.call(res.response.data.errors, e)) {

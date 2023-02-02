@@ -32,8 +32,8 @@ class AmvsController extends Controller
         if ($isFileUploaded) {
 
             $amv = new Amv();
-            $amv->text = $request->title;
-            $amv->user_id = 1;
+            $amv->text = $request->text;
+            $amv->user_id = $request->user_id;
             $amv->video = $filePath;
             $amv->tags = $request->tags;
             $amv->save();
