@@ -10,11 +10,11 @@
             <div class="ml-2 mt-0.5">
                 <span
                     class="block font-medium text-base leading-snug text-black dark:text-gray-100"
-                    >{{ post.user.name }}</span
+                    >{{ post.user.firstName + " " + post.user.lastName }}</span
                 >
                 <span
-                    class="block text-sm text-gray-500 dark:text-[var(--tertiary-dark-color)] font-light leading-snug"
-                    >16 December at 08:25
+                    class="block text-sm text-gray-400 font-light leading-snug"
+                    >{{ post.created_at }}
                 </span>
             </div>
         </div>
