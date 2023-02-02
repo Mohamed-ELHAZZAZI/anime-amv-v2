@@ -32,9 +32,9 @@ const store = createStore({
             });
         },
         register: ({ state, commit }, user) => {
-            return axiosClient.post("/register", user).then(({ response }) => {
-                if (response.success) {
-                    commit("setUserInfo", response);
+            return axiosClient.post("/register", user).then((response) => {
+                if (response.data.success) {
+                    commit("setUserInfo", response.data);
                 }
                 return response;
             });

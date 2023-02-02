@@ -227,9 +227,6 @@ function submitRegister() {
         store.dispatch("register", user).catch((res) => {
             dataSent.value = false;
             let err = res.response.data.error;
-            if (Object.hasOwnProperty.call(err, "email")) {
-            }
-
             for (const key in error.value) {
                 if (Object.hasOwnProperty.call(err, key)) {
                     error.value[key] = err[key][0];
