@@ -47,7 +47,7 @@ const store = createStore({
         },
         login({ commit }, user) {
             return axiosClient.post("/login", user).then(({ data }) => {
-                if (data.status) {
+                if (data.success) {
                     commit("setUserInfo", data);
                 }
                 return data;

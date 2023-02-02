@@ -59,7 +59,7 @@ class UsersController extends Controller
             $user = Auth::user();
 
             $token = $user->createToken('main')->plainTextToken;
-            unset($user['created_at'], $user['updated_at']);
+            unset($user['created_at'], $user['updated_at'], $user['email_verified_at']);
 
             return response()->json([
                 'user' => $user,
