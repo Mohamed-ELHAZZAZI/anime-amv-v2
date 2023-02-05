@@ -33,7 +33,7 @@ class AmvsController extends Controller
 
             $amv = new Amv();
             $amv->text = $request->text;
-            $amv->user_id = $request->user_id;
+            $amv->user_id = $request->user()->id;
             $amv->video = $filePath;
             $amv->tags = $request->tags;
             $amv->save();
@@ -56,7 +56,7 @@ class AmvsController extends Controller
     {
         $post = Amv::findOrFail($request->post_id);
 
-        if ($post->user_id === $request->user_id) {
+        if ($post->user_id === $request->user()->id) {
             $post->delete();
             return response([
                 'error' => false,

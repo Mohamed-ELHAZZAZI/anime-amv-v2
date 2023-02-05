@@ -21,11 +21,10 @@ Route::middleware('auth:sanctum')->group(function () {
         return $request->user();
     });
     Route::post('/logout', [UsersController::class, 'logout']);
+    Route::post('/delete-amv', [AmvsController::class, 'delete']);
+    Route::post('/save-amv',  [AmvsController::class, 'post']);
+    Route::get('/get-amv', [AmvsController::class, 'get']);
 });
 
 Route::post('/register', [UsersController::class, 'register']);
 Route::post('/login', [UsersController::class, 'login']);
-
-Route::post('save-amv',  [AmvsController::class, 'post']);
-Route::get('/get-amv', [AmvsController::class, 'get']);
-Route::post('/delete-amv', [AmvsController::class, 'delete']);
