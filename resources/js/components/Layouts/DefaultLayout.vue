@@ -325,14 +325,16 @@ const showAuthModel = ref(false);
 const showDropDownUser = ref(false);
 const user = ref(null);
 
+onMounted(() => {
+    if (store.state.user.token ? true : false) {
+        store.dispatch("InfoWithToken");
+    }
+});
+
 const loggedIn = computed(() => {
     user.value = store.state.user.info;
     return store.state.user.token ? true : false;
 });
-
-if (loggedIn) {
-    store.dispatch("InfoWithToken");
-}
 
 function logout() {
     showAuthModel.value = false;
