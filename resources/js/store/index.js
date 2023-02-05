@@ -75,6 +75,11 @@ const store = createStore({
                 })
                 .catch((err) => alert("Error try again later"));
         },
+        getSingleAmv: ({ commit }, postId) => {
+            return axiosClient.get("/get-single-amv/" + postId).then((res) => {
+                return res;
+            });
+        },
     },
     mutations: {
         setProgress: (state, per) => {

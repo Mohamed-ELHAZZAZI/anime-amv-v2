@@ -66,4 +66,12 @@ class AmvsController extends Controller
             'error' => true
         ]);
     }
+
+    public function getSingleAmv(Request $request, $id)
+    {
+        $post = Amv::where('id', $id)->where('user_id', $request->user()->id)->first();
+        return response([
+            'post' => $post
+        ]);
+    }
 }

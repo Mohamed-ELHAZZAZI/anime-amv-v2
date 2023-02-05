@@ -23,6 +23,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [UsersController::class, 'logout']);
     Route::post('/delete-amv', [AmvsController::class, 'delete']);
     Route::post('/save-amv',  [AmvsController::class, 'post']);
+    Route::get('/get-single-amv/{id}', [AmvsController::class, 'getSingleAmv']);
 });
 
 Route::post('/register', [UsersController::class, 'register']);

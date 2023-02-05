@@ -99,7 +99,12 @@
                             />
                         </svg>
                     </button>
-                    <video id="video-preview" class="w-full" controls />
+                    <video
+                        id="video-preview"
+                        class="w-full"
+                        controls
+                        :src="'../../storage/' + videoSrc"
+                    />
                 </div>
                 <label
                     v-if="!showVideo"
@@ -221,23 +226,33 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, onBeforeMount } from "vue";
 import store from "../store";
 import { useRouter } from "vue-router";
 
+const props = defineProps(["id"]);
 const router = useRouter();
 //fomr fileds data
 const text = ref(""); //message field
 const tags = ref([]); //tags array
 const tagInput = ref(""); //tags input
-const file = ref(null); //file input
+const file = ref(true); //file input
 const disabled = ref(false);
 let myFile = null;
 
 const errorMsg = ref(""); //error message
-const showVideo = ref(false);
-const showRemoveVideo = ref(false);
-
+const showVideo = ref(true);
+const showRemoveVideo = ref(true);
+const videoSrc = ref("");
+onBeforeMount(async () => {
+    await store.dispatch("getSingleAmv", props.id).then((response) => {
+        if (response.data.post) {
+            text.value = response.data.post.text;
+            tags.value = response.data.post.tags;
+            videoSrc.value = response.data.post.video;
+        } else router.push({ name: "Home" });
+    });
+});
 const per = computed(() => {
     return store.state.uploads.percentage;
 });
@@ -311,9 +326,9 @@ function removeVideo() {
 
 //submit sata
 function submitAmv() {
-    if (!myFile) {
-        return (errorMsg.value = "Choosing the appropriate file is crucial.");
-    }
+    // if (!myFile) {
+    //     return (errorMsg.value = "Choosing the appropriate file is crucial.");
+    // }
     const data = new FormData();
     data.append("text", text.value);
     data.append("file", myFile);
@@ -321,18 +336,18 @@ function submitAmv() {
         data.append("tags[]", tag);
     });
     disabled.value = true;
-    store.dispatch("postAmv", data).then((res) => {
-        if (Object.hasOwnProperty(res, "response")) {
-            disabled.value = false;
-            for (const e in res.response.data.errors) {
-                if (Object.hasOwnProperty.call(res.response.data.errors, e)) {
-                    return (errorMsg.value = res.response.data.errors[e][0]);
-                }
-            }
-        } else {
-            router.push("/");
-        }
-    });
+    // store.dispatch("postAmv", data).then((res) => {
+    //     if (Object.hasOwnProperty(res, "response")) {
+    //         disabled.value = false;
+    //         for (const e in res.response.data.errors) {
+    //             if (Object.hasOwnProperty.call(res.response.data.errors, e)) {
+    //                 return (errorMsg.value = res.response.data.errors[e][0]);
+    //             }
+    //         }
+    //     } else {
+    //         router.push("/");
+    //     }
+    // });
 }
 </script>
 
