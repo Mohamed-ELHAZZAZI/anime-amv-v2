@@ -80,6 +80,7 @@
                     class="w-full flex items-center justify-center relative"
                 >
                     <button
+                        type="button"
                         v-if="showRemoveVideo && !disabled"
                         @click="removeVideo"
                         class="absolute right-2 top-2 p-1 rounded-full bg-black bg-opacity-40 cursor-pointer z-10"
@@ -322,7 +323,7 @@ function submitAmv() {
     });
     disabled.value = true;
     store.dispatch("postAmv", data).then((res) => {
-        if (Object.hasOwnProperty(res, "response")) {
+        if (Object.hasOwn(res, "response")) {
             disabled.value = false;
             for (const e in res.response.data.errors) {
                 if (Object.hasOwnProperty.call(res.response.data.errors, e)) {

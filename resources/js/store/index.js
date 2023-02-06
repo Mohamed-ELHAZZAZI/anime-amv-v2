@@ -18,11 +18,11 @@ const store = createStore({
             return axiosClient
                 .post("/save-amv", data)
                 .then((response) => {
-                    state.uploads.percentage = 0;
+                    commit("setPercentage", 0);
                     return response;
                 })
                 .catch((error) => {
-                    state.uploads.percentage = 0;
+                    commit("setPercentage", 0);
                     return error;
                 });
         },
@@ -71,6 +71,7 @@ const store = createStore({
             return axiosClient
                 .post("/delete-amv", postId)
                 .then((response) => {
+                    console.log(response);
                     return response;
                 })
                 .catch((err) => alert("Error try again later"));
@@ -79,6 +80,18 @@ const store = createStore({
             return axiosClient.get("/get-single-amv/" + postId).then((res) => {
                 return res;
             });
+        },
+        modifyAmv: ({ state, commit }, data) => {
+            return axiosClient
+                .post("/modify-amv", data)
+                .then((response) => {
+                    commit("setPercentage", 0);
+                    return response;
+                })
+                .catch((error) => {
+                    commit("setPercentage", 0);
+                    return error;
+                });
         },
     },
     mutations: {
@@ -97,6 +110,9 @@ const store = createStore({
             state.user.info = {};
             state.user.token = null;
             sessionStorage.removeItem("TOKEN");
+        },
+        setPercentage: (state, value) => {
+            state.uploads.percentage = value;
         },
     },
     modules: {},
