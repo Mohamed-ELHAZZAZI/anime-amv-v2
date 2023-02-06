@@ -55,9 +55,12 @@ class AmvsController extends Controller
 
     public function delete(Request $request)
     {
-        $post = Amv::findOrFail($request->post_id);
+        $post = Amv::find($request->id);
 
         if ($post->user_id === $request->user()->id) {
+            if (File::exists(public_path('storage/' . $post->video))) {
+                File::delete(public_path('storage/' . $post->video));
+            }
             $post->delete();
             return response([
                 'error' => false,

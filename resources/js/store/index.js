@@ -69,12 +69,11 @@ const store = createStore({
         },
         deletePost: ({ commit, state }, postId) => {
             return axiosClient
-                .post("/delete-amv", postId)
+                .post("/delete-amv", { id: postId })
                 .then((response) => {
-                    console.log(response);
                     return response;
                 })
-                .catch((err) => alert("Error try again later"));
+                .catch((err) => console.log(err));
         },
         getSingleAmv: ({ commit }, postId) => {
             return axiosClient.get("/get-single-amv/" + postId).then((res) => {
