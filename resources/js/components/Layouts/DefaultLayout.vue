@@ -183,19 +183,12 @@ C11.8,5.4,10.8,5,9.5,5S7.2,5.4,6.3,6.3C5.4,7.2,5,8.2,5,9.5s0.4,2.3,1.3,3.2C7.2,1
             Login / Register
         </button>
     </nav>
-    <div class="p-4 sm:ml-64">
-        <div class="px-2 py-4 sm:px-4 rounded-lg mt-14 dark:text-white">
-            <div
-                class="w-full md:w-[800px] m-auto rounded md:max-w-[95%] flex flex-col gap-10"
-            >
-                <router-view></router-view>
-            </div>
-        </div>
-    </div>
     <AuthLayout
         v-if="!loggedIn && showAuthModel"
         @closeAuthModel="showAuthModel = false"
     />
+
+    <router-view></router-view>
 </template>
 
 <script setup>
