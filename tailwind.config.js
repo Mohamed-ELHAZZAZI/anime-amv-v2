@@ -16,6 +16,9 @@ module.exports = {
             lightGray: "#EDEAE9",
         },
         extend: {},
+        fontFamily: {
+            roboto: ["Roboto", "sans-serif"],
+        },
     },
     plugins: [require("flowbite/plugin")],
 };
