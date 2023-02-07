@@ -33,7 +33,7 @@
                 />
             </div>
             <button
-                @click="showSearchNav = false"
+                @click="(showSearchNav = false), (showUserDropDown = false)"
                 class="h-full items-center justify-center w-10 hover:bg-utOrange flex sm:hidden sm:w-12"
             >
                 <svg
@@ -128,13 +128,49 @@
             </router-link>
         </div>
 
-        <div class="flex items-center gap-1 cursor-pointer">
+        <div
+            class="flex items-center gap-1 cursor-pointer h-full relative"
+            @click="showUserDropDown = !showUserDropDown"
+        >
             <img
                 src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
                 alt=""
                 class="h-9 w-9 rounded-full"
             />
-            <i class="fa-solid fa-angle-down mt-1"></i>
+            <i
+                class="fa-solid fa-angle-down mt-1 duration-150"
+                :class="showUserDropDown ? 'rotate-180' : ''"
+            ></i>
+        </div>
+        <div
+            v-show="showUserDropDown"
+            class="absolute top-16 right-2 min-[390px]:right-8 w-52 bg-prussianBlue min-h-20 z-50"
+        >
+            <ul class="w-full h-full">
+                <li class="w-full">
+                    <router-link
+                        to="/"
+                        class="flex items-center w-full py-3 px-4 gap-3 hover:bg-utOrange"
+                        ><i class="fa-solid fa-user"></i> Settings
+                    </router-link>
+                </li>
+                <li class="w-full">
+                    <router-link
+                        to="/"
+                        class="flex items-center w-full py-3 px-4 Profile gap-3 hover:bg-utOrange"
+                        ><i class="fa-solid fa-gear"></i> Settings
+                    </router-link>
+                </li>
+                <li class="w-full">
+                    <button
+                        type="button"
+                        class="flex items-center w-full py-3 px-4 Profile gap-3 border-t border-t-lightGray hover:bg-utOrange"
+                    >
+                        <i class="fa-sharp fa-solid fa-right-from-bracket"></i>
+                        Sign out
+                    </button>
+                </li>
+            </ul>
         </div>
     </nav>
     <div class="p-4 sm:ml-64">
@@ -154,10 +190,10 @@ import store from "../../store";
 import AuthLayout from "../auth/AuthLayout.vue";
 
 const screenWidth = ref(null);
-const showAuthModel = ref(false);
-const showDropDownUser = ref(false);
-const user = ref(null);
+const showUserDropDown = ref(false);
 const showSearchNav = ref(false);
+const showAuthModel = ref(false);
+const user = ref(null);
 window.addEventListener(
     "resize",
     () => (screenWidth.value = document.documentElement.clientWidth)
