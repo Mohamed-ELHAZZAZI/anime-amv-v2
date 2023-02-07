@@ -161,6 +161,7 @@ C11.8,5.4,10.8,5,9.5,5S7.2,5.4,6.3,6.3C5.4,7.2,5,8.2,5,9.5s0.4,2.3,1.3,3.2C7.2,1
                     </li>
                     <li class="w-full">
                         <button
+                            @click="logout"
                             type="button"
                             class="flex items-center w-full py-3 px-4 Profile gap-3 border-t border-t-lightGray hover:bg-utOrange"
                         >
@@ -177,8 +178,9 @@ C11.8,5.4,10.8,5,9.5,5S7.2,5.4,6.3,6.3C5.4,7.2,5,8.2,5,9.5s0.4,2.3,1.3,3.2C7.2,1
             v-else
             class="px-4 py-2 rounded-md bg-utOrange cursor-pointer hover:opacity-90"
             type="button"
+            @click="showAuthModel = true"
         >
-            Login / Sign up
+            Login / Register
         </button>
     </nav>
     <div class="p-4 sm:ml-64">
@@ -190,6 +192,10 @@ C11.8,5.4,10.8,5,9.5,5S7.2,5.4,6.3,6.3C5.4,7.2,5,8.2,5,9.5s0.4,2.3,1.3,3.2C7.2,1
             </div>
         </div>
     </div>
+    <AuthLayout
+        v-if="!loggedIn && showAuthModel"
+        @closeAuthModel="showAuthModel = false"
+    />
 </template>
 
 <script setup>
@@ -219,7 +225,7 @@ const loggedIn = computed(() => {
 
 function logout() {
     showAuthModel.value = false;
-    showDropDownUser.value = false;
+    showUserDropDown.value = false;
     store.dispatch("logout");
 }
 </script>

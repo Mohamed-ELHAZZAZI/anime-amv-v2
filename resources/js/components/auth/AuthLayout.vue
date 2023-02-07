@@ -3,9 +3,7 @@
         class="fixed top-0 bottom-0 right-0 left-0 bg-black bg-opacity-60 z-10 flex items-center justify-center"
     >
         <div class="w-full max-w-[550px] overflow-hidden rounded-md">
-            <div
-                class="h-full dark:bg-[var(--primary-dark-color)] px-10 py-4 relative"
-            >
+            <div class="h-full dark:bg-prussianBlue px-10 py-4 relative">
                 <button
                     class="absolute top-3 right-3 dark:text-white"
                     @click="closeAuthModel"
@@ -29,28 +27,32 @@
                     <ul
                         class="flex flex-wrap -mb-px text-sm font-medium text-center text-white"
                     >
-                        <li class="mr-2">
+                        <li
+                            :class="[
+                                active === 'login'
+                                    ? 'text-utOrange border-utOrange'
+                                    : 'hover:text-gray-400 border-transparent',
+                            ]"
+                            class="border-b-2 w-1/2"
+                        >
                             <button
-                                class="inline-block p-4 border-b-2 rounded-t-lg"
-                                :class="[
-                                    active === 'login'
-                                        ? 'text-[var(--secondary-dark-color)] border-[var(--secondary-dark-color)]'
-                                        : 'hover:text-gray-400 border-transparent',
-                                ]"
+                                class="inline-block p-4 h-full w-full"
                                 @click="active = 'login'"
                                 type="button"
                             >
                                 Login
                             </button>
                         </li>
-                        <li class="mr-2">
+                        <li
+                            :class="[
+                                active === 'register'
+                                    ? 'text-utOrange border-utOrange'
+                                    : 'hover:text-gray-400 border-transparent',
+                            ]"
+                            class="border-b-2 w-1/2 cursor-pointer"
+                        >
                             <button
-                                class="inline-block p-4 border-b-2 rounded-t-lg"
-                                :class="[
-                                    active === 'register'
-                                        ? 'text-[var(--secondary-dark-color)] border-[var(--secondary-dark-color)]'
-                                        : 'hover:text-gray-400 border-transparent',
-                                ]"
+                                class="inline-block p-4 h-full w-full"
                                 @click="active = 'register'"
                                 type="button"
                             >
