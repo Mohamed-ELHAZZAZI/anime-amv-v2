@@ -1,6 +1,6 @@
 <template>
     <div
-        class="w-full bg-white border p-4 py-3 border-gray-300 flex flex-col justify-between gap-3 rounded-md cursor-pointer"
+        class="w-full bg-white border px-2 py-2 sm:px-4 sm:py-3 border-gray-300 flex flex-col justify-between gap-3 rounded-md cursor-pointer"
         @click="showCreate = true"
     >
         <div class="w-full flex items-center text-gray-400 gap-3">
@@ -11,7 +11,7 @@
             />
             <span>Type here ...</span>
             <button
-                class="bg-utOrange p-2 text-white w-36 ml-auto rounded-full"
+                class="bg-utOrange p-2 text-white sm:w-36 w-24 ml-auto rounded-full"
                 type="button"
             >
                 Post
@@ -50,7 +50,7 @@
         </div>
     </div>
     <div
-        class="w-full border border-gray-300 rounded-md bg-white py-2 px-5 pb-5 flex flex-col gap-2"
+        class="w-full border border-gray-300 rounded-md bg-white py-2 sm:px-5 px-2 pb-5 flex flex-col gap-2"
     >
         <div class="w-full h-16">
             <div class="w-full h-full flex items-center gap-5">

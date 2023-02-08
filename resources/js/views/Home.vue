@@ -1,11 +1,13 @@
 <template>
-    <div class="grid grid-cols-[1fr_700px_1fr] gap-16 p-7">
-        <div class="flex flex-col gap-10">
+    <div
+        class="min-[890px]:grid min-[1300px]:grid-cols-[minmax(250px,_300px)_minmax(600px,_1fr)_minmax(250px,_300px)] min-[1300px]:gap-16 min-[890px]:grid-cols-[minmax(250px,_300px)_minmax(550px,_1fr)] min-[890px]:gap-8 sm:p-7 p-2 flex flex-col"
+    >
+        <div class="min-[890px]:flex flex-col gap-10 hidden">
             <MostTrending />
             <FollowingPages title="Trending pages" />
         </div>
-        <div class="flex flex-col gap-6">
-            <ul class="w-full h-14 bg-white flex">
+        <div class="flex flex-col sm:gap-6 gap-3">
+            <ul class="w-full sm:h-14 h-12 bg-white flex">
                 <li class="h-full w-1/2">
                     <button
                         @click="show = 'all'"
@@ -14,7 +16,7 @@
                                 ? 'border-utOrange text-utOrange font-semibold'
                                 : 'border-gray-400 font-medium'
                         "
-                        class="h-full w-full flex items-center justify-center gap-3 border-b-[3px] text-lg"
+                        class="h-full w-full flex items-center justify-center gap-3 sm:border-b-2 border-b-2 text-lg"
                     >
                         All
                     </button>
@@ -27,7 +29,7 @@
                                 ? 'border-utOrange text-utOrange font-semibold'
                                 : 'border-gray-400 font-medium'
                         "
-                        class="h-full w-full flex items-center justify-center border-b-[3px] text-lg"
+                        class="h-full w-full flex items-center justify-center sm:border-b-2 border-b-2 text-lg"
                     >
                         Following
                     </button>
@@ -35,7 +37,7 @@
             </ul>
             <AllPosts v-if="show === 'all'" />
         </div>
-        <div class="flex flex-col gap-10">
+        <div class="min-[890px]:flex hidden flex-col gap-10">
             <FollowingPages title="Following pages" />
         </div>
     </div>
