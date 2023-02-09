@@ -13,11 +13,21 @@
         </div>
         <div class="max-h-96 overflow-y-auto formScroll">
             <textarea
+                @focusout="showTextArea = false"
+                v-model="text"
+                @input="textFilterTag"
                 id="textArea"
-                @keyup="resizeTextArea"
+                :class="!showTextArea ? 'absolute -z-50 invisible' : ''"
                 class="w-full p-0 overflow-hidden border-none focus:ring-0 outline-none resize-none min-h-[72px] placeholder:text-lg text-lg"
                 placeholder="What's up, Med?"
             ></textarea>
+            <div
+                @click="displayTextArea"
+                v-show="!showTextArea"
+                class="whitespace-pre-wrap break-words w-full p-0 overflow-hidden cursor-text border-none focus:ring-0 outline-none resize-none min-h-[72px] placeholder:text-lg text-lg"
+                placeholder="What's up, Med?"
+                id="input"
+            ></div>
             <div class="flex flex-col w-full">
                 <div
                     v-show="showVideo"
@@ -94,14 +104,11 @@
 
 <script setup>
 import { ref } from "vue";
-function resizeTextArea(e) {
-    let d = document.getElementById("textArea");
-    d.style.height = "auto";
-    d.style.height = `${d.scrollHeight}px`;
-}
 
 const showVideo = ref(false);
+const showTextArea = ref(true);
 const showRemoveVideo = ref(false);
+const text = ref("");
 let myFile = null;
 
 function selectedFile(e) {
@@ -120,6 +127,26 @@ function removeVideo() {
     showVideo.value = false;
     videoTag.src = "";
     myFile = null;
+}
+
+function textFilterTag() {
+    let d = document.getElementById("textArea");
+    d.style.height = "auto";
+    d.style.height = `${d.scrollHeight}px`;
+    let str = text.value;
+    str = str.replace(/(<.+?>)/gi, "");
+    str = str.replace(/(?:\r\n|\n\r|\r|\n)/g, "<br /> ");
+    str = str.replace(
+        /(?:\s|^)#([^0-9\W\s][a-zA-z0-9]*)/g,
+        " <span class='text-utOrange'>#$1</span>"
+    );
+    $("#input").html(str);
+}
+function displayTextArea() {
+    showTextArea.value = true;
+    setTimeout(() => {
+        $("#textArea").focus();
+    }, 100);
 }
 </script>
 
