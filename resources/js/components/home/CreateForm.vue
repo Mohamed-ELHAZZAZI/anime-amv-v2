@@ -1,5 +1,55 @@
 <template>
-    <form class="w-full flex flex-col justify-between px-4 p-4">
+    <form
+        class="w-full flex flex-col justify-between px-4 p-4"
+        @submit.prevent="createFun"
+    >
+        <!-- Start Error -->
+        <div
+            v-if="errorMsg"
+            id="alert-2"
+            class="flex p-4 mb-4 text-red-800 rounded-lg bg-red-50"
+            role="alert"
+        >
+            <svg
+                aria-hidden="true"
+                class="flex-shrink-0 w-5 h-5"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    fill-rule="evenodd"
+                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                    clip-rule="evenodd"
+                ></path>
+            </svg>
+            <span class="sr-only">Alert</span>
+            <div class="ml-3 text-sm font-medium">
+                {{ errorMsg }}
+            </div>
+            <button
+                type="button"
+                class="ml-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex h-8 w-8"
+                data-dismiss-target="#alert-2"
+                aria-label="Close"
+                @click="errorMsg = ''"
+            >
+                <span class="sr-only">Close</span>
+                <svg
+                    class="w-5 h-5"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        fill-rule="evenodd"
+                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                        clip-rule="evenodd"
+                    ></path>
+                </svg>
+            </button>
+        </div>
+        <!-- End Error -->
         <div class="w-full h-full flex items-center gap-3 mb-4">
             <img
                 :src="'../storage/icons/page.jpg'"
@@ -39,7 +89,7 @@
                         type="button"
                         v-if="showRemoveVideo"
                         @click="removeVideo"
-                        class="absolute right-2 top-2 p-1 rounded-full bg-black bg-opacity-40 cursor-pointer z-10"
+                        class="absolute right-2 top-2 p-1 rounded-full text-white bg-black bg-opacity-40 cursor-pointer z-10"
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -109,10 +159,25 @@ const showVideo = ref(false);
 const showTextArea = ref(true);
 const showRemoveVideo = ref(false);
 const text = ref("");
+const errorMsg = ref(null);
 let myFile = null;
 
 function selectedFile(e) {
     myFile = e.target.files[0];
+    if (!myFile) {
+        return (errorMsg.value = "Choosing the appropriate file is crucial.");
+    }
+
+    if (
+        myFile.type !== "video/mp4" &&
+        myFile.type !== "video/ogg" &&
+        myFile.type !== "video/webm"
+    )
+        return (errorMsg.value =
+            "The file format is not recognized or supported by the system.");
+    if (myFile.size > 104857600)
+        return (errorMsg.value =
+            "The maximum allowable file size is 100 megabytes.");
     showVideo.value = true; //show video section
     let videoTag = document.getElementById("video-preview");
     let reader = new FileReader();
@@ -123,7 +188,6 @@ function selectedFile(e) {
 }
 function removeVideo() {
     let videoTag = document.getElementById("video-preview");
-    file.value = null;
     showVideo.value = false;
     videoTag.src = "";
     myFile = null;
@@ -136,10 +200,9 @@ function textFilterTag() {
     let str = text.value;
     str = str.replace(/(<.+?>)/gi, "");
     str = str.replace(/(?:\r\n|\n\r|\r|\n)/g, "<br /> ");
-    str = str.replace(
-        /(?:\s|^)#([^0-9\W\s][a-zA-z0-9]*)/g,
-        " <span class='text-utOrange'>#$1</span>"
-    );
+    str = str.replace(/(?:\s|^)#([^0-9\W\s][a-zA-z0-9]*)/g, (value) => {
+        return `<span class='text-utOrange'>${value}</span>`;
+    });
     $("#input").html(str);
 }
 function displayTextArea() {
@@ -147,6 +210,27 @@ function displayTextArea() {
     setTimeout(() => {
         $("#textArea").focus();
     }, 100);
+}
+function createFun() {
+    if (!myFile) {
+        return (errorMsg.value = "Choosing the appropriate file is crucial.");
+    }
+    var re = /(?:^|[ ])#([a-zA-Z]+)/gm;
+    var str = text.value;
+    var m;
+    var tags = [];
+    while ((m = re.exec(str)) != null) {
+        if (m.index === re.lastIndex) {
+            re.lastIndex++;
+        }
+        tags.push(m[0].replace("#", ""));
+    }
+    const data = new FormData();
+    data.append("text", text.value);
+    data.append("file", myFile);
+    tags.value.forEach((tag) => {
+        data.append("tags[]", tag);
+    });
 }
 </script>
 
