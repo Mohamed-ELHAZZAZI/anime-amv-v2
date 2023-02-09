@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class PostTagsRelations extends Model
 {
     use HasFactory;
+    protected $fillable = ['amv_id', 'tag_id'];
 }

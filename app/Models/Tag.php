@@ -9,6 +9,8 @@ class Tag extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name'];
+
     public function amvs()
     {
         return $this->belongsToMany(Amv::class, 'post_tags_relations');

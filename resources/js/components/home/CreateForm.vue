@@ -87,7 +87,7 @@
                 >
                     <button
                         type="button"
-                        v-if="showRemoveVideo"
+                        v-if="showRemoveVideo && !disabled"
                         @click="removeVideo"
                         class="absolute right-2 top-2 p-1 rounded-full text-white bg-black bg-opacity-40 cursor-pointer z-10"
                     >
@@ -147,21 +147,25 @@
             </div>
         </div>
         <button class="w-full mt-8 bg-utOrange rounded-md text-white h-10">
-            Publish
+            <span v-if="!disabled">Publish</span>
+            <span v-else>{{ percentage + "%" }}</span>
         </button>
     </form>
 </template>
 
 <script setup>
-import { ref } from "vue";
-
+import { ref, computed } from "vue";
+import store from "../../store";
 const showVideo = ref(false);
 const showTextArea = ref(true);
 const showRemoveVideo = ref(false);
 const text = ref("");
 const errorMsg = ref(null);
 let myFile = null;
-
+const disabled = ref(false);
+const percentage = computed(() => {
+    return store.state.uploads.percentage;
+});
 function selectedFile(e) {
     myFile = e.target.files[0];
     if (!myFile) {
@@ -206,10 +210,12 @@ function textFilterTag() {
     $("#input").html(str);
 }
 function displayTextArea() {
-    showTextArea.value = true;
-    setTimeout(() => {
-        $("#textArea").focus();
-    }, 100);
+    if (!disabled.value) {
+        showTextArea.value = true;
+        setTimeout(() => {
+            $("#textArea").focus();
+        }, 100);
+    }
 }
 function createFun() {
     if (!myFile) {
@@ -228,8 +234,24 @@ function createFun() {
     const data = new FormData();
     data.append("text", text.value);
     data.append("file", myFile);
-    tags.value.forEach((tag) => {
+    tags.forEach((tag) => {
         data.append("tags[]", tag);
+    });
+    disabled.value = true;
+    store.dispatch("postAmv", data).then((res) => {
+        disabled.value = false;
+        if (Object.hasOwn(res, "response")) {
+            for (const e in res.response.data.errors) {
+                if (Object.hasOwnProperty.call(res.response.data.errors, e)) {
+                    console.log(res.response.data.errors[e][0]);
+                    return (errorMsg.value = res.response.data.errors[e][0]);
+                }
+            }
+        }
+        // else {
+        //     router.push("/");
+        // }
+        console.log(res);
     });
 }
 </script>

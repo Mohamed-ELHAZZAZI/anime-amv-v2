@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Amv;
+use App\Models\PostTagsRelations;
+use App\Models\Tag;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -12,17 +14,16 @@ class AmvsController extends Controller
 {
     public function post(Request $request)
     {
+
         $request->validate([
             'text' => 'string|nullable',
-            'tags' => 'array|max:5|nullable',
-            'tags.*' => 'string|distinct',
+            'tags' => 'array|nullable',
+            'tags.*' => 'string',
             'file' => 'file|mimetypes:video/mp4,video/ogg,video/webm|max:102400'
         ], [
             'file.file' => 'Choosing the appropriate file is crucial.',
             'file.mimetypes' => 'The file format is not recognized or supported by the system.',
             'file.max' => 'The maximum allowable file size is 100 megabytes.',
-            'tags.max' => 'The maximum number of tags allowed is 5.',
-            'tags.*.distinct' => 'The tags can not be duplicated'
         ]);
 
         $fileName = uniqid('amv_video_') . '.' . File::extension($request->file->getClientOriginalName());
@@ -36,8 +37,16 @@ class AmvsController extends Controller
             $amv->text = $request->text;
             $amv->user_id = $request->user()->id;
             $amv->video = $filePath;
-            $amv->tags = $request->tags;
             $amv->save();
+            if ($request->has('tags')) {
+                foreach ($request->tags as $key => $tag) {
+                    $tag_info = Tag::firstOrCreate(['name' => $tag]);
+                    $tag_amv = new PostTagsRelations();
+                    $tag_amv->tag_id = $tag_info->id;
+                    $tag_amv->amv_id = $amv->id;
+                    $tag_amv->save();
+                }
+            }
         }
 
         return response([
