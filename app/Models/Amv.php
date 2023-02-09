@@ -24,6 +24,10 @@ class Amv extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function tag()
+    {
+        return $this->belongsToMany(Tag::class, 'post_tags_relations');
+    }
 
     public function getCreatedAtAttribute($value)
     {

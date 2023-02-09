@@ -13,14 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('amvs', function (Blueprint $table) {
+        Schema::create('post_tags_relations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
-            $table->text('text')->nullable();
-            $table->string('video');
-            $table->integer('comments')->default(0);
-            $table->integer('likes')->default(0);
-            $table->integer('dislikes')->default(0);
+            $table->foreignId('amv_id')->constrained();
+            $table->foreignId('tag_id')->constrained();
             $table->timestamps();
         });
     }
@@ -32,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('amvs');
+        Schema::dropIfExists('post_tags_relations');
     }
 };
