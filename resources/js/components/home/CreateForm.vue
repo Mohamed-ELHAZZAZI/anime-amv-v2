@@ -1,5 +1,6 @@
 <template>
     <div
+        v-if="isLoggedIN"
         class="h-14 w-full relative border-b border-gray-300 flex items-center justify-center font-medium text-xl"
     >
         Create Post
@@ -25,6 +26,7 @@
         </button>
     </div>
     <form
+        v-if="isLoggedIN"
         class="w-full flex flex-col justify-between px-4 p-4"
         @submit.prevent="createFun"
     >
@@ -189,8 +191,10 @@ const showHideButton = ref(true);
 const text = ref("");
 const errorMsg = ref(null);
 let myFile = null;
+const isLoggedIN = ref(false);
 const disabled = ref(false);
 const percentage = computed(() => {
+    isLoggedIN.value = store.state.user.token;
     return store.state.uploads.percentage;
 });
 

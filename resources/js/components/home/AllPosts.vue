@@ -1,5 +1,6 @@
 <template>
     <div
+        v-if="isLoggedIN"
         class="w-full bg-white border px-2 py-2 sm:px-4 sm:py-3 border-gray-300 flex flex-col justify-between gap-3 rounded-md cursor-pointer"
         @click="showCreate = true"
     >
@@ -30,7 +31,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import store from "../../store";
 import CreateForm from "../home/CreateForm.vue";
 import AmvPostLayout from "../Layouts/AmvPostLayout.vue";
@@ -45,6 +46,10 @@ const watingData = ref(false);
 const info = ref({
     start: 0,
     end: 6,
+});
+
+const isLoggedIN = computed(() => {
+    return store.state.user.token ? true : false;
 });
 
 function getAmv() {

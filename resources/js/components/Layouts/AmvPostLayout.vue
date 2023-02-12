@@ -89,10 +89,7 @@ const props = defineProps(["post"]);
 const text = ref(null);
 onMounted(() => {
     let str = props.post.text;
-    str = str.replace(/(<.+?>)/gi, "");
-    str = str.replace(/(?:\r\n|\n\r|\r|\n)/g, "<br /> ");
     str = str.replace(/(?:\s|^)#([^0-9\W\s][a-zA-z0-9]*)/g, (value) => {
-        var res = Vue.compile("<div><span>{{ value }}</span></div>");
         return `<span class='text-utOrange cursor-pointer hover:underline' ">${value}</span>`;
     });
     text.value = str;
