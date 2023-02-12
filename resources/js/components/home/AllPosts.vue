@@ -26,14 +26,66 @@
             <CreateForm @hideCreateModel="showCreate = false" />
         </div>
     </div>
-    <AmvPostLayout />
+    <AmvPostLayout v-for="post in posts" :key="post.id" :post="post" />
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import store from "../../store";
 import CreateForm from "../home/CreateForm.vue";
 import AmvPostLayout from "../Layouts/AmvPostLayout.vue";
+
+const emit = defineEmits(["toggleShowSkelton"]);
+
 const showCreate = ref(false);
+const posts = ref([]);
+const stopSendingRequest = ref(false);
+const showSkelton = ref(false);
+const watingData = ref(false);
+const info = ref({
+    start: 0,
+    end: 6,
+});
+
+function getAmv() {
+    if (!watingData.value && !stopSendingRequest.value) {
+        emit("toggleShowSkelton");
+        watingData.value = true;
+        store.dispatch("getAmv", info.value).then((res) => {
+            emit("toggleShowSkelton");
+            watingData.value = false;
+            info.value.start += info.value.end;
+            info.value.end += 6;
+            posts.value.push(...res.data.posts);
+            if (!res.data.posts.length) {
+                stopSendingRequest.value = true;
+            }
+        });
+    }
+}
+
+onMounted(() => {
+    getAmv();
+});
+
+window.onscroll = () => {
+    let bottomOfWindow =
+        document.documentElement.scrollTop +
+        window.innerHeight -
+        (document.documentElement.offsetHeight - 550);
+
+    if (bottomOfWindow >= 0) {
+        getAmv();
+    }
+};
+
+// function deletePost(post) {
+//     store.dispatch("deletePost", post.id).then((res) => {
+//         if (!res.data.error) {
+//             posts.value = posts.value.filter((p) => p !== post);
+//         } else alert("Error try again later");
+//     });
+// }
 </script>
 
 <style></style>

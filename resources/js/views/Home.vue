@@ -35,76 +35,28 @@
                     </button>
                 </li>
             </ul>
-            <AllPosts v-if="show === 'all'" />
+            <AllPosts
+                v-if="show === 'all'"
+                @toggleShowSkelton="showSkelton = !showSkelton"
+            />
         </div>
         <div class="min-[890px]:flex hidden flex-col gap-10">
             <FollowingPages title="Following pages" />
         </div>
     </div>
-    <!-- <AmvPostLayoutVue
-    v-for="post in posts"
-    :key="post.id"
-    :post="post"
-    @deletePost="deletePost"
-/>
-<AmvPostSkeleton v-if="showSkelton" :count="count" /> -->
+    <AmvPostSkeleton v-if="showSkelton" :count="count" />
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from "vue";
-import AmvPostLayoutVue from "../components/Layouts/AmvPostLayout.vue";
-import AmvPostSkeleton from "../components/skeletons/AmvPostSkeleton.vue";
+import { onMounted, ref } from "vue";
 import store from "../store";
+import AmvPostSkeleton from "../components/skeletons/AmvPostSkeleton.vue";
 import MostTrending from "../components/home/MostTrending.vue";
 import FollowingPages from "../components/home/FollowingPages.vue";
 import AllPosts from "../components/home/AllPosts.vue";
 const show = ref("all");
-const posts = ref([]);
-const count = ref(3);
 const showSkelton = ref(false);
-const stopSendingRequest = ref(false);
-const info = ref({
-    start: 0,
-    end: 6,
-});
-
-function getAmv() {
-    if (!showSkelton.value && !stopSendingRequest.value) {
-        showSkelton.value = true;
-        store.dispatch("getAmv", info.value).then((res) => {
-            showSkelton.value = false;
-            info.value.start += info.value.end;
-            info.value.end += 6;
-            posts.value.push(...res.data.posts);
-            if (!res.data.posts.length) {
-                stopSendingRequest.value = true;
-            }
-        });
-    }
-}
-
-onMounted(() => {
-    getAmv();
-});
-
-window.onscroll = () => {
-    let bottomOfWindow =
-        document.documentElement.scrollTop +
-        window.innerHeight -
-        (document.documentElement.offsetHeight - 550);
-
-    if (bottomOfWindow >= 0) {
-        getAmv();
-    }
-};
-
-function deletePost(post) {
-    store.dispatch("deletePost", post.id).then((res) => {
-        if (!res.data.error) {
-            posts.value = posts.value.filter((p) => p !== post);
-        } else alert("Error try again later");
-    });
-}
+const count = ref(3);
 </script>
 
 <style></style>
