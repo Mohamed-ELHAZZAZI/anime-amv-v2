@@ -39,12 +39,12 @@
                 v-if="show === 'all'"
                 @toggleShowSkelton="showSkelton = !showSkelton"
             />
+            <AmvPostSkeleton v-if="showSkelton" :count="count" />
         </div>
         <div class="min-[890px]:flex hidden flex-col gap-10">
             <FollowingPages title="Following pages" />
         </div>
     </div>
-    <AmvPostSkeleton v-if="showSkelton" :count="count" />
 </template>
 
 <script setup>

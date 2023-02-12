@@ -2,12 +2,11 @@
     <div
         v-for="x in count"
         :key="x"
-        role="status"
-        class="px-5 py-4 pt-2 bg-[var(--primary-light-color)] dark:bg-[var(--primary-dark-color)] rounded-lg shadow animate-pulse flex flex-col gap-3"
+        class="px-5 py-4 pt-2 bg-white rounded-lg shadow animate-pulse flex flex-col gap-3"
     >
         <div class="flex items-center mt-4 space-x-3">
             <svg
-                class="text-gray-200 w-14 h-14 dark:text-gray-700"
+                class="text-gray-200 w-14 h-14"
                 aria-hidden="true"
                 fill="currentColor"
                 viewBox="0 0 20 20"
@@ -20,34 +19,24 @@
                 ></path>
             </svg>
             <div>
-                <div
-                    class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-32 mb-2"
-                ></div>
-                <div
-                    class="w-48 h-2 bg-gray-200 rounded-full dark:bg-gray-700"
-                ></div>
+                <div class="h-2.5 bg-gray-200 rounded-full w-32 mb-2"></div>
+                <div class="w-48 h-2 bg-gray-200 rounded-full"></div>
             </div>
         </div>
 
         <div>
-            <div
-                class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-48 mb-4"
-            ></div>
-            <div
-                class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 mb-2.5"
-            ></div>
-            <div
-                class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 mb-2.5"
-            ></div>
-            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+            <div class="h-2.5 bg-gray-200 rounded-full w-48 mb-4"></div>
+            <div class="h-2 bg-gray-200 rounded-full mb-2.5"></div>
+            <div class="h-2 bg-gray-200 rounded-full mb-2.5"></div>
+            <div class="h-2 bg-gray-200 rounded-full"></div>
         </div>
 
         <div
             role="status"
-            class="flex mb-5 items-center justify-center h-56 w-full bg-gray-300 rounded-lg animate-pulse dark:bg-gray-700"
+            class="flex mb-5 items-center justify-center h-56 w-full bg-gray-300 rounded-lg animate-pulse"
         >
             <svg
-                class="w-12 h-12 text-gray-200 dark:text-gray-600"
+                class="w-12 h-12 text-gray-200"
                 xmlns="http://www.w3.org/2000/svg"
                 aria-hidden="true"
                 fill="currentColor"
@@ -59,16 +48,11 @@
             </svg>
             <span class="sr-only">Loading video...</span>
         </div>
-        <div class="flex gap-3">
-            <div
-                class="h-8 bg-gray-200 dark:bg-gray-700 w-24 mb-4 rounded"
-            ></div>
-            <div
-                class="h-8 bg-gray-200 dark:bg-gray-700 w-24 mb-4 rounded"
-            ></div>
-            <div
-                class="h-8 bg-gray-200 dark:bg-gray-700 w-24 mb-4 rounded"
-            ></div>
+        <div class="flex gap-3 justify-between">
+            <div class="h-8 bg-gray-200 w-24 mb-4 rounded"></div>
+            <div class="h-8 bg-gray-200 w-24 mb-4 rounded"></div>
+            <div class="h-8 bg-gray-200 w-24 mb-4 rounded"></div>
+            <div class="h-8 bg-gray-200 w-24 mb-4 rounded"></div>
         </div>
 
         <span class="sr-only">Loading...</span>
