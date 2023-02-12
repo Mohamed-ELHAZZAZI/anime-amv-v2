@@ -7,7 +7,7 @@
                     type="email"
                     name="floating_email"
                     id="floating_email"
-                    class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-[var(--secondary-dark-color)] focus:outline-none focus:ring-0 focus:border-[var(--secondary-dark-color)] peer"
+                    class="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 appearance-none text-white border-gray-600 focus:border-utOrange focus:outline-none focus:ring-0 peer"
                     placeholder=" "
                     v-model="user.email_address"
                     required
@@ -19,7 +19,7 @@
                 />
                 <label
                     for="floating_email"
-                    class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                    class="peer-focus:font-medium absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                     >Email address</label
                 >
             </div>
@@ -29,7 +29,7 @@
                     :type="showPass ? 'text' : 'password'"
                     name="floating_password"
                     id="floating_password"
-                    class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-[var(--secondary-dark-color)] focus:outline-none focus:ring-0 focus:border-[var(--secondary-dark-color)] peer"
+                    class="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 appearance-none text-white border-gray-600 focus:border-utOrange focus:outline-none focus:ring-0 peer"
                     placeholder=" "
                     v-model="user.password"
                     required
@@ -78,26 +78,24 @@
                 </button>
                 <label
                     for="floating_password"
-                    class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                    class="peer-focus:font-medium absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                     >Password</label
                 >
             </div>
-            <p class="text-sm text-gray-500 dark:text-gray-400">
-                <a
-                    href="#"
-                    class="font-medium text-[var(--secondary-dark-color)] hover:underline dark:text-[var(--secondary-dark-color)]"
+            <p class="text-sm text-gray-400">
+                <a href="#" class="font-medium text-utOrange hover:underline"
                     >Forget password?</a
                 >
             </p>
             <button
                 :disabled="dataSent"
-                class="h-10 mt-10 bg-[var(--secondary-dark-color)] rounded-md w-full text-white capitalize"
+                class="h-10 mt-10 bg-utOrange rounded-md w-full text-white capitalize"
             >
                 <span v-if="!dataSent">log in</span>
                 <div v-else role="status">
                     <svg
                         aria-hidden="true"
-                        class="inline w-7 h-7 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-gray-600 dark:fill-gray-300"
+                        class="inline w-7 h-7 mr-2 animate-spin text-gray-600 fill-gray-300"
                         viewBox="0 0 100 101"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"

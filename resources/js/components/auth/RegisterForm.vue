@@ -9,7 +9,7 @@
                         name="first_name"
                         v-model="user.first_name"
                         id="floating_first_name"
-                        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-[var(--secondary-dark-color)] focus:outline-none focus:ring-0 focus:border-[var(--secondary-dark-color)] peer"
+                        class="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 appearance-none text-white border-gray-600 focus:outline-none focus:ring-0 focus:border-utOrange peer"
                         placeholder=" "
                         required
                     />
@@ -19,7 +19,7 @@
                     />
                     <label
                         for="floating_first_name"
-                        class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                        class="peer-focus:font-medium absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                         >First name</label
                     >
                 </div>
@@ -30,7 +30,7 @@
                         name="last_name"
                         v-model="user.last_name"
                         id="floating_last_name"
-                        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-[var(--secondary-dark-color)] focus:outline-none focus:ring-0 focus:border-[var(--secondary-dark-color)] peer"
+                        class="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 appearance-none text-white border-gray-600 focus:outline-none focus:ring-0 focus:border-utOrange peer"
                         placeholder=" "
                         required
                     />
@@ -40,7 +40,7 @@
                     />
                     <label
                         for="floating_last_name"
-                        class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                        class="peer-focus:font-medium absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                         >Last name</label
                     >
                 </div>
@@ -52,7 +52,7 @@
                     name="email"
                     v-model="user.email_address"
                     id="floating_email"
-                    class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-[var(--secondary-dark-color)] focus:outline-none focus:ring-0 focus:border-[var(--secondary-dark-color)] peer"
+                    class="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 appearance-none text-white border-gray-600 focus:outline-none focus:ring-0 focus:border-utOrange peer"
                     placeholder=" "
                     required
                 />
@@ -62,7 +62,7 @@
                 />
                 <label
                     for="floating_email"
-                    class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                    class="peer-focus:font-medium absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                     >Email address</label
                 >
             </div>
@@ -73,7 +73,7 @@
                     name="password"
                     v-model="user.password"
                     id="floating_password"
-                    class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-[var(--secondary-dark-color)] focus:outline-none focus:ring-0 focus:border-[var(--secondary-dark-color)] peer"
+                    class="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 appearance-none text-white focus:outline-none focus:ring-0 focus:border-utOrange peer"
                     placeholder=" "
                     autocomplete="current-password"
                     required
@@ -122,7 +122,7 @@
                 </button>
                 <label
                     for="floating_password"
-                    class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                    class="peer-focus:font-medium absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                     >Password</label
                 >
             </div>
@@ -134,17 +134,15 @@
                         name="agree"
                         value=""
                         v-model="user.agree"
-                        class="w-4 h-4 focus:ring-0 focus:outline-none focus:shadow-none border-gray-300 rounded bg-gray-50 dark:bg-gray-700 dark:border-gray-600"
+                        class="w-4 h-4 focus:ring-0 focus:outline-none focus:shadow-none rounded bg-gray-700 border-gray-600"
                         required
                     />
                 </div>
                 <label
                     for="terms"
-                    class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    class="ml-2 text-sm font-medium text-gray-300"
                     >I agree with the
-                    <a
-                        href="#"
-                        class="text-[var(--secondary-dark-color)]hover:underline dark:text-[var(--secondary-dark-color)]"
+                    <a href="#" class="text-utOrange hover:underline"
                         >terms and conditions</a
                     ></label
                 >
@@ -152,13 +150,13 @@
             <formError v-if="error.agree" :error="error.agree" />
             <button
                 :disabled="dataSent"
-                class="h-10 mt-10 bg-[var(--secondary-dark-color)] rounded-md w-full text-white capitalize"
+                class="h-10 mt-10 bg-utOrange rounded-md w-full text-white capitalize"
             >
                 <span v-if="!dataSent">register</span>
                 <div v-else role="status">
                     <svg
                         aria-hidden="true"
-                        class="inline w-7 h-7 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-gray-600 dark:fill-gray-300"
+                        class="inline w-7 h-7 mr-2 animate-spin text-gray-600 fill-gray-300"
                         viewBox="0 0 100 101"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"

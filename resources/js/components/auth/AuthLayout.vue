@@ -3,9 +3,9 @@
         class="fixed top-0 bottom-0 right-0 left-0 bg-black bg-opacity-60 z-10 flex items-center justify-center"
     >
         <div class="w-full max-w-[550px] overflow-hidden rounded-md">
-            <div class="h-full dark:bg-prussianBlue px-10 py-4 relative">
+            <div class="h-full bg-prussianBlue px-10 py-4 relative">
                 <button
-                    class="absolute top-3 right-3 dark:text-white"
+                    class="absolute top-3 right-3 text-white"
                     @click="closeAuthModel"
                 >
                     <svg
@@ -23,7 +23,7 @@
                         />
                     </svg>
                 </button>
-                <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
+                <div class="mb-4 border-b border-gray-700">
                     <ul
                         class="flex flex-wrap -mb-px text-sm font-medium text-center text-white"
                     >
