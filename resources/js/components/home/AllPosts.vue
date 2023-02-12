@@ -23,31 +23,7 @@
         class="fixed top-0 right-0 bottom-0 left-0 bg-black bg-opacity-25 z-50 flex items-center justify-center"
     >
         <div class="w-[550px] pb-2 bg-white rounded-md">
-            <div
-                class="h-14 w-full relative border-b border-gray-300 flex items-center justify-center font-medium text-xl"
-            >
-                Create Post
-                <button
-                    class="absolute cursor-pointer right-3 top-3 p-1 hover:bg-prussianBlue hover:text-white rounded-md"
-                    @click="showCreate = false"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="1.5"
-                        stroke="currentColor"
-                        class="w-6 h-6"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M6 18L18 6M6 6l12 12"
-                        />
-                    </svg>
-                </button>
-            </div>
-            <CreateForm />
+            <CreateForm @hideCreateModel="showCreate = false" />
         </div>
     </div>
     <AmvPostLayout />

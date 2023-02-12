@@ -1,4 +1,29 @@
 <template>
+    <div
+        class="h-14 w-full relative border-b border-gray-300 flex items-center justify-center font-medium text-xl"
+    >
+        Create Post
+        <button
+            v-if="showHideButton"
+            class="absolute cursor-pointer right-3 top-3 p-1 hover:bg-prussianBlue hover:text-white rounded-md"
+            @click="hideCreateModel"
+        >
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-6 h-6"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M6 18L18 6M6 6l12 12"
+                />
+            </svg>
+        </button>
+    </div>
     <form
         class="w-full flex flex-col justify-between px-4 p-4"
         @submit.prevent="createFun"
@@ -156,9 +181,11 @@
 <script setup>
 import { ref, computed } from "vue";
 import store from "../../store";
+const emit = defineEmits(["hideCreateModel"]);
 const showVideo = ref(false);
 const showTextArea = ref(true);
 const showRemoveVideo = ref(false);
+const showHideButton = ref(true);
 const text = ref("");
 const errorMsg = ref(null);
 let myFile = null;
@@ -166,6 +193,10 @@ const disabled = ref(false);
 const percentage = computed(() => {
     return store.state.uploads.percentage;
 });
+
+function hideCreateModel() {
+    emit("hideCreateModel");
+}
 function selectedFile(e) {
     myFile = e.target.files[0];
     if (!myFile) {
@@ -238,20 +269,19 @@ function createFun() {
         data.append("tags[]", tag);
     });
     disabled.value = true;
+    showHideButton.value = false;
     store.dispatch("postAmv", data).then((res) => {
         disabled.value = false;
+        showHideButton.value = true;
         if (Object.hasOwn(res, "response")) {
             for (const e in res.response.data.errors) {
                 if (Object.hasOwnProperty.call(res.response.data.errors, e)) {
-                    console.log(res.response.data.errors[e][0]);
                     return (errorMsg.value = res.response.data.errors[e][0]);
                 }
             }
+        } else {
+            emit("hideCreateModel");
         }
-        // else {
-        //     router.push("/");
-        // }
-        console.log(res);
     });
 }
 </script>
