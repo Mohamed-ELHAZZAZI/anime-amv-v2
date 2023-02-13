@@ -191,10 +191,12 @@ const showHideButton = ref(true);
 const text = ref("");
 const errorMsg = ref(null);
 let myFile = null;
-const isLoggedIN = ref(false);
 const disabled = ref(false);
+
+const isLoggedIN = computed(() => {
+    return store.state.user.token ? true : false;
+});
 const percentage = computed(() => {
-    isLoggedIN.value = store.state.user.token;
     return store.state.uploads.percentage;
 });
 
