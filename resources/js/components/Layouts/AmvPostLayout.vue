@@ -1,6 +1,6 @@
 <template>
     <div
-        class="w-full border border-gray-300 rounded-md bg-white py-2 sm:px-5 px-2 pb-5 flex flex-col gap-2"
+        class="w-full border border-gray-300 rounded-md bg-white py-2 sm:px-5 px-2 pb-5 flex flex-col gap-2 relative overflow-hidden"
     >
         <div class="w-full h-16">
             <div class="w-full h-full flex items-center gap-5 relative">
@@ -58,6 +58,7 @@
                         </li>
                         <li class="w-full h-12">
                             <button
+                                @click="showDeleteModel"
                                 class="w-full h-full flex items-center px-3 gap-2 text-red-600 hover:bg-lightGray"
                             >
                                 <svg
@@ -133,26 +134,42 @@
                 </svg>
             </button>
         </div>
+        <ConfirmationModalLayout
+            ref="deleteModel"
+            message="Are you sure you want to delete this post?"
+            @delete="deletePost"
+        />
     </div>
 </template>
 
 <script setup>
 import { computed, onMounted, ref } from "vue";
 import store from "../../store";
-
+import ConfirmationModalLayout from "./ConfirmationModalLayout.vue";
 const props = defineProps(["post"]);
 const showPostBox = ref(false);
 const text = ref(null);
+const deleteModel = ref();
 const user = computed(() => {
     return store.state.user.info;
 });
 onMounted(() => {
     let str = props.post.text;
     str = str.replace(/(?:\s|^)#([^0-9\W\s][a-zA-z0-9]*)/g, (value) => {
-        return `<span class='text-utOrange cursor-pointer hover:underline' ">${value}</span>`;
+        value = value.slice(2, value.length);
+        return `<a href='/tags/${value}' class='text-utOrange cursor-pointer hover:underline' "> #${value}</a>`;
     });
     text.value = str;
 });
+
+function showDeleteModel() {
+    showPostBox.value = false;
+    deleteModel.value.showDeleteModel();
+}
+
+function deletePost() {
+    alert("delete");
+}
 </script>
 
 <style></style>
