@@ -27,7 +27,12 @@
             <CreateForm @hideCreateModel="showCreate = false" />
         </div>
     </div>
-    <AmvPostLayout v-for="post in posts" :key="post.id" :post="post" />
+    <AmvPostLayout
+        v-for="post in posts"
+        :key="post.id"
+        :post="post"
+        @deletePost="deletePost"
+    />
 </template>
 
 <script setup>
@@ -84,13 +89,13 @@ window.onscroll = () => {
     }
 };
 
-// function deletePost(post) {
-//     store.dispatch("deletePost", post.id).then((res) => {
-//         if (!res.data.error) {
-//             posts.value = posts.value.filter((p) => p !== post);
-//         } else alert("Error try again later");
-//     });
-// }
+function deletePost(post) {
+    store.dispatch("deletePost", post.id).then((res) => {
+        if (!res.data.error) {
+            posts.value = posts.value.filter((p) => p !== post);
+        } else alert("Error try again later");
+    });
+}
 </script>
 
 <style></style>

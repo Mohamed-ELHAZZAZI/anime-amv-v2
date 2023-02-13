@@ -150,6 +150,7 @@ const props = defineProps(["post"]);
 const showPostBox = ref(false);
 const text = ref(null);
 const deleteModel = ref();
+const emit = defineEmits(["deletePost"]);
 const user = computed(() => {
     return store.state.user.info;
 });
@@ -168,7 +169,7 @@ function showDeleteModel() {
 }
 
 function deletePost() {
-    alert("delete");
+    emit("deletePost", props.post);
 }
 </script>
 
