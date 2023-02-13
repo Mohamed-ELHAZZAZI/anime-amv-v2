@@ -13,9 +13,9 @@
                     <span class="font-semibold text-lg">
                         {{ post.user.firstName + " " + post.user.lastName }}
                     </span>
-                    <span class="text-sm text-gray-500"
-                        >@autakoLive - {{ post.created_at }}</span
-                    >
+                    <span class="text-sm text-gray-500">{{
+                        post.created_at
+                    }}</span>
                 </span>
                 <router-link to="/" class="ml-auto text-lg">
                     <i
@@ -36,6 +36,7 @@
                     <ul class="w-full flex flex-col gap-[2px]">
                         <li class="w-full h-12">
                             <button
+                                @click="showModifyModel"
                                 class="w-full h-full flex items-center px-3 gap-2 text-prussianBlue hover:bg-lightGray"
                             >
                                 <svg
@@ -84,10 +85,6 @@
         </div>
         <div class="w-full flex">
             <p v-html="text"></p>
-            <!-- This AMV is very -->
-            <!-- <router-link to="/" class="text-utOrange ml-1 hover:underline"
-                >{{ " " }}#excited</router-link
-            > -->
         </div>
         <video :src="'../storage/' + post.video" controls></video>
         <div
@@ -150,7 +147,7 @@ const props = defineProps(["post"]);
 const showPostBox = ref(false);
 const text = ref(null);
 const deleteModel = ref();
-const emit = defineEmits(["deletePost"]);
+const emit = defineEmits(["deletePost", "modifyPost"]);
 const user = computed(() => {
     return store.state.user.info;
 });
@@ -170,6 +167,11 @@ function showDeleteModel() {
 
 function deletePost() {
     emit("deletePost", props.post);
+}
+
+function showModifyModel() {
+    showPostBox.value = false;
+    emit("modifyPost", props.post);
 }
 </script>
 

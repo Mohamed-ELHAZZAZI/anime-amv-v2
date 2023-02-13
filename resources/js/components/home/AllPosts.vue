@@ -24,7 +24,10 @@
         class="fixed top-0 right-0 bottom-0 left-0 bg-black bg-opacity-25 z-50 flex items-center justify-center"
     >
         <div class="w-[550px] pb-2 bg-white rounded-md">
-            <CreateForm @hideCreateModel="showCreate = false" />
+            <CreateForm
+                @hideCreateModel="hideCreateModel"
+                :toModifyPost="toModifyPost"
+            />
         </div>
     </div>
     <AmvPostLayout
@@ -32,6 +35,7 @@
         :key="post.id"
         :post="post"
         @deletePost="deletePost"
+        @modifyPost="modifyPost"
     />
 </template>
 
@@ -95,6 +99,16 @@ function deletePost(post) {
             posts.value = posts.value.filter((p) => p !== post);
         } else alert("Error try again later");
     });
+}
+
+const toModifyPost = ref(null);
+function modifyPost(post) {
+    toModifyPost.value = post;
+    showCreate.value = true;
+}
+function hideCreateModel() {
+    toModifyPost.value = null;
+    showCreate.value = false;
 }
 </script>
 

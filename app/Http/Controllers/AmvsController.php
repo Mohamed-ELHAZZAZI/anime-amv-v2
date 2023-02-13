@@ -51,6 +51,7 @@ class AmvsController extends Controller
 
         return response([
             'status' => 200,
+            'post' => $amv
         ]);
     }
 
@@ -93,16 +94,16 @@ class AmvsController extends Controller
     {
         $isFileUploaded = true;
         $post = Amv::where('id', $request->post_id)->where('user_id', $request->user()->id)->first();
-        $filePath = $post->video;
         if (!$post) {
             return response([
                 'status' => 400
             ]);
         }
+        $filePath = $post->video;
         $request->validate([
-            'text' => 'string|nullable',
-            'tags' => 'array|max:5|nullable',
-            'tags.*' => 'string|distinct',
+            'text' => 'nullable',
+            'tags' => 'array|nullable',
+            'tags.*' => 'string',
 
         ], [
             'tags.max' => 'The maximum number of tags allowed is 5.',
@@ -126,14 +127,25 @@ class AmvsController extends Controller
         }
 
         if ($isFileUploaded) {
-
             $post->text = $request->text;
-            $post->user_id = $request->user()->id;
             $post->video = $filePath;
-            $post->tags = $request->tags;
             $post->save();
+            $post_tags = PostTagsRelations::where('amv_id', $post->id)->get(['id']);
+            if (!empty($post_tags)) {
+                PostTagsRelations::destroy($post_tags->toArray());
+            }
+            if ($request->has('tags')) {
+                foreach ($request->tags as $key => $tag) {
+                    $tag_info = Tag::firstOrCreate(['name' => $tag]);
+                    $tag_amv = new PostTagsRelations();
+                    $tag_amv->tag_id = $tag_info->id;
+                    $tag_amv->amv_id = $post->id;
+                    $tag_amv->save();
+                }
+            }
             return response([
-                'status' => 200
+                'status' => 200,
+                'post' => $post
             ]);
         } else {
             return response([

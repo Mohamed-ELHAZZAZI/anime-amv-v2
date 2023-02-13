@@ -174,24 +174,37 @@
             </div>
         </div>
         <button class="w-full mt-8 bg-utOrange rounded-md text-white h-10">
-            <span v-if="!disabled">Publish</span>
+            <span v-if="!disabled && !updatePost">Publish</span>
+            <span v-else-if="!disabled && updatePost">Update</span>
             <span v-else>{{ percentage + "%" }}</span>
         </button>
     </form>
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
+import { useRouter } from "vue-router";
 import store from "../../store";
+const props = defineProps(["toModifyPost"]);
 const emit = defineEmits(["hideCreateModel"]);
-const showVideo = ref(false);
-const showTextArea = ref(true);
-const showRemoveVideo = ref(false);
+const router = useRouter();
+const updatePost = ref(props.toModifyPost ? true : false);
+const showVideo = ref(updatePost.value ? true : false);
+const showTextArea = ref(updatePost.value ? false : true);
+const showRemoveVideo = ref(updatePost.value ? true : false);
 const showHideButton = ref(true);
-const text = ref("");
+const text = ref(updatePost.value ? props.toModifyPost?.text : "");
 const errorMsg = ref(null);
-let myFile = null;
+let myFile = updatePost.value ? 1 : false;
 const disabled = ref(false);
+
+onMounted(() => {
+    if (props.toModifyPost?.video) {
+        let videoTag = document.getElementById("video-preview");
+        videoTag.src = "../storage/" + props.toModifyPost.video;
+        textFilterTag();
+    }
+});
 
 const isLoggedIN = computed(() => {
     return store.state.user.token ? true : false;
@@ -258,7 +271,7 @@ function createFun() {
     if (!myFile) {
         return (errorMsg.value = "Choosing the appropriate file is crucial.");
     }
-    var re = /(?:^|[ ])#([a-zA-Z]+)/gm;
+    var re = /(?:^|[ ])#([a-zA-Z0-9]+)/gm;
     var str = text.value;
     var m;
     var tags = [];
@@ -269,6 +282,7 @@ function createFun() {
         tags.push(m[0].replace("#", ""));
     }
     const data = new FormData();
+    data.append("post_id", updatePost.value ? props.toModifyPost.id : 0);
     data.append("text", text.value);
     data.append("file", myFile);
     tags.forEach((tag) => {
@@ -276,7 +290,8 @@ function createFun() {
     });
     disabled.value = true;
     showHideButton.value = false;
-    store.dispatch("postAmv", data).then((res) => {
+    let to = updatePost.value ? "modifyAmv" : "postAmv";
+    store.dispatch(to, data).then((res) => {
         disabled.value = false;
         showHideButton.value = true;
         if (Object.hasOwn(res, "response")) {
@@ -287,6 +302,7 @@ function createFun() {
             }
         } else {
             emit("hideCreateModel");
+            router.push("/p/" + res.data.post.id);
         }
     });
 }
