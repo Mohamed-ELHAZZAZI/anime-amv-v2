@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('post_tags_relations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('amv_id')->constrained();
+            $table->foreignId('amv_id')->constrained()->onDelete('cascade');
             $table->foreignId('tag_id')->constrained();
             $table->timestamps();
         });
