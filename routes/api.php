@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AmvsController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\UsersController;
 
 /*
@@ -31,3 +32,5 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::post('/register', [UsersController::class, 'register']);
 Route::post('/login', [UsersController::class, 'login']);
 Route::get('/get-amv', [AmvsController::class, 'get']);
+Route::post('/comment', [CommentController::class, 'comment']);
+Route::get('/getcomment', [CommentController::class, 'get']);

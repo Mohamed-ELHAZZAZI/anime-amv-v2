@@ -38,4 +38,10 @@ class Amv extends Model
     {
         return $this->hasMany(AmvReaction::class);
     }
+
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class)->whereNull('parent_id');
+    }
 }
