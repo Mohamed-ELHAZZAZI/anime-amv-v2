@@ -24,9 +24,9 @@ class CommentController extends Controller
         ]);
     }
 
-    public function get()
+    public function get($post_id)
     {
-        $get = Comment::with('replies')->where('parent_id', null)->get();
+        $get = Comment::with('user')->with('replies')->where('parent_id', null)->get();
         return response([
             'comments' => $get
         ]);

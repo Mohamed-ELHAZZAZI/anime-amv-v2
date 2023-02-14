@@ -95,6 +95,13 @@ const store = createStore({
         reactToAmv: ({ state, commit }, data) => {
             return axiosClient.post("/react-to-amv", data);
         },
+        getComments: ({ state, commit }, post_id) => {
+            return axiosClient
+                .get("/getComment/" + post_id)
+                .then((response) => {
+                    return response;
+                });
+        },
     },
     mutations: {
         setProgress: (state, per) => {

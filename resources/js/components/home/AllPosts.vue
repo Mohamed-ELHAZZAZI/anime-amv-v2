@@ -31,14 +31,18 @@
         </div>
     </div>
     <AmvPostLayout
-        @showComment="showComment = true"
+        @showComment="displayCommentModel"
         v-for="post in posts"
         :key="post.id"
         :post="post"
         @deletePost="deletePost"
         @modifyPost="modifyPost"
     />
-    <CommentBoxLayout v-if="showComment" @hideComment="showComment = false" />
+    <CommentBoxLayout
+        v-if="showComment"
+        @hideComment="showComment = false"
+        :post_id="post_id"
+    />
 </template>
 
 <script setup>
@@ -113,6 +117,12 @@ function modifyPost(post) {
 function hideCreateModel() {
     toModifyPost.value = null;
     showCreate.value = false;
+}
+
+const post_id = ref(null);
+function displayCommentModel(params) {
+    post_id.value = params;
+    showComment.value = true;
 }
 </script>
 

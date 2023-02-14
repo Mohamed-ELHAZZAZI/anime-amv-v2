@@ -33,4 +33,4 @@ Route::post('/register', [UsersController::class, 'register']);
 Route::post('/login', [UsersController::class, 'login']);
 Route::get('/get-amv', [AmvsController::class, 'get']);
 Route::post('/comment', [CommentController::class, 'comment']);
-Route::get('/getcomment', [CommentController::class, 'get']);
+Route::get('/getComment/{post_id}', [CommentController::class, 'get']);

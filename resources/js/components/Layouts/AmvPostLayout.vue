@@ -316,7 +316,7 @@ function reactToPost(type) {
     store.dispatch("reactToAmv", info);
 }
 function showComment() {
-    emit("showComment");
+    emit("showComment", props.post.id);
 }
 </script>
 
