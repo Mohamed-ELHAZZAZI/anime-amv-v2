@@ -253,7 +253,6 @@ const deleteModel = ref();
 const emit = defineEmits(["deletePost", "modifyPost"]);
 const showCopied = ref(false);
 const shareLink = ref(window.location.href + "/p/" + props.post.id);
-console.log(shareLink.value);
 const user = computed(() => {
     return store.state.user.info;
 });

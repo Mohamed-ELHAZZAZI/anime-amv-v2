@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Amv;
-use App\Models\PostTagsRelations;
 use App\Models\Tag;
-use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Http\Request;
+use App\Models\PostTagsRelations;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Contracts\Validation\Rule;
 
 class AmvsController extends Controller
 {
@@ -57,9 +57,20 @@ class AmvsController extends Controller
 
     public function get(Request $request)
     {
-
+        $userId = auth('sanctum')->user()->id;
+        $posts = Amv::with('user')->leftJoinSub(function ($query) use ($userId) {
+            $query->select('amv_id', 'type')
+                ->from('amv_reactions')
+                ->where('user_id', $userId);
+        }, 'user_reaction', function ($join) {
+            $join->on('amvs.id', '=', 'user_reaction.amv_id');
+        })
+            ->select('amvs.*', 'user_reaction.type as user_reaction')
+            ->offset($request->start ? $request->start : 0)->limit($request->end ? $request->end : 0)->orderBy('created_at', 'DESC')
+            ->get();
         return response([
-            'posts' => Amv::with('user')->orderBy('created_at', 'DESC')->offset($request->start ? $request->start : 0)->limit($request->end ? $request->end : 0)->orderBy('created_at', 'DESC')->get(),
+            'posts' => $posts
+            // 'posts' => Amv::with('user')->orderBy('created_at', 'DESC')->offset($request->start ? $request->start : 0)->limit($request->end ? $request->end : 0)->orderBy('created_at', 'DESC')->get(),
         ]);
     }
 

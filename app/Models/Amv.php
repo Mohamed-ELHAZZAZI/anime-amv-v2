@@ -33,4 +33,9 @@ class Amv extends Model
     {
         return Carbon::parse($value)->diffForHumans();
     }
+
+    public function amvReactions()
+    {
+        return $this->hasMany(AmvReaction::class);
+    }
 }
