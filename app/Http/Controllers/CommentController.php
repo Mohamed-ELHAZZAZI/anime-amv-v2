@@ -26,7 +26,7 @@ class CommentController extends Controller
 
     public function get($post_id)
     {
-        $get = Comment::with('user')->with('replies')->where('parent_id', null)->get();
+        $get = Comment::with('user', 'replies.user')->with('replies')->where('amv_id', $post_id)->where('parent_id', null)->get();
         return response([
             'comments' => $get
         ]);
