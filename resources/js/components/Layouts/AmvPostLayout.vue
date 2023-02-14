@@ -91,6 +91,7 @@
             class="w-full h-12 flex justify-between border-t border-gray-300 mt-3 relative"
         >
             <button
+                @click="showComment"
                 class="flex items-center gap-1 hover:bg-lightGray mt-2 px-2 hover:fill-red-600 rounded"
             >
                 <svg
@@ -254,7 +255,7 @@ const showPostBox = ref(false);
 const text = ref(null);
 const showShareBox = ref(false);
 const deleteModel = ref();
-const emit = defineEmits(["deletePost", "modifyPost"]);
+const emit = defineEmits(["deletePost", "modifyPost", "showComment"]);
 const showCopied = ref(false);
 const shareLink = ref(window.location.href + "/p/" + props.post.id);
 const user = computed(() => {
@@ -314,6 +315,9 @@ function reactToPost(type) {
     info.append("post_id", props.post.id);
 
     store.dispatch("reactToAmv", info);
+}
+function showComment() {
+    emit("showComment");
 }
 </script>
 
