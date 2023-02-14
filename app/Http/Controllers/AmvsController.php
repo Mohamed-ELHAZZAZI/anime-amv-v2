@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Amv;
+use App\Models\AmvReaction;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use App\Models\PostTagsRelations;
@@ -57,7 +58,7 @@ class AmvsController extends Controller
 
     public function get(Request $request)
     {
-        $userId = auth('sanctum')->user()->id;
+        $userId = auth('sanctum')->user()?->id;
         $posts = Amv::with('user')->leftJoinSub(function ($query) use ($userId) {
             $query->select('amv_id', 'type')
                 ->from('amv_reactions')
@@ -70,7 +71,6 @@ class AmvsController extends Controller
             ->get();
         return response([
             'posts' => $posts
-            // 'posts' => Amv::with('user')->orderBy('created_at', 'DESC')->offset($request->start ? $request->start : 0)->limit($request->end ? $request->end : 0)->orderBy('created_at', 'DESC')->get(),
         ]);
     }
 
@@ -163,5 +163,38 @@ class AmvsController extends Controller
                 'status' => 400
             ]);
         }
+    }
+
+    public function reactToAmv(Request $request)
+    {
+        $post = Amv::find($request->post_id);
+        if ($post) {
+            if ($request->action == "add") {
+                $react = new AmvReaction();
+                $react->user_id = auth('sanctum')->user()->id;
+                $react->amv_id =  $request->post_id;
+                $react->type = $request->type;
+                $react->save();
+                return response([
+                    'data' => $react
+                ]);
+            } elseif ($request->action == "remove") {
+                $react = AmvReaction::where('user_id', auth('sanctum')->user()->id)->where('amv_id', $request->post_id)->first();
+                $react->delete();
+                return response([
+                    'deleted' => true
+                ]);
+            } elseif ($request->action == "change") {
+                $react = AmvReaction::where('user_id', auth('sanctum')->user()->id)->where('amv_id', $request->post_id)->first();
+                $react->type = $request->type;
+                $react->save();
+                return response([
+                    'updated' => true
+                ]);
+            }
+        }
+        return response([
+            'data' => $post
+        ]);
     }
 }

@@ -110,6 +110,8 @@
                 {{ post.comments }}
             </button>
             <button
+                @click="reactToPost('like')"
+                :class="post.user_reaction == 'like' ? 'fill-red-600 ' : ''"
                 class="flex items-center gap-1 hover:bg-lightGray mt-2 px-2 hover:fill-red-600 rounded"
             >
                 <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24">
@@ -120,6 +122,8 @@
                 {{ post.likes }}
             </button>
             <button
+                @click="reactToPost('dislike')"
+                :class="post.user_reaction == 'dislike' ? 'fill-red-600 ' : ''"
                 class="flex items-center gap-1 hover:bg-lightGray mt-2 px-2 hover:fill-red-600 rounded"
             >
                 <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24">
@@ -286,6 +290,30 @@ function copyShareLink() {
     setInterval(() => {
         showCopied.value = false;
     }, 2000);
+}
+
+function reactToPost(type) {
+    let action;
+    if (props.post.user_reaction == type) {
+        action = "remove";
+        props.post[props.post.user_reaction + "s"]--;
+        props.post.user_reaction = null;
+    } else if (props.post.user_reaction != type) {
+        if (props.post.user_reaction != null) {
+            action = "change";
+            props.post[props.post.user_reaction + "s"]--;
+        } else {
+            action = "add";
+        }
+        props.post[type + "s"]++;
+        props.post.user_reaction = type;
+    }
+    let info = new FormData();
+    info.append("type", type);
+    info.append("action", action);
+    info.append("post_id", props.post.id);
+
+    store.dispatch("reactToAmv", info);
 }
 </script>
 

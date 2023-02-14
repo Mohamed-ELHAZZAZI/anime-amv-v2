@@ -92,6 +92,9 @@ const store = createStore({
                     return error;
                 });
         },
+        reactToAmv: ({ state, commit }, data) => {
+            return axiosClient.post("/react-to-amv", data);
+        },
     },
     mutations: {
         setProgress: (state, per) => {
