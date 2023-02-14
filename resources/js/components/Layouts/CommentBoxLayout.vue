@@ -31,7 +31,7 @@
                     <span class="sr-only">Close modal</span>
                 </button>
             </div>
-            <div class="w-full h-[450px] overflow-auto flex py-2">
+            <!-- <div class="w-full h-[450px] overflow-auto flex py-2">
                 <div class="antialiased mx-auto max-w-screen-sm">
                     <div class="space-y-4">
                         <div class="flex">
@@ -161,14 +161,17 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
+            <CommentSkeleton v-if="showCommentSkeleton" :class="'mb-3'" />
         </div>
     </div>
 </template>
 
 <script setup>
+import { ref } from "@vue/reactivity";
+import CommentSkeleton from "../skeletons/CommentSkeleton.vue";
 const emit = defineEmits(["hideComment"]);
-
+const showCommentSkeleton = ref(true);
 function closeCommentSection() {
     emit("hideComment");
 }

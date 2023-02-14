@@ -264,8 +264,7 @@ const user = computed(() => {
 onMounted(() => {
     let str = props.post.text;
     str = str.replace(/(?:\s|^)#([^0-9\W\s][a-zA-z0-9]*)/g, (value) => {
-        value = value.slice(2, value.length);
-        return `<a href='/tags/${value}' class='text-utOrange cursor-pointer hover:underline' "> #${value}</a>`;
+        return `<a href='/tags/${value}' class='text-utOrange cursor-pointer hover:underline' "> ${value}</a>`;
     });
     text.value = str;
 });
