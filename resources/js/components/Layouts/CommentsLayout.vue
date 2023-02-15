@@ -40,7 +40,7 @@
                 </button>
                 <div
                     v-if="showCommentBox"
-                    class="w-36 bg-white absolute border-2 border-gray-300 top-7 right-0"
+                    class="w-36 bg-white absolute border-2 z-20 rounded border-gray-300 top-7 right-0"
                 >
                     <ul class="w-full flex flex-col gap-[2px]">
                         <li class="w-full h-10">

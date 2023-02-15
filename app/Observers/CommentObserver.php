@@ -38,6 +38,9 @@ class CommentObserver
      */
     public function deleted(Comment $comment)
     {
+        $post = Amv::find($comment->amv_id);
+        $post->comments--;
+        $post->save();
     }
 
     /**
