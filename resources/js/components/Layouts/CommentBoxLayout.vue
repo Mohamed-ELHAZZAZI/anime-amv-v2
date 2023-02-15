@@ -39,69 +39,27 @@
                             v-for="comment in comments"
                             :key="comment.id"
                         >
-                            <div class="flex-shrink-0 mr-3">
-                                <img
-                                    class="mt-2 rounded-full w-8 h-8 sm:w-10 sm:h-10"
-                                    src="https://images.unsplash.com/photo-1604426633861-11b2faead63c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&h=200&q=80"
-                                    alt=""
-                                />
-                            </div>
-                            <div
-                                class="flex-1 border rounded-lg px-4 py-2 sm:px-6 sm:py-4 leading-relaxed"
-                            >
-                                <span class="text-base font-bold">{{
-                                    comment.user.firstName +
-                                    " " +
-                                    comment.user.lastName
-                                }}</span>
-                                <span class="ml-2 text-xs text-gray-400">{{
-                                    comment.created_at
-                                }}</span>
-                                <p class="text-sm">
-                                    {{ comment.body }}
-                                </p>
-
-                                <h4
-                                    class="my-5 uppercase tracking-wide text-gray-400 font-bold text-xs"
-                                >
-                                    Replies
-                                </h4>
-
-                                <div class="space-y-4">
-                                    <div
-                                        class="flex"
-                                        v-for="reply in comment.replies"
-                                        :key="reply.id"
-                                    >
-                                        <div class="flex-shrink-0 mr-3">
-                                            <img
-                                                class="mt-3 rounded-full w-6 h-6 sm:w-8 sm:h-8"
-                                                src="https://images.unsplash.com/photo-1604426633861-11b2faead63c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&h=200&q=80"
-                                                alt=""
-                                            />
-                                        </div>
-                                        <div
-                                            class="flex-1 bg-gray-100 rounded-lg px-4 py-2 sm:px-6 sm:py-4 leading-relaxed"
-                                        >
-                                            <span class="text-base font-bold">{{
-                                                reply.user.firstName +
-                                                " " +
-                                                reply.user.lastName
-                                            }}</span>
-                                            <span
-                                                class="ml-2 text-xs text-gray-400"
-                                                >{{ reply.created_at }}</span
-                                            >
-                                            <p class="text-xs sm:text-sm">
-                                                {{ reply.body }}
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <CommentsReplies :comment="comment" />
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="w-full flex items-center justify-center px-3">
+                <form class="w-full">
+                    <label
+                        for="default-search"
+                        class="mb-2 text-sm font-medium text-gray-900 sr-only"
+                        >Comment</label
+                    >
+                    <div class="relative flex py-2">
+                        <textarea
+                            @input="textAreaResizer"
+                            id="textArea"
+                            placeholder="Write your comment here..."
+                            class="block resize-none w-full max-h-[100px] overflow-auto p-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-utOrange focus:border-utOrange"
+                        ></textarea>
+                    </div>
+                </form>
             </div>
             <CommentSkeleton v-if="showCommentSkeleton" :class="'mb-3'" />
         </div>
@@ -113,6 +71,8 @@ import { ref } from "@vue/reactivity";
 import { onMounted } from "@vue/runtime-core";
 import store from "../../store";
 import CommentSkeleton from "../skeletons/CommentSkeleton.vue";
+import CommentsReplies from "../Layouts/CommentsLayout.vue";
+
 const emit = defineEmits(["hideComment"]);
 const props = defineProps(["post_id"]);
 const showCommentSkeleton = ref(false);
@@ -120,12 +80,17 @@ const comments = ref([]);
 onMounted(() => {
     store.dispatch("getComments", props.post_id).then((res) => {
         comments.value = res.data.comments;
-        console.log(comments.value);
     });
 });
 
 function closeCommentSection() {
     emit("hideComment");
+}
+
+function textAreaResizer() {
+    let d = document.getElementById("textArea");
+    d.style.height = "auto";
+    d.style.height = `${d.scrollHeight}px`;
 }
 </script>
 
