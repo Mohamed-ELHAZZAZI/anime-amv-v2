@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AmvsController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\UsersController;
+use App\Models\Comment;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,11 +27,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/save-amv',  [AmvsController::class, 'post']);
     Route::post('/react-to-amv', [AmvsController::class, 'reactToAmv']);
     Route::post('/modify-amv',  [AmvsController::class, 'modify']);
+    Route::post('/delete-comment', [CommentController::class, 'delete']);
     Route::get('/get-single-amv/{id}', [AmvsController::class, 'getSingleAmv']);
+    Route::post('/comment', [CommentController::class, 'comment']);
 });
 
 Route::post('/register', [UsersController::class, 'register']);
 Route::post('/login', [UsersController::class, 'login']);
 Route::get('/get-amv', [AmvsController::class, 'get']);
-Route::post('/comment', [CommentController::class, 'comment']);
 Route::get('/getComment/{post_id}', [CommentController::class, 'get']);

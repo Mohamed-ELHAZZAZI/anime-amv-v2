@@ -42,4 +42,19 @@ class CommentController extends Controller
             'comments' => $get
         ]);
     }
+
+    public function delete(Request $request)
+    {
+        $comment = Comment::find($request->id);
+        if ($comment && $comment->user_id === auth('sanctum')->user()->id) {
+            $comment->delete();
+            return response([
+                'error' => false,
+                'comment' => $comment
+            ]);
+        }
+        return response([
+            'error' => true,
+        ]);
+    }
 }

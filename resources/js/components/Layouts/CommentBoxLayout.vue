@@ -39,7 +39,11 @@
                     v-for="comment in comments"
                     :key="comment.id"
                 >
-                    <CommentsReplies :comment="comment" />
+                    <CommentsReplies
+                        @deleteComment="deleteComment"
+                        :comment="comment"
+                        :user="user"
+                    />
                 </div>
             </div>
             <div class="w-full flex items-center justify-center py-2 px-4">
@@ -88,7 +92,7 @@
 
 <script setup>
 import { ref } from "@vue/reactivity";
-import { onMounted } from "@vue/runtime-core";
+import { computed, onMounted } from "@vue/runtime-core";
 import store from "../../store";
 import CommentSkeleton from "../skeletons/CommentSkeleton.vue";
 import CommentsReplies from "../Layouts/CommentsLayout.vue";
@@ -105,6 +109,10 @@ onMounted(() => {
         showCommentSkeleton.value = false;
         comments.value = res.data.comments;
     });
+});
+
+const user = computed(() => {
+    return store.state.user.info;
 });
 
 function closeCommentSection() {
@@ -133,9 +141,12 @@ function submitComment() {
             res.data.comment.user = res.data.user;
             res.data.comment.replies = [];
             comments.value.unshift(res.data.comment);
-            console.log(res.data.comment.user);
         }
     });
+}
+
+function deleteComment(comment) {
+    comments.value = comments.value.filter((cmt) => cmt.id != comment.id);
 }
 </script>
 

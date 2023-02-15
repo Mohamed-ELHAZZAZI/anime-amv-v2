@@ -107,6 +107,13 @@ const store = createStore({
                 return response;
             });
         },
+        deleteComment: ({ state, commit }, comment_id) => {
+            return axiosClient
+                .post("/delete-comment", { id: comment_id })
+                .then((response) => {
+                    return response.data;
+                });
+        },
     },
     mutations: {
         setProgress: (state, per) => {
