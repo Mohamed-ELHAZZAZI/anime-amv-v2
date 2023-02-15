@@ -32,7 +32,13 @@
                 </button>
             </div>
             <div class="w-full overflow-auto px-12 flex flex-col gap-2 py-2">
-                <div class="flex" v-for="comment in comments" :key="comment.id">
+                <CommentSkeleton v-if="showCommentSkeleton" :class="'mb-3'" />
+                <div
+                    class="flex"
+                    v-else
+                    v-for="comment in comments"
+                    :key="comment.id"
+                >
                     <CommentsReplies :comment="comment" />
                 </div>
             </div>
@@ -76,7 +82,6 @@
                     </div>
                 </form>
             </div>
-            <CommentSkeleton v-if="showCommentSkeleton" :class="'mb-3'" />
         </div>
     </div>
 </template>
@@ -95,7 +100,9 @@ const comments = ref([]);
 const commentText = ref("");
 const commentError = ref("");
 onMounted(() => {
+    showCommentSkeleton.value = true;
     store.dispatch("getComments", props.post_id).then((res) => {
+        showCommentSkeleton.value = false;
         comments.value = res.data.comments;
     });
 });
