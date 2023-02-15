@@ -35,7 +35,7 @@
                 <CommentSkeleton v-if="showCommentSkeleton" />
                 <div
                     class="flex"
-                    v-else
+                    v-else-if="comments.length"
                     v-for="comment in comments"
                     :key="comment.id"
                 >
@@ -44,6 +44,9 @@
                         :comment="comment"
                         :user="user"
                     />
+                </div>
+                <div v-else class="text-center">
+                    <span>This post has no comments yet! </span>
                 </div>
             </div>
             <div class="w-full flex items-center justify-center py-2 px-4">
