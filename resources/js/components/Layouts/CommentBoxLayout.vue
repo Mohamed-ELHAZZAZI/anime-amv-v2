@@ -111,9 +111,9 @@ function textAreaResizer() {
 }
 
 function submitComment() {
-    // if (!commentText.value) {
-    //     return (commentError.value = "The");
-    // }
+    if (!commentText.value) {
+        return (commentError.value = "The text field is required.");
+    }
     let data = new FormData();
     data.append("text", commentText.value);
     data.append("post_id", props.post_id);

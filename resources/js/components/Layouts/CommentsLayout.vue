@@ -33,6 +33,44 @@
             </button>
 
             <div class="space-y-4" v-if="showReplies">
+                <form class="w-full" @submit.prevent="submitReply">
+                    <formError v-if="replyError" :error="replyError" />
+                    <label
+                        for="default-search"
+                        class="mb-2 text-sm font-medium text-gray-900 sr-only"
+                        >Comment</label
+                    >
+                    <div class="relative flex items-center gap-4">
+                        <textarea
+                            @input="textAreaResizer"
+                            v-model="replyText"
+                            id="textArea"
+                            placeholder="Write your reply here..."
+                            class="block resize-none w-full h-14 max-h-[100px] overflow-auto p-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-utOrange focus:border-utOrange"
+                        ></textarea>
+                        <button
+                            type="submit"
+                            class="h-10 bg-utOrange rounded border-none p-4 text-white flex items-center justify-center gap-2"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                class="w-5 h-5"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"
+                                />
+                            </svg>
+
+                            Reply
+                        </button>
+                    </div>
+                </form>
                 <div
                     class="flex w-full"
                     v-for="reply in comment.replies"
@@ -72,9 +110,30 @@
 
 <script setup>
 import { ref } from "vue";
+import store from "../../store";
+import formError from "../auth/formError.vue";
 const props = defineProps(["comment"]);
-
+const replyError = ref("");
 const showReplies = ref(false);
+const replyText = ref("");
+
+function submitReply() {
+    if (!replyText.value) {
+        return (replyError.value = "The text field is required.");
+    }
+    let data = new FormData();
+    data.append("text", replyText.value);
+    data.append("post_id", props.comment.amv_id);
+    data.append("parent_id", props.comment.id);
+    replyError.value = "";
+    store
+        .dispatch("submitComment", data)
+        .then((res) => {
+            replyText.value = "";
+            console.log(res);
+        })
+        .catch((err) => (replyError.value = err.response.data.message));
+}
 </script>
 
 <style></style>
