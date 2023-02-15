@@ -130,7 +130,10 @@ function submitComment() {
         if (res.data.error) {
             commentError.value = res.data.data.text[0];
         } else {
-            console.log(res.data);
+            res.data.comment.user = res.data.user;
+            res.data.comment.replies = [];
+            comments.value.unshift(res.data.comment);
+            console.log(res.data.comment.user);
         }
     });
 }

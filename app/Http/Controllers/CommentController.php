@@ -11,9 +11,7 @@ class CommentController extends Controller
     public function comment(Request $request)
     {
 
-        // $request->validate([
-        //     'text' => 'required|string',
-        // ]);
+
         $validator = Validator::make($request->all(), [
             'text' => 'required|string'
         ]);
@@ -39,7 +37,7 @@ class CommentController extends Controller
 
     public function get($post_id)
     {
-        $get = Comment::with('user', 'replies.user')->with('replies')->where('amv_id', $post_id)->where('parent_id', null)->get();
+        $get = Comment::with('user', 'replies.user')->with('replies')->where('amv_id', $post_id)->where('parent_id', null)->orderBy('created_at', 'DESC')->get();
         return response([
             'comments' => $get
         ]);
