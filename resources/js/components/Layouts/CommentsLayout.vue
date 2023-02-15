@@ -126,14 +126,15 @@ function submitReply() {
     data.append("post_id", props.comment.amv_id);
     data.append("parent_id", props.comment.id);
     replyError.value = "";
-    store
-        .dispatch("submitComment", data)
-        .then((res) => {
-            replyText.value = "";
-            res.data.comment.user = res.data.user;
+    store.dispatch("submitComment", data).then((res) => {
+        replyText.value = "";
+        if (res.data.error) {
+            replyError.value = res.data.data.text[0];
+        } else {
             props.comment.replies.unshift(res.data.comment);
-        })
-        .catch((err) => console.log(err));
+            res.data.comment.user = res.data.user;
+        }
+    });
 }
 
 function textAreaResizer(e) {

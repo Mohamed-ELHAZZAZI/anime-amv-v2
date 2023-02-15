@@ -125,13 +125,14 @@ function submitComment() {
     data.append("text", commentText.value);
     data.append("post_id", props.post_id);
     commentError.value = "";
-    store
-        .dispatch("submitComment", data)
-        .then((res) => {
-            commentText.value = "";
-            console.log(res);
-        })
-        .catch((err) => (commentError.value = err.response.data.message));
+    store.dispatch("submitComment", data).then((res) => {
+        commentText.value = "";
+        if (res.data.error) {
+            commentError.value = res.data.data.text[0];
+        } else {
+            console.log(res.data);
+        }
+    });
 }
 </script>
 
