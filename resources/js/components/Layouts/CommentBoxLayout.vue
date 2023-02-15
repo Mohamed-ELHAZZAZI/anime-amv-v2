@@ -4,10 +4,10 @@
         @click.self="closeCommentSection"
     >
         <div
-            class="w-full rounded md:max-w-[750px] min-h-[550px] bg-white flex flex-col z-40"
+            class="w-full rounded md:max-w-[750px] min-h-[550px] bg-white grid grid-rows-[64px_450px_auto] z-40"
         >
             <div
-                class="w-full h-16 flex items-center justify-center border-b-2 border-b-gray-300 font-semibold text-lg relative"
+                class="w-full flex items-center justify-center border-b-2 border-b-gray-300 font-semibold text-lg relative"
             >
                 Comments
                 <button
@@ -31,20 +31,12 @@
                     <span class="sr-only">Close modal</span>
                 </button>
             </div>
-            <div class="w-full h-[450px] overflow-auto px-12 flex py-2">
-                <div class="antialiased mx-auto w-full">
-                    <div class="space-y-4">
-                        <div
-                            class="flex"
-                            v-for="comment in comments"
-                            :key="comment.id"
-                        >
-                            <CommentsReplies :comment="comment" />
-                        </div>
-                    </div>
+            <div class="w-full overflow-auto px-12 flex flex-col gap-2 py-2">
+                <div class="flex" v-for="comment in comments" :key="comment.id">
+                    <CommentsReplies :comment="comment" />
                 </div>
             </div>
-            <div class="w-full flex items-center justify-center px-3">
+            <div class="w-full flex items-center justify-center py-2 px-4">
                 <form class="w-full" @submit.prevent="submitComment">
                     <label
                         for="default-search"
@@ -58,7 +50,7 @@
                             v-model="commentText"
                             id="textArea"
                             placeholder="Write your comment here..."
-                            class="block resize-none w-full max-h-[100px] overflow-auto p-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-utOrange focus:border-utOrange"
+                            class="block resize-none w-full h-16 max-h-[100px] overflow-auto p-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-utOrange focus:border-utOrange"
                         ></textarea>
                         <button
                             type="submit"
