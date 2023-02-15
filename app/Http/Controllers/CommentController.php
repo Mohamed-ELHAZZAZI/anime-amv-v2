@@ -14,14 +14,15 @@ class CommentController extends Controller
             'text' => 'required|string',
         ]);
 
-        Comment::create([
+        $commnet  = Comment::create([
             'amv_id' => $request->post_id,
             'user_id' => auth('sanctum')->user()->id,
             'parent_id' => $request->parent_id ? $request->parent_id : null,
             'body' => $request->text
         ]);
         return response([
-            'ee' => true
+            'comment' => $commnet,
+            'user' => auth('sanctum')->user()
         ]);
     }
 

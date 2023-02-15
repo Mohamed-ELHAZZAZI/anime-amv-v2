@@ -42,9 +42,9 @@
                     >
                     <div class="relative flex items-center gap-4">
                         <textarea
+                            ref="textArea"
                             @input="textAreaResizer"
                             v-model="replyText"
-                            id="textArea"
                             placeholder="Write your reply here..."
                             class="block resize-none w-full h-14 max-h-[100px] overflow-auto p-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-utOrange focus:border-utOrange"
                         ></textarea>
@@ -116,7 +116,7 @@ const props = defineProps(["comment"]);
 const replyError = ref("");
 const showReplies = ref(false);
 const replyText = ref("");
-
+const textArea = ref();
 function submitReply() {
     if (!replyText.value) {
         return (replyError.value = "The text field is required.");
@@ -130,9 +130,16 @@ function submitReply() {
         .dispatch("submitComment", data)
         .then((res) => {
             replyText.value = "";
-            console.log(res);
+            res.data.comment.user = res.data.user;
+            props.comment.replies.unshift(res.data.comment);
         })
-        .catch((err) => (replyError.value = err.response.data.message));
+        .catch((err) => console.log(err));
+}
+
+function textAreaResizer(e) {
+    let d = textArea.value;
+    d.style.height = "auto";
+    d.style.height = `${d.scrollHeight}px`;
 }
 </script>
 

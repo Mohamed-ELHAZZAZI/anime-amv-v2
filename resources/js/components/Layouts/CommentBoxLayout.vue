@@ -32,7 +32,7 @@
                 </button>
             </div>
             <div class="w-full overflow-auto px-12 flex flex-col gap-2 py-2">
-                <CommentSkeleton v-if="showCommentSkeleton" :class="'mb-3'" />
+                <CommentSkeleton v-if="showCommentSkeleton" />
                 <div
                     class="flex"
                     v-else
