@@ -45,19 +45,42 @@
                 </div>
             </div>
             <div class="w-full flex items-center justify-center px-3">
-                <form class="w-full">
+                <form class="w-full" @submit.prevent="submitComment">
                     <label
                         for="default-search"
                         class="mb-2 text-sm font-medium text-gray-900 sr-only"
                         >Comment</label
                     >
-                    <div class="relative flex py-2">
+                    <formError v-if="commentError" :error="commentError" />
+                    <div class="relative flex items-center gap-4">
                         <textarea
                             @input="textAreaResizer"
+                            v-model="commentText"
                             id="textArea"
                             placeholder="Write your comment here..."
                             class="block resize-none w-full max-h-[100px] overflow-auto p-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-utOrange focus:border-utOrange"
                         ></textarea>
+                        <button
+                            type="submit"
+                            class="h-10 bg-utOrange rounded border-none p-4 text-white flex items-center justify-center gap-2"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                class="w-5 h-5 -rotate-45"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"
+                                />
+                            </svg>
+
+                            Send
+                        </button>
                     </div>
                 </form>
             </div>
@@ -72,11 +95,13 @@ import { onMounted } from "@vue/runtime-core";
 import store from "../../store";
 import CommentSkeleton from "../skeletons/CommentSkeleton.vue";
 import CommentsReplies from "../Layouts/CommentsLayout.vue";
-
+import formError from "../auth/formError.vue";
 const emit = defineEmits(["hideComment"]);
 const props = defineProps(["post_id"]);
 const showCommentSkeleton = ref(false);
 const comments = ref([]);
+const commentText = ref("");
+const commentError = ref("");
 onMounted(() => {
     store.dispatch("getComments", props.post_id).then((res) => {
         comments.value = res.data.comments;
@@ -91,6 +116,23 @@ function textAreaResizer() {
     let d = document.getElementById("textArea");
     d.style.height = "auto";
     d.style.height = `${d.scrollHeight}px`;
+}
+
+function submitComment() {
+    // if (!commentText.value) {
+    //     return (commentError.value = "The");
+    // }
+    let data = new FormData();
+    data.append("text", commentText.value);
+    data.append("post_id", props.post_id);
+    commentError.value = "";
+    store
+        .dispatch("submitComment", data)
+        .then((res) => {
+            commentText.value = "";
+            console.log(res);
+        })
+        .catch((err) => (commentError.value = err.response.data.message));
 }
 </script>
 

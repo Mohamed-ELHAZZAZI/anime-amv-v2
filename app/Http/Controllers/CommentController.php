@@ -9,15 +9,16 @@ class CommentController extends Controller
 {
     public function comment(Request $request)
     {
+
         $request->validate([
-            'body' => 'required',
+            'text' => 'required|string',
         ]);
 
         Comment::create([
-            'amv_id' => 1,
-            'user_id' => 1,
-            'parent_id' => 1,
-            'body' => $request->body
+            'amv_id' => $request->post_id,
+            'user_id' => auth('sanctum')->user()->id,
+            'parent_id' => $request->parent_id ? $request->parent_id : null,
+            'body' => $request->text
         ]);
         return response([
             'ee' => true
