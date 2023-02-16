@@ -140,6 +140,7 @@ class AmvsController extends Controller
         if ($isFileUploaded) {
             $post->text = $request->text;
             $post->video = $filePath;
+            $post->updated = 1;
             $post->save();
             $post_tags = PostTagsRelations::where('amv_id', $post->id)->get(['id']);
             if (!empty($post_tags)) {

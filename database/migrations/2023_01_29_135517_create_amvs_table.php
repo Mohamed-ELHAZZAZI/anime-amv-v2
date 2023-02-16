@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('comments')->default(0);
             $table->integer('likes')->default(0);
             $table->integer('dislikes')->default(0);
+            $table->enum('updated', [1, 0])->default(0);
             $table->timestamps();
         });
     }

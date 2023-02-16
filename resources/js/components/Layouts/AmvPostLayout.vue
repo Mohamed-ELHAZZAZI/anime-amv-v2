@@ -10,9 +10,16 @@
                     alt=""
                 />
                 <span class="flex flex-col">
-                    <span class="font-semibold text-lg">
-                        {{ post.user.firstName + " " + post.user.lastName }}
-                    </span>
+                    <div>
+                        <span class="font-semibold text-lg">
+                            {{ post.user.firstName + " " + post.user.lastName }}
+                        </span>
+                        <span
+                            v-if="post.updated === '1'"
+                            class="ml-2 text-xs font-medium mr-2 px-2.5 py-0.5 rounded bg-gray-300 text-black"
+                            >Modified</span
+                        >
+                    </div>
                     <span class="text-sm text-gray-500">{{
                         post.created_at
                     }}</span>
@@ -267,9 +274,11 @@ const user = computed(() => {
 });
 onMounted(() => {
     let str = props.post.text;
-    str = str.replace(/(?:\s|^)#([^0-9\W\s][a-zA-z0-9]*)/g, (value) => {
-        return `<a href='/tags/${value}' class='text-utOrange cursor-pointer hover:underline' "> ${value}</a>`;
-    });
+    if (str) {
+        str = str.replace(/(?:\s|^)#([^0-9\W\s][a-zA-z0-9]*)/g, (value) => {
+            return `<a href='/tags/${value}' class='text-utOrange cursor-pointer hover:underline' "> ${value}</a>`;
+        });
+    }
     text.value = str;
 });
 

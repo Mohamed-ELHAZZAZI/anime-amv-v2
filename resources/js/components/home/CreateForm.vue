@@ -268,6 +268,9 @@ function displayTextArea() {
     }
 }
 function createFun() {
+    if (myFile === 1 && text.value === props.toModifyPost?.text) {
+        return emit("hideCreateModel");
+    }
     if (!myFile) {
         return (errorMsg.value = "Choosing the appropriate file is crucial.");
     }
