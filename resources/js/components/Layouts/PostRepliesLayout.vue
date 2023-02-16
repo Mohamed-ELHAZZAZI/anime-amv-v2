@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex w-full bg-gray-100 rounded-lg px-4 py-3 gap-2 leading-relaxed relative"
+        class="grid grid-cols-[35px_1fr] w-full bg-gray-100 rounded-lg px-4 py-3 gap-2 leading-relaxed relative"
     >
         <div class="">
             <img
@@ -18,9 +18,43 @@
                     reply.created_at
                 }}</span>
             </div>
-            <p class="text-xs sm:text-sm">
+            <p class="text-xs sm:text-sm" v-if="!showModifyForm">
                 {{ reply.body }}
             </p>
+            <div class="w-full" v-else>
+                <form class="w-full" @submit.prevent="ModiyReply">
+                    <formError v-if="modifyError" :error="modifyError" />
+                    <label
+                        for="default-search"
+                        class="mb-2 text-sm font-medium text-gray-900 sr-only"
+                        >Comment</label
+                    >
+                    <div class="relative flex flex-col items-center gap-4">
+                        <textarea
+                            ref="textArea"
+                            @input="textAreaResizer"
+                            v-model="newReply"
+                            placeholder="Write your reply here..."
+                            class="block resize-none w-full h-14 max-h-[100px] overflow-auto p-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-utOrange focus:border-utOrange"
+                        ></textarea>
+                        <div class="grid w-full gap-3 grid-cols-2">
+                            <button
+                                type="submit"
+                                class="h-10 w-full bg-utOrange rounded border-none p-4 text-white flex items-center justify-center gap-2"
+                            >
+                                Save
+                            </button>
+                            <button
+                                @click="showModifyForm = false"
+                                type="button"
+                                class="h-10 w-full bg-white border-2 border-gray-300 rounded p-4 text-prussianBlue flex items-center justify-center gap-2"
+                            >
+                                cancel
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
         <button
             :disabled="triggerDelete"
@@ -51,6 +85,10 @@
             <ul class="w-full flex flex-col gap-[2px]">
                 <li class="w-full h-10">
                     <button
+                        @click="
+                            showModifyForm = true;
+                            showReplyBox = false;
+                        "
                         :disabled="triggerDelete"
                         :class="triggerDelete ? 'cursor-not-allowed' : ''"
                         class="w-full h-full flex items-center px-3 gap-2 text-prussianBlue hover:bg-lightGray"
@@ -129,11 +167,14 @@
 <script setup>
 import { ref } from "@vue/reactivity";
 import store from "../../store";
+import formError from "../auth/formError.vue";
 const props = defineProps(["reply", "user"]);
 const emit = defineEmits(["deleteReply"]);
 const showReplyBox = ref(false);
 const triggerDelete = ref(false);
-
+const showModifyForm = ref(false);
+const newReply = ref(props.reply.body);
+const modifyError = ref("");
 function deleteReply() {
     triggerDelete.value = true;
 
@@ -143,6 +184,30 @@ function deleteReply() {
             alert("Error try agin later");
         } else {
             emit("deleteReply", res.comment);
+        }
+    });
+}
+
+function ModiyReply() {
+    if (!newReply.value) {
+        return (modifyError.value = "The text field is required.");
+    } else if (newReply.value === props.reply.body) {
+        return (showModifyForm.value = false);
+    }
+    let data = new FormData();
+    data.append("comment_id", props.reply.id);
+    data.append("text", newReply.value);
+    modifyError.value = "";
+    store.dispatch("updateComment", data).then((res) => {
+        if (res.data.error) {
+            if (res.data.msg) {
+                modifyError.value = res.data.msg.text[0];
+            } else {
+                modifyError.value = res.data.text;
+            }
+        } else {
+            props.reply.body = res.data.comment.body;
+            showModifyForm.value = false;
         }
     });
 }

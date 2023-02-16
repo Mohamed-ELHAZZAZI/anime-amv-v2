@@ -295,13 +295,17 @@ function deleteReply(reply) {
 }
 
 function ModiyComment() {
+    if (!newComment.value) {
+        return (modifyError.value = "The text field is required.");
+    } else if (newComment.value === props.comment.body) {
+        return (showModifyField.value = false);
+    }
     let data = new FormData();
     data.append("comment_id", props.comment.id);
     data.append("text", newComment.value);
     modifyError.value = "";
     store.dispatch("updateComment", data).then((res) => {
         if (res.data.error) {
-            console.log(res.data);
             if (res.data.msg) {
                 modifyError.value = res.data.msg.text[0];
             } else {
