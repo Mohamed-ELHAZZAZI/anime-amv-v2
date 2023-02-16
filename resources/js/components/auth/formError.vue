@@ -1,5 +1,5 @@
 <template>
-    <span class="text-sm text-[#df4545] mt-1 block">
+    <span class="text-sm text-[#df4545] mt-1 flex items-center gap-1">
         <svg version="1.1" viewBox="0 0 12 12" class="w-3 h-3 inline">
             <path
                 fill="#df4545"
