@@ -10,20 +10,26 @@
             />
         </div>
         <div>
-            <div class="h-8 flex items-center gap-1">
-                <span class="text-base font-bold">{{
-                    reply.user.firstName + " " + reply.user.lastName
-                }}</span>
-                <span
-                    v-if="reply.updated"
-                    class="text-xs font-medium mr-2 px-2.5 py-0.5 rounded bg-gray-300 text-black"
-                    >Modified</span
-                >
-                <span class="text-xs text-gray-400">{{
-                    reply.created_at
-                }}</span>
+            <div class="min-h-8 flex items-center gap-1 pr-1">
+                <span class="text-sm min-[400px]:text-base font-bold"
+                    >{{ reply.user.firstName + " " + reply.user.lastName }}
+                    <span
+                        v-if="reply.updated"
+                        class="text-xs font-medium mr-2 px-1 min-[400px]:px-2.5 py-0.5 rounded bg-gray-300 text-black"
+                        >M<span class="hidden sm:inline-block">odified</span> {{
+                    }}</span>
+
+                    <span
+                        class="text-xs min-[450px]:inline hidden text-gray-400"
+                        >{{ reply.created_at }}</span
+                    >
+                </span>
             </div>
-            <p class="text-xs sm:text-sm" v-if="!showModifyForm">
+            <p
+                class="text-xs sm:text-sm"
+                style="overflow-wrap: anywhere"
+                v-if="!showModifyForm"
+            >
                 {{ reply.body }}
             </p>
             <div class="w-full" v-else>
@@ -34,7 +40,9 @@
                         class="mb-2 text-sm font-medium text-gray-900 sr-only"
                         >Comment</label
                     >
-                    <div class="relative flex flex-col items-center gap-4">
+                    <div
+                        class="relative flex flex-col items-center gap-2 min-[400px]:gap-4"
+                    >
                         <textarea
                             ref="textArea"
                             :disabled="submitModify"
@@ -44,7 +52,7 @@
                             class="block resize-none w-full h-14 max-h-[100px] overflow-auto p-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-utOrange focus:border-utOrange"
                         ></textarea>
                         <div
-                            class="grid w-full gap-3 grid-cols-2"
+                            class="grid w-full gap-1 min-[400px]:gap-3 grid-cols-2"
                             :class="submitModify ? 'grid-cols-1' : ''"
                         >
                             <button
@@ -119,10 +127,10 @@
         <div
             v-if="showReplyBox"
             ref="replyBox"
-            class="w-36 bg-white absolute border-2 z-20 rounded border-gray-300 top-7 right-0"
+            class="w-32 min-[400px]:w-36 bg-white absolute border-2 z-20 rounded border-gray-300 top-7 right-0"
         >
             <ul class="w-full flex flex-col gap-[2px]">
-                <li class="w-full h-10">
+                <li class="w-full h-8 min-[400px]:h-10">
                     <button
                         @click="
                             showModifyForm = true;
@@ -138,7 +146,7 @@
                             viewBox="0 0 24 24"
                             stroke-width="1.5"
                             stroke="currentColor"
-                            class="w-5 h-5"
+                            class="min-[400px]:w-5 min-[400px]:h-5 w-4 h-4"
                         >
                             <path
                                 stroke-linecap="round"
@@ -149,7 +157,7 @@
                         Modify
                     </button>
                 </li>
-                <li class="w-full h-10">
+                <li class="w-full h-8 min-[400px]:h-10">
                     <button
                         @click="deleteReply"
                         :disabled="triggerDelete"
@@ -163,7 +171,7 @@
                             viewBox="0 0 24 24"
                             stroke-width="1.5"
                             stroke="currentColor"
-                            class="w-5 h-5"
+                            class="min-[400px]:w-5 min-[400px]:h-5 w-4 h-4"
                         >
                             <path
                                 stroke-linecap="round"

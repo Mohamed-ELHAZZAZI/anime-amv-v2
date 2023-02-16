@@ -1,28 +1,35 @@
 <template>
     <div
-        class="flex w-full border gap-3 rounded-lg px-4 py-2 leading-relaxed pt-2 relative"
+        class="flex w-full border gap-2 sm:gap-3 rounded-lg px-2 sm:px-4 py-2 leading-relaxed pt-2 relative"
     >
         <div class="flex-shrink-0">
             <img
-                class="rounded-full w-10 h-10"
+                class="rounded-full w-8 h-8 sm:w-10 sm:h-10"
                 src="https://images.unsplash.com/photo-1604426633861-11b2faead63c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&h=200&q=80"
                 alt=""
             />
         </div>
         <div class="w-full">
-            <div class="w-full h-10 flex items-center relative gap-1">
-                <span class="text-base font-bold">
+            <div
+                class="w-full min-h-8 sm:min-h-10 flex items-center relative gap-1 pr-4"
+            >
+                <span
+                    class="text-base font-bold"
+                    style="overflow-wrap: anywhere"
+                >
                     {{ comment.user.firstName + " " + comment.user.lastName }}
+                    <span
+                        v-if="comment.updated"
+                        class="text-xs font-medium mr-2 px-2.5 py-0.5 rounded bg-gray-300 text-black"
+                        >M<span class="hidden sm:inline-block">odified</span> {{
+                    }}</span>
+                    <span
+                        class="text-xs text-gray-400 hidden min-[430px]:inline"
+                    >
+                        {{ comment.created_at }}
+                    </span>
                 </span>
 
-                <span
-                    v-if="comment.updated"
-                    class="text-xs font-medium mr-2 px-2.5 py-0.5 rounded bg-gray-300 text-black"
-                    >Modified {{
-                }}</span>
-                <span class="text-xs text-gray-400">
-                    {{ comment.created_at }}
-                </span>
                 <button
                     @click.stop="showBox = !showBox"
                     v-if="user.id === comment.user.id"
@@ -51,7 +58,7 @@
                     class="w-36 bg-white absolute border-2 z-20 rounded border-gray-300 top-7 right-0"
                 >
                     <ul class="w-full flex flex-col gap-[2px]">
-                        <li class="w-full h-10">
+                        <li class="w-full h-8 min-[420px]:h-10">
                             <button
                                 @click="
                                     showModifyField = true;
@@ -69,7 +76,7 @@
                                     viewBox="0 0 24 24"
                                     stroke-width="1.5"
                                     stroke="currentColor"
-                                    class="w-5 h-5"
+                                    class="w-4 h-4 min-[420px]:w-5 min-[420px]:h-5"
                                 >
                                     <path
                                         stroke-linecap="round"
@@ -80,7 +87,7 @@
                                 Modify
                             </button>
                         </li>
-                        <li class="w-full h-10">
+                        <li class="w-full h-8 min-[420px]:h-10">
                             <button
                                 :disabled="deleteTriger"
                                 @click="deleteComment"
@@ -96,7 +103,7 @@
                                     viewBox="0 0 24 24"
                                     stroke-width="1.5"
                                     stroke="currentColor"
-                                    class="w-5 h-5"
+                                    class="w-4 h-4 min-[420px]:w-5 min-[420px]:h-5"
                                 >
                                     <path
                                         stroke-linecap="round"
@@ -134,10 +141,14 @@
                     </ul>
                 </div>
             </div>
-            <p class="text-sm" v-if="!showModifyField">
+            <p
+                class="text-sm"
+                style="overflow-wrap: anywhere"
+                v-if="!showModifyField"
+            >
                 {{ comment.body }}
             </p>
-            <div class="w-full" v-else>
+            <div class="w-full mt-2" v-else>
                 <form class="w-full" @submit.prevent="ModiyComment">
                     <formError v-if="modifyError" :error="modifyError" />
                     <label
@@ -145,17 +156,19 @@
                         class="mb-2 text-sm font-medium text-gray-900 sr-only"
                         >Comment</label
                     >
-                    <div class="relative flex flex-col items-center gap-4">
+                    <div
+                        class="relative flex flex-col items-center gap-1 sm:gap-4"
+                    >
                         <textarea
                             ref="textArea"
                             :disabled="submitModifyComment"
                             @input="textAreaResizer"
                             v-model="newComment"
                             placeholder="Write your reply here..."
-                            class="block resize-none w-full h-14 max-h-[100px] overflow-auto p-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-utOrange focus:border-utOrange"
+                            class="block resize-none w-full h-14 max-h-[100px] overflow-auto p-2 smp-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-utOrange focus:border-utOrange"
                         ></textarea>
                         <div
-                            class="grid w-full gap-3 grid-cols-2"
+                            class="grid w-full gap-2 sm:gap-3 grid-cols-2"
                             :class="submitModifyComment ? 'grid-cols-1' : ''"
                         >
                             <button
@@ -166,7 +179,7 @@
                                         : ''
                                 "
                                 type="submit"
-                                class="h-10 w-full bg-utOrange rounded border-none p-4 text-white flex items-center justify-center gap-2"
+                                class="sm:h-10 h-8 w-full bg-utOrange rounded border-none p-4 text-white flex items-center justify-center gap-2"
                             >
                                 <span v-if="!submitModifyComment"> Save</span>
                                 <div
@@ -197,7 +210,7 @@
                                 v-if="!submitModifyComment"
                                 @click="showModifyField = false"
                                 type="button"
-                                class="h-10 w-full bg-white border-2 border-gray-300 rounded p-4 text-prussianBlue flex items-center justify-center gap-2"
+                                class="sm:h-10 h-8 w-full bg-white border-2 border-gray-300 rounded p-4 text-prussianBlue flex items-center justify-center gap-2"
                             >
                                 cancel
                             </button>
@@ -224,7 +237,9 @@
                         class="mb-2 text-sm font-medium text-gray-900 sr-only"
                         >Comment</label
                     >
-                    <div class="relative flex items-center gap-4">
+                    <div
+                        class="relative flex items-center min-[400px]:gap-4 gap-1"
+                    >
                         <textarea
                             ref="textArea"
                             :disabled="submiteReply"
@@ -255,7 +270,11 @@
                                 />
                             </svg>
 
-                            <span v-if="!submiteReply">Reply</span>
+                            <span
+                                v-if="!submiteReply"
+                                class="hidden min-[400px]:inline"
+                                >Reply</span
+                            >
                             <div
                                 v-else
                                 role="status"

@@ -1,18 +1,18 @@
 <template>
     <div
-        class="fixed bottom-0 top-0 left-0 right-0 bg-black bg-opacity-40 z-30 flex justify-center items-center"
+        class="fixed bottom-0 top-0 left-0 overflow-auto right-0 bg-black bg-opacity-40 z-30 flex justify-center items-center"
         @click.self="closeCommentSection"
     >
         <div
-            class="w-full rounded md:max-w-[750px] min-h-[550px] bg-white grid grid-rows-[64px_450px_auto] z-40"
+            class="w-full rounded md:max-w-[750px] mt-24 mb-10 mx-3 md:m-0 min-h-[550px] bg-white grid grid-rows-[50px_400px_auto] mg:grid-rows-[64px_450px_auto] z-40"
         >
             <div
-                class="w-full flex items-center justify-center border-b-2 border-b-gray-300 font-semibold text-lg relative"
+                class="w-full flex items-center justify-center border-b-2 border-b-gray-300 font-semibold sm:text-lg relative"
             >
                 Comments
                 <button
                     type="button"
-                    class="absolute top-3 right-2.5 text-gray-400 bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center hover:bg-gray-800 hover:text-white"
+                    class="absolute sm:top-2 md:top-3 right-2.5 text-gray-400 bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center hover:bg-gray-800 hover:text-white"
                     @click="closeCommentSection"
                 >
                     <svg
@@ -31,7 +31,9 @@
                     <span class="sr-only">Close modal</span>
                 </button>
             </div>
-            <div class="w-full overflow-auto px-12 flex flex-col gap-2 py-2">
+            <div
+                class="w-full overflow-auto px-2 min-[400px]:px-4 sm:px-12 flex flex-col gap-2 py-2"
+            >
                 <CommentSkeleton v-if="showCommentSkeleton" />
                 <div
                     class="flex"
@@ -57,7 +59,9 @@
                         >Comment</label
                     >
                     <formError v-if="commentError" :error="commentError" />
-                    <div class="relative flex items-center gap-4">
+                    <div
+                        class="relative flex items-center gap-2 min-[400px]:gap-4"
+                    >
                         <textarea
                             :disabled="submited"
                             @input="textAreaResizer"
