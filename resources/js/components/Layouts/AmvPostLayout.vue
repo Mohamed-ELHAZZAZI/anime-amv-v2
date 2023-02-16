@@ -24,6 +24,7 @@
                 </router-link>
                 <button
                     v-if="user.id === post.user_id"
+                    @click.stop="postBox = !postBox"
                     class="text-lg text-gray-600 hover:text-utOrange"
                     @click="showPostBox = !showPostBox"
                 >
@@ -31,6 +32,7 @@
                 </button>
                 <div
                     v-if="showPostBox && user?.id === post.user_id"
+                    ref="postBox"
                     class="absolute right-0 top-12 w-40 py-1 z-20 bg-white rounded border-gray-300 border"
                 >
                     <ul class="w-full flex flex-col gap-[2px]">
@@ -136,6 +138,7 @@
             </button>
             <button
                 @click="showShareBox = !showShareBox"
+                @click.stop="shareBox = !shareBox"
                 class="flex items-center gap-1 hover:bg-lightGray mt-2 px-2 rounded pr-2"
             >
                 <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24">
@@ -146,6 +149,7 @@
             </button>
             <div
                 v-show="showShareBox"
+                ref="shareBox"
                 class="z-40 absolute right-0 -top-[155px] w-40 py-1 bg-white rounded border-gray-300 border"
             >
                 <ul class="w-full flex flex-col gap-[2px]">
@@ -246,7 +250,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, onBeforeUnmount } from "vue";
 import { useRoute } from "vue-router";
 import store from "../../store";
 import ConfirmationModalLayout from "./ConfirmationModalLayout.vue";
@@ -318,6 +322,33 @@ function reactToPost(type) {
 function showComment() {
     emit("showComment", props.post.id);
 }
+
+const postBox = ref(null);
+const shareBox = ref(null);
+const onClickOutside = (event) => {
+    if (
+        postBox.value &&
+        !postBox.value.contains(event.target) &&
+        event.target !== postBox.value.previousSibling
+    ) {
+        showPostBox.value = false;
+    }
+    if (
+        shareBox.value &&
+        !shareBox.value.contains(event.target) &&
+        event.target !== shareBox.value.previousSibling
+    ) {
+        showShareBox.value = false;
+    }
+};
+
+onMounted(() => {
+    window.addEventListener("click", onClickOutside);
+});
+
+onBeforeUnmount(() => {
+    window.removeEventListener("click", onClickOutside);
+});
 </script>
 
 <style></style>
