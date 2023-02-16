@@ -18,6 +18,7 @@
                     {{ comment.created_at }}
                 </span>
                 <button
+                    @click.stop="showBox = !showBox"
                     v-if="user.id === comment.user.id"
                     :disabled="deleteTriger"
                     class="absolute right-0 top-2"
@@ -40,6 +41,7 @@
                 </button>
                 <div
                     v-if="showCommentBox"
+                    ref="commentBox"
                     class="w-36 bg-white absolute border-2 z-20 rounded border-gray-300 top-7 right-0"
                 >
                     <ul class="w-full flex flex-col gap-[2px]">
@@ -234,11 +236,11 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted, onBeforeUnmount } from "vue";
 import store from "../../store";
 import formError from "../auth/formError.vue";
 import PostRepliesLayout from "./PostRepliesLayout.vue";
-
+const commentBox = ref(null);
 const props = defineProps(["comment", "user"]);
 const emit = defineEmits(["deleteComment"]);
 const replyError = ref("");
@@ -317,6 +319,24 @@ function ModiyComment() {
         }
     });
 }
+
+const onClickOutside = (event) => {
+    if (
+        commentBox.value &&
+        !commentBox.value.contains(event.target) &&
+        event.target !== commentBox.value.previousSibling
+    ) {
+        showCommentBox.value = false;
+    }
+};
+
+onMounted(() => {
+    window.addEventListener("click", onClickOutside);
+});
+
+onBeforeUnmount(() => {
+    window.removeEventListener("click", onClickOutside);
+});
 </script>
 
 <style></style>
