@@ -15,8 +15,9 @@ class CommentObserver
      */
     public function created(Comment $comment)
     {
+        $nbr = count(Comment::where('amv_id', $comment->amv_id)->get());
         $post = Amv::find($comment->amv_id);
-        $post->comments++;
+        $post->comments = $nbr;
         $post->save();
     }
 
@@ -38,8 +39,9 @@ class CommentObserver
      */
     public function deleted(Comment $comment)
     {
+        $nbr = count(Comment::where('amv_id', $comment->amv_id)->get());
         $post = Amv::find($comment->amv_id);
-        $post->comments--;
+        $post->comments = $nbr;
         $post->save();
     }
 
