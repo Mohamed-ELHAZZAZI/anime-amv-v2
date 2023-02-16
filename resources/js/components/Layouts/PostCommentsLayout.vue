@@ -180,32 +180,11 @@
                     v-for="reply in comment.replies"
                     :key="reply.id"
                 >
-                    <div
-                        class="flex w-full bg-gray-100 rounded-lg px-4 py-3 gap-2 leading-relaxed"
-                    >
-                        <div class="">
-                            <img
-                                class="rounded-full w-8 h-8"
-                                src="https://images.unsplash.com/photo-1604426633861-11b2faead63c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&h=200&q=80"
-                                alt=""
-                            />
-                        </div>
-                        <div>
-                            <div class="h-8 flex items-center gap-2">
-                                <span class="text-base font-bold">{{
-                                    reply.user.firstName +
-                                    " " +
-                                    reply.user.lastName
-                                }}</span>
-                                <span class="ml-2 text-xs text-gray-400">{{
-                                    reply.created_at
-                                }}</span>
-                            </div>
-                            <p class="text-xs sm:text-sm">
-                                {{ reply.body }}
-                            </p>
-                        </div>
-                    </div>
+                    <PostRepliesLayout
+                        :reply="reply"
+                        :user="user"
+                        @deleteReply="deleteReply"
+                    />
                 </div>
             </div>
         </div>
@@ -220,6 +199,8 @@
 import { ref } from "vue";
 import store from "../../store";
 import formError from "../auth/formError.vue";
+import PostRepliesLayout from "./PostRepliesLayout.vue";
+
 const props = defineProps(["comment", "user"]);
 const emit = defineEmits(["deleteComment"]);
 const replyError = ref("");
@@ -265,6 +246,12 @@ function deleteComment() {
             emit("deleteComment", res.comment);
         }
     });
+}
+
+function deleteReply(reply) {
+    props.comment.replies = props.comment.replies.filter(
+        (rpl) => rpl.id != reply.id
+    );
 }
 </script>
 

@@ -98,7 +98,7 @@ import { ref } from "@vue/reactivity";
 import { computed, onMounted } from "@vue/runtime-core";
 import store from "../../store";
 import CommentSkeleton from "../skeletons/CommentSkeleton.vue";
-import CommentsReplies from "../Layouts/CommentsLayout.vue";
+import CommentsReplies from "./PostCommentsLayout.vue";
 import formError from "../auth/formError.vue";
 const emit = defineEmits(["hideComment"]);
 const props = defineProps(["post_id"]);
