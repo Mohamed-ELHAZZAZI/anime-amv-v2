@@ -10,11 +10,16 @@
             />
         </div>
         <div>
-            <div class="h-8 flex items-center gap-2">
+            <div class="h-8 flex items-center gap-1">
                 <span class="text-base font-bold">{{
                     reply.user.firstName + " " + reply.user.lastName
                 }}</span>
-                <span class="ml-2 text-xs text-gray-400">{{
+                <span
+                    v-if="reply.updated"
+                    class="text-xs font-medium mr-2 px-2.5 py-0.5 rounded bg-gray-300 text-black"
+                    >Modified</span
+                >
+                <span class="text-xs text-gray-400">{{
                     reply.created_at
                 }}</span>
             </div>
@@ -245,6 +250,7 @@ function ModiyReply() {
             }
         } else {
             props.reply.body = res.data.comment.body;
+            props.reply.updated = 1;
             showModifyForm.value = false;
         }
     });

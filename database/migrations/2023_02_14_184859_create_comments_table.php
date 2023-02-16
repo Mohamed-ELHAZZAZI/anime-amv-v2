@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('parent_id')->nullable()->references('id')->on('comments')->onDelete('cascade');
             $table->text('body');
+            $table->enum('updated', [1, 0])->default(0);
             $table->timestamps();
         });
     }

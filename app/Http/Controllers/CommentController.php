@@ -75,6 +75,7 @@ class CommentController extends Controller
 
         if ($comment && $comment->user_id === auth('sanctum')->user()->id) {
             $comment->body = $request->text;
+            $comment->updated = 1;
             $comment->save();
             return response([
                 'error' => false,

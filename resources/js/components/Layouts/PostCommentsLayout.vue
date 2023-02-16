@@ -10,11 +10,17 @@
             />
         </div>
         <div class="w-full">
-            <div class="w-full h-10 flex items-center relative">
+            <div class="w-full h-10 flex items-center relative gap-1">
                 <span class="text-base font-bold">
                     {{ comment.user.firstName + " " + comment.user.lastName }}
                 </span>
-                <span class="ml-2 text-xs text-gray-400">
+
+                <span
+                    v-if="comment.updated"
+                    class="text-xs font-medium mr-2 px-2.5 py-0.5 rounded bg-gray-300 text-black"
+                    >Modified {{
+                }}</span>
+                <span class="text-xs text-gray-400">
                     {{ comment.created_at }}
                 </span>
                 <button
@@ -383,6 +389,7 @@ function ModiyComment() {
             }
         } else {
             props.comment.body = res.data.comment.body;
+            props.comment.updated = 1;
             showModifyField.value = false;
         }
     });
