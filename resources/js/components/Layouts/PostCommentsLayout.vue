@@ -45,6 +45,10 @@
                     <ul class="w-full flex flex-col gap-[2px]">
                         <li class="w-full h-10">
                             <button
+                                @click="
+                                    showModifyField = true;
+                                    showCommentBox = false;
+                                "
                                 :disabled="deleteTriger"
                                 :class="
                                     deleteTriger ? 'cursor-not-allowed' : ''
@@ -122,9 +126,43 @@
                     </ul>
                 </div>
             </div>
-            <p class="text-sm">
+            <p class="text-sm" v-if="!showModifyField">
                 {{ comment.body }}
             </p>
+            <div class="w-full" v-else>
+                <form class="w-full" @submit.prevent="ModiyComment">
+                    <formError v-if="modifyError" :error="modifyError" />
+                    <label
+                        for="default-search"
+                        class="mb-2 text-sm font-medium text-gray-900 sr-only"
+                        >Comment</label
+                    >
+                    <div class="relative flex flex-col items-center gap-4">
+                        <textarea
+                            ref="textArea"
+                            @input="textAreaResizer"
+                            v-model="newComment"
+                            placeholder="Write your reply here..."
+                            class="block resize-none w-full h-14 max-h-[100px] overflow-auto p-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-utOrange focus:border-utOrange"
+                        ></textarea>
+                        <div class="grid w-full gap-3 grid-cols-2">
+                            <button
+                                type="submit"
+                                class="h-10 w-full bg-utOrange rounded border-none p-4 text-white flex items-center justify-center gap-2"
+                            >
+                                Save
+                            </button>
+                            <button
+                                @click="showModifyField = false"
+                                type="button"
+                                class="h-10 w-full bg-white border-2 border-gray-300 rounded p-4 text-prussianBlue flex items-center justify-center gap-2"
+                            >
+                                cancel
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
 
             <button
                 @click="showReplies = !showReplies"
@@ -209,7 +247,9 @@ const replyText = ref("");
 const textArea = ref();
 const deleteTriger = ref(false);
 const showCommentBox = ref(false);
-
+const showModifyField = ref(false);
+const modifyError = ref("");
+const newComment = ref(props.comment.body);
 function submitReply() {
     if (!replyText.value) {
         return (replyError.value = "The text field is required.");
@@ -252,6 +292,26 @@ function deleteReply(reply) {
     props.comment.replies = props.comment.replies.filter(
         (rpl) => rpl.id != reply.id
     );
+}
+
+function ModiyComment() {
+    let data = new FormData();
+    data.append("comment_id", props.comment.id);
+    data.append("text", newComment.value);
+    modifyError.value = "";
+    store.dispatch("updateComment", data).then((res) => {
+        if (res.data.error) {
+            console.log(res.data);
+            if (res.data.msg) {
+                modifyError.value = res.data.msg.text[0];
+            } else {
+                modifyError.value = res.data.text;
+            }
+        } else {
+            props.comment.body = res.data.comment.body;
+            showModifyField.value = false;
+        }
+    });
 }
 </script>
 

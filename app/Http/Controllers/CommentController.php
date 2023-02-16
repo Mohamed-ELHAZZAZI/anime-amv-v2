@@ -57,4 +57,34 @@ class CommentController extends Controller
             'error' => true,
         ]);
     }
+
+    public function update(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'text' => 'required|string'
+        ]);
+
+        if ($validator->fails()) {
+            return response([
+                'error' => true,
+                'msg' => $validator->errors()
+            ]);
+        }
+
+        $comment = Comment::find($request->comment_id);
+
+        if ($comment && $comment->user_id === auth('sanctum')->user()->id) {
+            $comment->body = $request->text;
+            $comment->save();
+            return response([
+                'error' => false,
+                'comment' => $comment
+            ]);
+        }
+
+        return response([
+            'error' => true,
+            'text' => 'Unknown error occurred'
+        ]);
+    }
 }
