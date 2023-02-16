@@ -57,6 +57,7 @@
             </div>
         </div>
         <button
+            @click.stop="replyBox = !replyBox"
             :disabled="triggerDelete"
             :class="triggerDelete ? 'cursor-not-allowed' : ''"
             v-if="user.id === reply.user.id"
@@ -80,6 +81,7 @@
         </button>
         <div
             v-if="showReplyBox"
+            ref="replyBox"
             class="w-36 bg-white absolute border-2 z-20 rounded border-gray-300 top-7 right-0"
         >
             <ul class="w-full flex flex-col gap-[2px]">
@@ -165,7 +167,7 @@
 </template>
 
 <script setup>
-import { ref } from "@vue/reactivity";
+import { ref, onMounted, onBeforeUnmount } from "vue";
 import store from "../../store";
 import formError from "../auth/formError.vue";
 const props = defineProps(["reply", "user"]);
@@ -211,6 +213,24 @@ function ModiyReply() {
         }
     });
 }
+const replyBox = ref(null);
+const onClickOutside = (event) => {
+    if (
+        replyBox.value &&
+        !replyBox.value.contains(event.target) &&
+        event.target !== replyBox.value.previousSibling
+    ) {
+        showReplyBox.value = false;
+    }
+};
+
+onMounted(() => {
+    window.addEventListener("click", onClickOutside);
+});
+
+onBeforeUnmount(() => {
+    window.removeEventListener("click", onClickOutside);
+});
 </script>
 
 <style></style>
