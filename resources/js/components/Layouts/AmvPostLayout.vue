@@ -2,29 +2,39 @@
     <div
         class="w-full border border-gray-300 rounded-md bg-white py-2 sm:px-5 px-2 pb-2 flex flex-col gap-2 relative overflow-hidden"
     >
-        <div class="w-full h-16">
-            <div class="w-full h-full flex items-center gap-5 relative">
+        <div class="w-full min-h-16">
+            <div
+                class="w-full h-full flex items-center gap-2 min-[400px]:gap-5 relative"
+            >
                 <img
                     :src="'../storage/icons/page.jpg'"
-                    class="rounded-full w-14"
+                    class="rounded-full w-12 min-[400px]:w-14"
                     alt=""
                 />
                 <span class="flex flex-col">
-                    <div>
-                        <span class="font-semibold text-lg">
+                    <div class="flex items-center">
+                        <span
+                            class="font-semibold min-[400px]:text-lg min-[400px]:w-auto w-32 text-base whitespace-nowrap overflow-hidden text-ellipsis inline-block"
+                        >
                             {{ post.user.firstName + " " + post.user.lastName }}
                         </span>
                         <span
                             v-if="post.updated === '1'"
                             class="ml-2 text-xs font-medium mr-2 px-2.5 py-0.5 rounded bg-gray-300 text-black"
-                            >Modified</span
+                            ><span>M</span
+                            ><span class="hidden min-[400px]:inline"
+                                >odified</span
+                            ></span
                         >
                     </div>
-                    <span class="text-sm text-gray-500">{{
+                    <span class="min-[400px]:text-sm text-xs text-gray-500">{{
                         post.created_at
                     }}</span>
                 </span>
-                <router-link to="/" class="ml-auto text-lg">
+                <router-link
+                    to="/"
+                    class="ml-auto mr-2 min-[400px]:text-lg text-sm"
+                >
                     <i
                         class="fa-solid fa-arrow-up-right-from-square text-gray-600"
                     ></i>
@@ -32,7 +42,7 @@
                 <button
                     v-if="user.id === post.user_id"
                     @click.stop="postBox = !postBox"
-                    class="text-lg text-gray-600 hover:text-utOrange"
+                    class="text-lg text-gray-600 hover:text-utOrange mr-1 min-[400px]:mr-0"
                     @click="showPostBox = !showPostBox"
                 >
                     <i class="fa-solid fa-ellipsis-vertical"></i>
@@ -43,7 +53,9 @@
                     class="absolute right-0 top-12 w-40 py-1 z-20 bg-white rounded border-gray-300 border"
                 >
                     <ul class="w-full flex flex-col gap-[2px]">
-                        <li class="w-full h-12">
+                        <li
+                            class="w-full min-[400px]:h-12 h-10 text-sm min-[400px]:text-base"
+                        >
                             <button
                                 @click="showModifyModel"
                                 class="w-full h-full flex items-center px-3 gap-2 text-prussianBlue hover:bg-lightGray"
@@ -54,7 +66,7 @@
                                     viewBox="0 0 24 24"
                                     stroke-width="1.5"
                                     stroke="currentColor"
-                                    class="w-5 h-5"
+                                    class="min-[400px]:w-5 min-[400px]:h-5 h-4 w-4"
                                 >
                                     <path
                                         stroke-linecap="round"
@@ -66,7 +78,9 @@
                                 Modify post
                             </button>
                         </li>
-                        <li class="w-full h-12">
+                        <li
+                            class="w-full min-[400px]:h-12 h-10 text-sm min-[400px]:text-base"
+                        >
                             <button
                                 @click="showDeleteModel"
                                 class="w-full h-full flex items-center px-3 gap-2 text-red-600 hover:bg-lightGray"
@@ -77,7 +91,7 @@
                                     viewBox="0 0 24 24"
                                     stroke-width="1.5"
                                     stroke="currentColor"
-                                    class="w-5 h-5"
+                                    class="min-[400px]:w-5 min-[400px]:h-5 h-4 w-4"
                                 >
                                     <path
                                         stroke-linecap="round"

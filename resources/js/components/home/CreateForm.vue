@@ -1,12 +1,12 @@
 <template>
     <div
         v-if="isLoggedIN"
-        class="h-14 w-full relative border-b border-gray-300 flex items-center justify-center font-medium text-xl"
+        class="min-[400px]:h-14 h-12 w-full relative border-b border-gray-300 flex items-center justify-center font-medium text-lg sm:text-xl"
     >
         Create Post
         <button
             v-if="showHideButton"
-            class="absolute cursor-pointer right-3 top-3 p-1 hover:bg-prussianBlue hover:text-white rounded-md"
+            class="absolute cursor-pointer right-3 min-[400px]:top-3 p-1 hover:bg-prussianBlue hover:text-white rounded-md"
             @click="hideCreateModel"
         >
             <svg
@@ -15,7 +15,7 @@
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                class="w-6 h-6"
+                class="w-5 h-5 min-[400px]:h-6 min-[400px]:w-6"
             >
                 <path
                     stroke-linecap="round"
@@ -80,12 +80,16 @@
         <div class="w-full h-full flex items-center gap-3 mb-4">
             <img
                 :src="'../storage/icons/page.jpg'"
-                class="rounded-full w-14"
+                class="rounded-full w-12 min-[400px]:w-14"
                 alt=""
             />
             <span class="flex flex-col">
-                <span class="font-bold text-lg">Autako live</span>
-                <span class="text-sm text-gray-500">Now</span>
+                <span class="font-bold min-[400px]:text-lg text-base"
+                    >Autako live</span
+                >
+                <span class="min-[400px]:text-sm text-xs text-gray-500"
+                    >Now</span
+                >
             </span>
         </div>
         <div class="max-h-96 overflow-y-auto formScroll">
