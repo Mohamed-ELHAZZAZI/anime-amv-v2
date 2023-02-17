@@ -256,11 +256,13 @@ function textFilterTag() {
     d.style.height = "auto";
     d.style.height = `${d.scrollHeight}px`;
     let str = text.value;
-    str = str.replace(/(<.+?>)/gi, "");
-    str = str.replace(/(?:\r\n|\n\r|\r|\n)/g, "<br /> ");
-    str = str.replace(/(?:\s|^)#([^0-9\W\s][a-zA-z0-9]*)/g, (value) => {
-        return `<span class='text-utOrange'>${value}</span>`;
-    });
+    if (str) {
+        str = str.replace(/(<.+?>)/gi, "");
+        str = str.replace(/(?:\r\n|\n\r|\r|\n)/g, "<br /> ");
+        str = str.replace(/(?:\s|^)#([^0-9\W\s][a-zA-z0-9]*)/g, (value) => {
+            return `<span class='text-utOrange'>${value}</span>`;
+        });
+    }
     $("#input").html(str);
 }
 function displayTextArea() {

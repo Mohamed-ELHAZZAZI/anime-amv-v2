@@ -14,7 +14,7 @@
                 <span class="flex flex-col">
                     <div class="flex items-center">
                         <span
-                            class="font-semibold min-[400px]:text-lg min-[400px]:w-auto w-32 text-base whitespace-nowrap overflow-hidden text-ellipsis inline-block"
+                            class="font-semibold min-[400px]:text-lg min-[400px]:w-auto max-w-32 text-base whitespace-nowrap overflow-hidden text-ellipsis inline-block"
                         >
                             {{ post.user.firstName + " " + post.user.lastName }}
                         </span>
