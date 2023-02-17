@@ -3,7 +3,9 @@
         class="w-full min-h-screen px-8 py-4 grid grid-cols-[1fr_300px] gap-14"
     >
         <div class="">
+            <UserHeaderSkeleton v-if="showHeaderSkeletpn" />
             <div
+                v-else
                 class="relative w-full h-[425px] bg-cover bg-no-repeat bg-center rounded-[20px] overflow-hidden flex items-end"
                 :style="{
                     backgroundImage: `url(${'../storage/icons/cover.jpg'})`,
@@ -54,11 +56,14 @@
                     <MostTrending />
                 </div>
                 <div class="flex flex-col gap-5">
-                    <AmvPostLayout
-                        v-for="post in posts"
-                        :key="post.id"
-                        :post="post"
-                    />
+                    <div class="flex flex-col gap-5" v-if="posts">
+                        <AmvPostLayout
+                            v-for="post in posts"
+                            :key="post.id"
+                            :post="post"
+                        />
+                    </div>
+                    <AmvPostSkeleton :count="3" v-if="showPostsSkeletpn" />
                 </div>
             </div>
         </div>
@@ -74,14 +79,19 @@ import { ref } from "vue";
 import store from "../store";
 import MostTrending from "../components/home/MostTrending.vue";
 import AmvPostLayout from "../components/Layouts/AmvPostLayout.vue";
+import UserHeaderSkeleton from "../components/skeletons/UserHeaderSkeleton.vue";
+import AmvPostSkeleton from "../components/skeletons/AmvPostSkeleton.vue";
 const props = defineProps(["username"]);
 const userInfo = ref();
 const posts = ref();
+const showHeaderSkeletpn = ref(true);
+const showPostsSkeletpn = ref(true);
 onBeforeMount(() => {
     store.dispatch("getUser", props.username).then((res) => {
         userInfo.value = res.data.user;
         posts.value = res.data.posts;
-        console.log(res.data);
+        showHeaderSkeletpn.value = false;
+        showPostsSkeletpn.value = false;
     });
 });
 </script>
