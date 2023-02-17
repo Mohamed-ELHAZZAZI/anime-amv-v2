@@ -42,6 +42,7 @@
                     :key="comment.id"
                 >
                     <PostCommentsLayout
+                        @updateNumber="updateNbrComment"
                         @deleteComment="deleteComment"
                         :comment="comment"
                         :user="user"
@@ -131,7 +132,7 @@ import store from "../../store";
 import CommentSkeleton from "../skeletons/CommentSkeleton.vue";
 import PostCommentsLayout from "./PostCommentsLayout.vue";
 import formError from "../auth/formError.vue";
-const emit = defineEmits(["hideComment"]);
+const emit = defineEmits(["hideComment", "updateCommentsNumber"]);
 const props = defineProps(["post_id"]);
 const showCommentSkeleton = ref(false);
 const comments = ref([]);
@@ -177,13 +178,23 @@ function submitComment() {
         } else {
             res.data.comment.user = res.data.user;
             res.data.comment.replies = [];
+            emit("updateCommentsNumber", 1);
             comments.value.unshift(res.data.comment);
         }
     });
 }
 
 function deleteComment(comment) {
+    let nbr = 1;
+    if (!comment.parent_id) {
+        nbr += comment.replies.length;
+    }
+    emit("updateCommentsNumber", -nbr);
     comments.value = comments.value.filter((cmt) => cmt.id != comment.id);
+}
+
+function updateNbrComment(value) {
+    emit("updateCommentsNumber", value);
 }
 </script>
 

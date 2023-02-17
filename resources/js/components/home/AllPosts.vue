@@ -31,17 +31,11 @@
         </div>
     </div>
     <AmvPostLayout
-        @showComment="displayCommentModel"
         v-for="post in posts"
         :key="post.id"
         :post="post"
         @deletePost="deletePost"
         @modifyPost="modifyPost"
-    />
-    <CommentBoxLayout
-        v-if="showComment"
-        @hideComment="showComment = false"
-        :post_id="post_id"
     />
 </template>
 
@@ -50,7 +44,6 @@ import { ref, onMounted, computed } from "vue";
 import store from "../../store";
 import CreateForm from "../home/CreateForm.vue";
 import AmvPostLayout from "../Layouts/AmvPostLayout.vue";
-import CommentBoxLayout from "../Layouts/CommentBoxLayout.vue";
 
 const emit = defineEmits(["toggleShowSkelton"]);
 
@@ -59,7 +52,6 @@ const posts = ref([]);
 const stopSendingRequest = ref(false);
 const showSkelton = ref(false);
 const watingData = ref(false);
-const showComment = ref(false);
 const info = ref({
     start: 0,
     end: 6,
@@ -117,12 +109,6 @@ function modifyPost(post) {
 function hideCreateModel() {
     toModifyPost.value = null;
     showCreate.value = false;
-}
-
-const post_id = ref(null);
-function displayCommentModel(params) {
-    post_id.value = params;
-    showComment.value = true;
 }
 </script>
 

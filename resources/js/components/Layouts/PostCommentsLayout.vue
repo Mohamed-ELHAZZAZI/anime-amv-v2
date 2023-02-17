@@ -328,7 +328,7 @@ import formError from "../auth/formError.vue";
 import PostRepliesLayout from "./PostRepliesLayout.vue";
 const commentBox = ref(null);
 const props = defineProps(["comment", "user"]);
-const emit = defineEmits(["deleteComment"]);
+const emit = defineEmits(["deleteComment", "updateNumber"]);
 const replyError = ref("");
 const showReplies = ref(false);
 const replyText = ref("");
@@ -358,6 +358,7 @@ function submitReply() {
         } else {
             props.comment.replies.unshift(res.data.comment);
             res.data.comment.user = res.data.user;
+            emit("updateNumber", 1);
         }
     });
 }
@@ -375,12 +376,13 @@ function deleteComment() {
         if (res.error) {
             alert("Error try agin later");
         } else {
-            emit("deleteComment", res.comment);
+            emit("deleteComment", props.comment);
         }
     });
 }
 
 function deleteReply(reply) {
+    emit("updateNumber", -1);
     props.comment.replies = props.comment.replies.filter(
         (rpl) => rpl.id != reply.id
     );

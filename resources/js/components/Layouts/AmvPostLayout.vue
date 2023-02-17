@@ -114,7 +114,7 @@
             class="w-full h-12 flex justify-between border-t border-gray-300 mt-3 relative"
         >
             <button
-                @click="showComment"
+                @click="showComment = true"
                 class="flex items-center gap-1 hover:bg-lightGray mt-2 px-2 hover:fill-red-600 rounded"
             >
                 <svg
@@ -268,21 +268,29 @@
             @delete="deletePost"
         />
     </div>
+    <CommentBoxLayout
+        v-if="showComment"
+        :post_id="props.post.id"
+        @hideComment="showComment = false"
+        @updateCommentsNumber="updateCommentsNumber"
+    />
 </template>
 
 <script setup>
 import { computed, onMounted, ref, onBeforeUnmount } from "vue";
 import { useRoute } from "vue-router";
 import store from "../../store";
+import CommentBoxLayout from "../Layouts/CommentBoxLayout.vue";
 import ConfirmationModalLayout from "./ConfirmationModalLayout.vue";
 const props = defineProps(["post"]);
 const showPostBox = ref(false);
 const text = ref(null);
 const showShareBox = ref(false);
 const deleteModel = ref();
-const emit = defineEmits(["deletePost", "modifyPost", "showComment"]);
+const emit = defineEmits(["deletePost", "modifyPost"]);
 const showCopied = ref(false);
 const shareLink = ref(window.location.href + "/p/" + props.post.id);
+const showComment = ref(false);
 const user = computed(() => {
     return store.state.user.info;
 });
@@ -342,8 +350,8 @@ function reactToPost(type) {
 
     store.dispatch("reactToAmv", info);
 }
-function showComment() {
-    emit("showComment", props.post.id);
+function updateCommentsNumber(value) {
+    props.post.comments = props.post.comments + value;
 }
 
 const postBox = ref(null);
