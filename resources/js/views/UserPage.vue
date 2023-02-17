@@ -61,10 +61,46 @@
                 </div>
                 <div class="flex flex-col gap-5">
                     <div class="flex flex-col gap-5" v-if="posts">
+                        <div
+                            v-if="currentUser.id == userInfo.id"
+                            class="w-full bg-white border px-2 py-2 sm:px-4 sm:py-3 border-gray-300 flex flex-col justify-between gap-3 rounded-md cursor-pointer"
+                            @click="showCreate = true"
+                        >
+                            <div
+                                class="w-full flex items-center text-gray-400 gap-3"
+                            >
+                                <img
+                                    :src="'../storage/icons/page.jpg'"
+                                    class="rounded-full w-12 outline-none focus:ring-0 shadow-none"
+                                    alt=""
+                                />
+                                <span>Type here ...</span>
+                                <button
+                                    class="bg-utOrange p-2 text-white sm:w-36 w-24 ml-auto rounded-full"
+                                    type="button"
+                                >
+                                    Post
+                                </button>
+                            </div>
+                        </div>
+                        <div
+                            v-if="currentUser.id == userInfo.id && showCreate"
+                            class="fixed top-0 right-0 bottom-0 left-0 bg-black bg-opacity-25 z-50 flex items-center justify-center"
+                        >
+                            <div
+                                class="sm:w-[550px] w-full my-5 pb-2 bg-white rounded-md mx-1"
+                            >
+                                <CreateForm
+                                    @hideCreateModel="showCreate = false"
+                                    :toModifyPost="toModifyPost"
+                                />
+                            </div>
+                        </div>
                         <AmvPostLayout
                             v-for="post in posts"
                             :key="post.id"
                             :post="post"
+                            @modifyPost="modifyPost"
                         />
                     </div>
                     <AmvPostSkeleton :count="3" v-if="showPostsSkeletpn" />
@@ -85,6 +121,7 @@ import MostTrending from "../components/home/MostTrending.vue";
 import AmvPostLayout from "../components/Layouts/AmvPostLayout.vue";
 import UserHeaderSkeleton from "../components/skeletons/UserHeaderSkeleton.vue";
 import AmvPostSkeleton from "../components/skeletons/AmvPostSkeleton.vue";
+import CreateForm from "../components/home/CreateForm.vue";
 const props = defineProps(["username"]);
 const userInfo = ref();
 const posts = ref();
@@ -92,6 +129,8 @@ const showHeaderSkeletpn = ref(true);
 const showPostsSkeletpn = ref(true);
 const stopSendingRequest = ref(false);
 const watingData = ref(false);
+const showCreate = ref();
+const toModifyPost = ref(null);
 onBeforeMount(() => {
     store.dispatch("getUser", props.username).then((res) => {
         userInfo.value = res.data.user;
@@ -107,6 +146,10 @@ const info = computed(() => {
         end: 12,
         owner_id: userInfo.value?.id,
     };
+});
+
+const currentUser = computed(() => {
+    return store.state.user.info;
 });
 
 window.onscroll = () => {
@@ -136,6 +179,11 @@ window.onscroll = () => {
         });
     }
 };
+
+function modifyPost(post) {
+    toModifyPost.value = post;
+    showCreate.value = true;
+}
 </script>
 
 <style></style>

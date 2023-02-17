@@ -102,6 +102,7 @@ class UsersController extends Controller
         })
             ->select('amvs.*', 'user_reaction.type as user_reaction')
             ->limit(6)
+            ->orderBy('created_at', 'DESC')
             ->get();
 
         if ($user) {
