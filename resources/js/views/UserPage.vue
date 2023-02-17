@@ -1,12 +1,12 @@
 <template>
     <div
-        class="w-full min-h-screen px-8 py-4 grid grid-cols-[1fr_300px] gap-14"
+        class="w-full min-h-screen py-4 min-[1200px]:grid min-[1200px]:grid-cols-[minmax(850px,1fr)_minmax(250px,300px)] min-[1200px]:gap-10 min-[1200px]:px-8 min-[1100px]:gap-8 md:px-6 px-4"
     >
         <div class="">
             <UserHeaderSkeleton v-if="showHeaderSkeletpn" />
             <div
                 v-else
-                class="relative w-full h-[425px] bg-cover bg-no-repeat bg-center rounded-[20px] overflow-hidden flex items-end"
+                class="relative w-full min-[1200px]:h-[425px] h-[370px] bg-cover bg-no-repeat bg-center rounded-[20px] overflow-hidden flex items-end"
                 :style="{
                     backgroundImage: `url(${'../storage/icons/cover.jpg'})`,
                 }"
@@ -14,8 +14,10 @@
                 <div
                     class="absolute top-0 right-0 left-0 bottom-0 bg-black bg-opacity-70 z-10"
                 ></div>
-                <div class="w-full h-64 flex items-center px-10 z-20 gap-5">
-                    <div class="w-60">
+                <div
+                    class="w-full sm:h-64 flex items-center px-10 z-20 gap-5 h-full flex-col sm:flex-row sm:py-0 py-4"
+                >
+                    <div class="min-[1200px]:w-60 md:w-48 w-36">
                         <img
                             :src="'../storage/icons/page.jpg'"
                             class="rounded-full"
@@ -24,9 +26,9 @@
                         />
                     </div>
                     <div class="w-60 flex flex-col gap-3">
-                        <div class="flex flex-col">
+                        <div class="flex flex-col items-center sm:items-start">
                             <span
-                                class="capitalize text-white font-semibold text-5xl"
+                                class="capitalize text-white font-semibold min-[1200px]:text-5xl md:text-4xl text-3xl"
                                 >{{
                                     userInfo.firstName + " " + userInfo.lastName
                                 }}</span
@@ -51,8 +53,10 @@
                     </div>
                 </div>
             </div>
-            <div class="w-full my-10 grid grid-cols-[300px_1fr] gap-5">
-                <div>
+            <div
+                class="w-full my-10 mx-1 min-[850px]:grid min-[850px]:grid-cols-[minmax(225px,300px)_minmax(550px,1fr)] gap-5"
+            >
+                <div class="min-[850px]:block hidden">
                     <MostTrending />
                 </div>
                 <div class="flex flex-col gap-5">
@@ -67,7 +71,7 @@
                 </div>
             </div>
         </div>
-        <div class="h-96">
+        <div class="h-96 hidden min-[850px]:flex">
             <MostTrending />
         </div>
     </div>
