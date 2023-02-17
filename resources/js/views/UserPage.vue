@@ -101,6 +101,7 @@
                             :key="post.id"
                             :post="post"
                             @modifyPost="modifyPost"
+                            @deletePost="deletePost"
                         />
                     </div>
                     <AmvPostSkeleton :count="3" v-if="showPostsSkeletpn" />
@@ -183,6 +184,14 @@ window.onscroll = () => {
 function modifyPost(post) {
     toModifyPost.value = post;
     showCreate.value = true;
+}
+
+function deletePost(post) {
+    store.dispatch("deletePost", post.id).then((res) => {
+        if (!res.data.error) {
+            posts.value = posts.value.filter((p) => p !== post);
+        } else alert("Error try again later");
+    });
 }
 </script>
 
