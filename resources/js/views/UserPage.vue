@@ -49,6 +49,18 @@
                     </div>
                 </div>
             </div>
+            <div class="w-full my-10 grid grid-cols-[300px_1fr] gap-5">
+                <div>
+                    <MostTrending />
+                </div>
+                <div class="flex flex-col gap-5">
+                    <AmvPostLayout
+                        v-for="post in posts"
+                        :key="post.id"
+                        :post="post"
+                    />
+                </div>
+            </div>
         </div>
         <div class="h-96">
             <MostTrending />
@@ -61,11 +73,14 @@ import { onBeforeMount } from "@vue/runtime-core";
 import { ref } from "vue";
 import store from "../store";
 import MostTrending from "../components/home/MostTrending.vue";
+import AmvPostLayout from "../components/Layouts/AmvPostLayout.vue";
 const props = defineProps(["username"]);
 const userInfo = ref();
+const posts = ref();
 onBeforeMount(() => {
     store.dispatch("getUser", props.username).then((res) => {
         userInfo.value = res.data.user;
+        posts.value = res.data.posts;
         console.log(res.data);
     });
 });

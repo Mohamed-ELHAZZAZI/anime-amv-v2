@@ -92,20 +92,21 @@ class UsersController extends Controller
     public function get(Request $request)
     {
         $user = User::where('username', $request->username)->with('amv')->first();
-        // $userId = auth('sanctum')->user()?->id;
-        // $posts = Amv::where('user_id', $user->id)->leftJoinSub(function ($query) use ($userId) {
-        //     $query->select('amv_id', 'type')
-        //         ->from('amv_reactions')
-        //         ->where('user_id', $userId);
-        // }, 'user_reaction', function ($join) {
-        //     $join->on('amvs.id', '=', 'user_reaction.amv_id');
-        // })
-        //     ->select('amvs.*', 'user_reaction.type as user_reaction')
-        //     ->get();
+        $userId = auth('sanctum')->user()?->id;
+        $posts = Amv::where('user_id', $user->id)->with('user')->leftJoinSub(function ($query) use ($userId) {
+            $query->select('amv_id', 'type')
+                ->from('amv_reactions')
+                ->where('user_id', $userId);
+        }, 'user_reaction', function ($join) {
+            $join->on('amvs.id', '=', 'user_reaction.amv_id');
+        })
+            ->select('amvs.*', 'user_reaction.type as user_reaction')
+            ->get();
 
         if ($user) {
             return response([
                 'user' => $user,
+                'posts' => $posts
             ]);
         }
         return response([

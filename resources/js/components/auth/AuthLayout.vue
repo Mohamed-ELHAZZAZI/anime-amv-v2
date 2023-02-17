@@ -1,6 +1,6 @@
 <template>
     <div
-        class="fixed top-0 bottom-0 right-0 left-0 bg-black bg-opacity-60 z-10 flex items-center justify-center"
+        class="fixed top-0 bottom-0 right-0 left-0 bg-black bg-opacity-60 z-50 flex items-center justify-center"
     >
         <div class="w-full max-w-[550px] overflow-hidden rounded-md">
             <div class="h-full bg-prussianBlue px-10 py-4 relative">
