@@ -59,6 +59,7 @@ class AmvsController extends Controller
     public function get(Request $request)
     {
         $userId = auth('sanctum')->user()?->id;
+        $ownerId = $request->owner_id;
         $posts = Amv::with('user')->leftJoinSub(function ($query) use ($userId) {
             $query->select('amv_id', 'type')
                 ->from('amv_reactions')
@@ -67,6 +68,12 @@ class AmvsController extends Controller
             $join->on('amvs.id', '=', 'user_reaction.amv_id');
         })
             ->select('amvs.*', 'user_reaction.type as user_reaction')
+            ->when($ownerId, function ($query, $ownerId) use ($userId) {
+                $query->where(function ($query) use ($ownerId, $userId) {
+                    $query->where('user_id', $ownerId)
+                        ->where('user_id', $userId);
+                });
+            })
             ->offset($request->start ? $request->start : 0)->limit($request->end ? $request->end : 0)->orderBy('created_at', 'DESC')
             ->get();
         return response([

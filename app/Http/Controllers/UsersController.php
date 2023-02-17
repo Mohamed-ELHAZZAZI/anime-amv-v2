@@ -101,6 +101,7 @@ class UsersController extends Controller
             $join->on('amvs.id', '=', 'user_reaction.amv_id');
         })
             ->select('amvs.*', 'user_reaction.type as user_reaction')
+            ->limit(6)
             ->get();
 
         if ($user) {

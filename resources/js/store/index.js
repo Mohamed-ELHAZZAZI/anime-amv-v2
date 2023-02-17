@@ -28,7 +28,14 @@ const store = createStore({
         },
         getAmv: ({ state, commit }, info) => {
             return axiosClient
-                .get("/get-amv?start=" + info.start + "&&end=" + info.end)
+                .get(
+                    "/get-amv?start=" +
+                        info.start +
+                        "&&end=" +
+                        info.end +
+                        "&&owner_id=" +
+                        info.owner_id
+                )
                 .then((response) => {
                     return response;
                 });

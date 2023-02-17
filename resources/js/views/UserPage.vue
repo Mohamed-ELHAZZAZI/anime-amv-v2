@@ -78,7 +78,7 @@
 </template>
 
 <script setup>
-import { onBeforeMount } from "@vue/runtime-core";
+import { onBeforeMount, computed } from "@vue/runtime-core";
 import { ref } from "vue";
 import store from "../store";
 import MostTrending from "../components/home/MostTrending.vue";
@@ -90,6 +90,8 @@ const userInfo = ref();
 const posts = ref();
 const showHeaderSkeletpn = ref(true);
 const showPostsSkeletpn = ref(true);
+const stopSendingRequest = ref(false);
+const watingData = ref(false);
 onBeforeMount(() => {
     store.dispatch("getUser", props.username).then((res) => {
         userInfo.value = res.data.user;
@@ -98,6 +100,42 @@ onBeforeMount(() => {
         showPostsSkeletpn.value = false;
     });
 });
+
+const info = computed(() => {
+    return {
+        start: 6,
+        end: 12,
+        owner_id: userInfo.value?.id,
+    };
+});
+
+window.onscroll = () => {
+    let bottomOfWindow =
+        document.documentElement.scrollTop +
+        window.innerHeight -
+        (document.documentElement.offsetHeight - 550);
+
+    if (
+        bottomOfWindow >= 0 &&
+        !stopSendingRequest.value &&
+        !watingData.value &&
+        userInfo.value.id
+    ) {
+        watingData.value = true;
+        showPostsSkeletpn.value = true;
+        store.dispatch("getAmv", info.value).then((res) => {
+            info.value.start += info.value.end;
+            info.value.end += 6;
+            watingData.value = false;
+            showPostsSkeletpn.value = false;
+            posts.value.push(...res.data.posts);
+            console.log(res);
+            if (!res.data.posts.length) {
+                stopSendingRequest.value = true;
+            }
+        });
+    }
+};
 </script>
 
 <style></style>
