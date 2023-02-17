@@ -121,6 +121,11 @@ const store = createStore({
                     return response;
                 });
         },
+        getUser: ({ state, commit }, username) => {
+            return axiosClient.get("/get-user/" + username).then((response) => {
+                return response;
+            });
+        },
     },
     mutations: {
         setProgress: (state, per) => {

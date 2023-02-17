@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Amv;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -85,6 +86,30 @@ class UsersController extends Controller
 
         return response([
             'success' => true,
+        ]);
+    }
+
+    public function get(Request $request)
+    {
+        $user = User::where('username', $request->username)->with('amv')->first();
+        // $userId = auth('sanctum')->user()?->id;
+        // $posts = Amv::where('user_id', $user->id)->leftJoinSub(function ($query) use ($userId) {
+        //     $query->select('amv_id', 'type')
+        //         ->from('amv_reactions')
+        //         ->where('user_id', $userId);
+        // }, 'user_reaction', function ($join) {
+        //     $join->on('amvs.id', '=', 'user_reaction.amv_id');
+        // })
+        //     ->select('amvs.*', 'user_reaction.type as user_reaction')
+        //     ->get();
+
+        if ($user) {
+            return response([
+                'user' => $user,
+            ]);
+        }
+        return response([
+            'user' => false
         ]);
     }
 }

@@ -3,9 +3,7 @@
         class="w-full border border-gray-300 rounded-md bg-white py-2 sm:px-5 px-2 pb-2 flex flex-col gap-2 relative overflow-hidden"
     >
         <div class="w-full min-h-16">
-            <div
-                class="w-full h-full flex items-center gap-2 min-[400px]:gap-5 relative"
-            >
+            <div class="w-full h-full flex items-center gap-2 relative">
                 <img
                     :src="'../storage/icons/page.jpg'"
                     class="rounded-full w-12 min-[400px]:w-14"
@@ -13,11 +11,15 @@
                 />
                 <span class="flex flex-col">
                     <div class="flex items-center">
-                        <span
+                        <router-link
+                            :to="{
+                                name: 'UserPage',
+                                params: { username: post.user.username },
+                            }"
                             class="font-semibold min-[400px]:text-lg min-[400px]:w-auto max-w-32 text-base whitespace-nowrap overflow-hidden text-ellipsis inline-block"
                         >
                             {{ post.user.firstName + " " + post.user.lastName }}
-                        </span>
+                        </router-link>
                         <span
                             v-if="post.updated === '1'"
                             class="ml-2 text-xs font-medium mr-2 px-2.5 py-0.5 rounded bg-gray-300 text-black"
