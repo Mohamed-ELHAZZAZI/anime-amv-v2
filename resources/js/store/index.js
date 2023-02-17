@@ -27,6 +27,7 @@ const store = createStore({
                 });
         },
         getAmv: ({ state, commit }, info) => {
+            let owner_id = info?.owner_id ? info.owner_id : 0;
             return axiosClient
                 .get(
                     "/get-amv?start=" +
@@ -34,7 +35,7 @@ const store = createStore({
                         "&&end=" +
                         info.end +
                         "&&owner_id=" +
-                        info.owner_id
+                        owner_id
                 )
                 .then((response) => {
                     return response;

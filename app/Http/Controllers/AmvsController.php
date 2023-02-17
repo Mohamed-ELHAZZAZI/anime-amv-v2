@@ -59,7 +59,7 @@ class AmvsController extends Controller
     public function get(Request $request)
     {
         $userId = auth('sanctum')->user()?->id;
-        $ownerId = $request->owner_id;
+        $ownerId = $request?->owner_id ? $request->owner_id : null;
         $posts = Amv::with('user')->leftJoinSub(function ($query) use ($userId) {
             $query->select('amv_id', 'type')
                 ->from('amv_reactions')
