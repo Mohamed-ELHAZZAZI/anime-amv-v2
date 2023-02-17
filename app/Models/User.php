@@ -21,6 +21,7 @@ class User extends Authenticatable
         'firstName',
         'lastName',
         'email',
+        'username',
         'password',
     ];
 
@@ -43,6 +44,22 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($user) {
+            $user->username = $user->generateUsername();
+        });
+    }
+
+    public function generateUsername()
+    {
+        $username = strtolower($this->firstName . '.' . $this->lastName);
+        $username = str_replace(' ', '.', $username);
+        $count = User::where('username', 'like', $username . '%')->count();
+        return $count ? "{$username}.{$count}" : $username;
+    }
 
     public function amv()
     {
