@@ -3,7 +3,9 @@
     <div
         class="fixed top-0 right-0 left-0 bottom-0 bg-black bg-opacity-40 z-30 flex justify-center items-center"
     >
-        <div class="bg-white w-[850px] pt-14 p-7 rounded-md relative">
+        <div
+            class="bg-white w-[850px] pt-14 pb-7 px-5 sm:px-7 rounded-md relative sm:mx-5 mx-2"
+        >
             <button
                 :disabled="requestSent"
                 type="button"
@@ -26,7 +28,7 @@
                 <span class="sr-only">Close modal</span>
             </button>
             <form class="w-full" @submit.prevent="updateInfo">
-                <div class="grid grid-cols-2 gap-3">
+                <div class="grid sm:grid-cols-2 sm:gap-3">
                     <div class="mb-6">
                         <label
                             for="firstName"
