@@ -29,6 +29,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/modify-amv',  [AmvsController::class, 'modify']);
     Route::post('/delete-comment', [CommentController::class, 'delete']);
     Route::post('/update-comment', [CommentController::class, 'update']);
+    Route::post('/update-user', [UsersController::class, 'update']);
     Route::get('/get-single-amv/{id}', [AmvsController::class, 'getSingleAmv']);
     Route::post('/comment', [CommentController::class, 'comment']);
 });

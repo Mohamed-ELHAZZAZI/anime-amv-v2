@@ -51,8 +51,22 @@
                             >
                         </div>
                     </div>
+                    <div class="h-full ml-auto flex items-end pb-10">
+                        <button
+                            @click="showUpdateProfile = true"
+                            class="px-4 py-3 text-white bg-utOrange border-none rounded-lg"
+                        >
+                            Modify Profile
+                        </button>
+                    </div>
                 </div>
             </div>
+            <ModifyUserLayout
+                v-if="showUpdateProfile"
+                :user="userInfo"
+                @closeModel="showUpdateProfile = false"
+                @changeUserInfo="changeUserInfo"
+            />
             <div
                 class="w-full my-10 mx-1 min-[850px]:grid min-[850px]:grid-cols-[minmax(225px,300px)_minmax(550px,1fr)] gap-5"
             >
@@ -123,6 +137,7 @@ import AmvPostLayout from "../components/Layouts/AmvPostLayout.vue";
 import UserHeaderSkeleton from "../components/skeletons/UserHeaderSkeleton.vue";
 import AmvPostSkeleton from "../components/skeletons/AmvPostSkeleton.vue";
 import CreateForm from "../components/home/CreateForm.vue";
+import ModifyUserLayout from "../components/auth/ModifyUserLayout.vue";
 const props = defineProps(["username"]);
 const userInfo = ref();
 const posts = ref();
@@ -132,6 +147,7 @@ const stopSendingRequest = ref(false);
 const watingData = ref(false);
 const showCreate = ref();
 const toModifyPost = ref(null);
+const showUpdateProfile = ref(false);
 onBeforeMount(() => {
     store.dispatch("getUser", props.username).then((res) => {
         userInfo.value = res.data.user;
@@ -192,6 +208,11 @@ function deletePost(post) {
             posts.value = posts.value.filter((p) => p !== post);
         } else alert("Error try again later");
     });
+}
+
+function changeUserInfo(info) {
+    userInfo.value = info;
+    showUpdateProfile.value = false;
 }
 </script>
 

@@ -134,6 +134,11 @@ const store = createStore({
                 return response;
             });
         },
+        UpdateUser: ({ state, commit }, info) => {
+            return axiosClient.post("/update-user", info).then((response) => {
+                return response;
+            });
+        },
     },
     mutations: {
         setProgress: (state, per) => {

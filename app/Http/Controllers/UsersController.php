@@ -115,4 +115,38 @@ class UsersController extends Controller
             'user' => false
         ]);
     }
+
+    public function update(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'first_name' => 'required|string|max:15',
+            'last_name' => 'required|string|max:15',
+            'username' => 'required|regex:/^[a-zA-Z0-9.]+$/|max:15|unique:users,username,' . auth()->user()->id,
+            'email' => 'required|email|unique:users,email,' . auth()->user()->id
+        ]);
+
+        if ($validator->fails()) {
+            return response([
+                'errors' => $validator->errors()
+            ]);
+        }
+
+        $user = auth()->user();
+        if ($user->id === $request->id) {
+            $user->firstName = $request->first_name;
+            $user->lastName = $request->last_name;
+            $user->lastName = $request->last_name;
+            $user->username = $request->username;
+            $user->email = $request->email;
+            $user->save();
+            return response([
+                'errors' =>  false,
+                'user' => auth()->user()
+            ]);
+        }
+        return response([
+            'errors' =>  true
+        ]);
+    }
 }
