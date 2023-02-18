@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import DefaultLayout from "../components/Layouts/DefaultLayout.vue";
 import Home from "../views/Home.vue";
 import UserPage from "../views/UserPage.vue";
+import AnimesHome from "../views/animes/Home.vue";
 const routes = [
     {
         path: "/home",
@@ -16,6 +17,11 @@ const routes = [
                 props: true,
             },
         ],
+    },
+    {
+        path: "/anime",
+        component: AnimesHome,
+        name: "AnimesHome",
     },
 ];
 const router = createRouter({

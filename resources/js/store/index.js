@@ -139,6 +139,13 @@ const store = createStore({
                 return response;
             });
         },
+
+        //anime section,
+        getTopAnimes: ({ state, commit }) => {
+            return axiosClient.get("/getTopAnimes").then((response) => {
+                return response;
+            });
+        },
     },
     mutations: {
         setProgress: (state, per) => {

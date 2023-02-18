@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AmvsController;
+use App\Http\Controllers\AnimesController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\UsersController;
 use App\Models\Comment;
@@ -39,3 +40,6 @@ Route::post('/login', [UsersController::class, 'login']);
 Route::get('/get-amv', [AmvsController::class, 'get']);
 Route::get('/getComment/{post_id}', [CommentController::class, 'get']);
 Route::get('/get-user/{username}', [UsersController::class, 'get']);
+
+
+Route::get('getTopAnimes', [AnimesController::class, 'getTop']);
