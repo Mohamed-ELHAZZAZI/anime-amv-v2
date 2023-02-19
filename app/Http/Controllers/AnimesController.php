@@ -9,7 +9,7 @@ class AnimesController extends Controller
 {
     public function getTop()
     {
-        $anime = Anime::where('rank', '<', 100)->get();
+        $anime = Anime::where('rank', '<', 39)->get();
         return response([
             'rr' => $anime
         ]);
